@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:paddingTop="10dp"
+       >
+        <com.app.drugcorner32.dc_template.CustomViews.SquareLayout
+            android:layout_width="0dp"
+            android:layout_height="80dp"
+            android:layout_margin="10dp"
+            android:layout_weight="1">
+
+            <ImageButton
+                android:src="@drawable/ic_camera"
+                android:id="@+id/cameraButton"
+                android:scaleType="fitCenter"
+                android:padding="20dp"
+
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/orange_button_style"/>
+
+
+        </com.app.drugcorner32.dc_template.CustomViews.SquareLayout>
+
+        <TextView
+            android:id="@+id/cameraTextView"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:layout_width="0dp"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:text="camera"/>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:paddingBottom="10dp">
+        <TextView
+            android:id="@+id/galleryTextView"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:layout_width="0dp"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:text="gallery"/>
+        <com.app.drugcorner32.dc_template.CustomViews.SquareLayout
+            android:layout_width="0dp"
+            android:layout_height="80dp"
+            android:layout_margin="10dp"
+            android:layout_weight="1">
+            <ImageButton
+                android:id="@+id/galleryButton"
+                android:src="@drawable/ic_gallery"
+                android:scaleType="fitCenter"
+                android:padding="20dp"
+                android:layout_width="match_parent"
+                android:background="@drawable/green_button_style"
+                android:layout_height="match_parent"/>
+
+        </com.app.drugcorner32.dc_template.CustomViews.SquareLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

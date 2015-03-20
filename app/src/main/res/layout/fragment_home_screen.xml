@@ -1,0 +1,95 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#eeeeee"
+    tools:context="com.app.tarun.dc.HomeScreenFragment"
+    android:orientation="vertical"
+    android:weightSum="3"
+    android:id="@+id/homeFragment"
+    android:gravity="center">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+        <com.app.drugcorner32.dc_template.CustomViews.SquareLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="20dp"
+            android:layout_weight="1">
+
+            <ImageButton
+                android:src="@drawable/ic_pillls"
+                android:id="@+id/homeScreenImageButton1"
+                android:scaleType="fitCenter"
+                android:padding="35dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/pink_button_style"/>
+
+
+        </com.app.drugcorner32.dc_template.CustomViews.SquareLayout>
+
+        <TextView
+            android:id="@+id/homeScreenTextView1"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:layout_width="0dp"
+            android:gravity="center"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            android:text="buy medicine"/>
+
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.15"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/homeScreenTextView2"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:layout_width="0dp"
+            android:gravity="center"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            android:text="call us"/>
+        <com.app.drugcorner32.dc_template.CustomViews.SquareLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="20dp"
+            android:layout_weight="1">
+            <ImageButton
+                android:id="@+id/homeScreenImageButton2"
+                android:src="@drawable/ic_phone"
+                android:scaleType="fitCenter"
+                android:padding="35dp"
+                android:layout_width="match_parent"
+                android:background="@drawable/turquoize_button_style"
+                android:layout_height="match_parent"/>
+
+        </com.app.drugcorner32.dc_template.CustomViews.SquareLayout>
+
+    </LinearLayout>
+
+
+
+</LinearLayout>
+
+
+
+
+

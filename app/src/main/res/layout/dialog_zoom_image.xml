@@ -1,0 +1,19 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.app.drugcorner32.dc_template.Fragments.ZoomImageFragment">
+
+    <com.app.drugcorner32.dc_template.CustomViews.TouchImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/zoomImageView"/>
+
+    <ImageButton
+        android:id="@+id/zoomImageButton1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right|top"
+        android:background="#00000000"
+        android:src="@drawable/ic_cancel"/>
+
+</FrameLayout>
