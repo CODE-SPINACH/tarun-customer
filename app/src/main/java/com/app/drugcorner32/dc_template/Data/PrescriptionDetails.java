@@ -55,8 +55,12 @@ public class PrescriptionDetails {
         days = details.getDays();
         if(details.getMedicineList() != null)
             for(int i = 0;i<details.getMedicineList().size();i++){
-                if(details.getMedicineList().get(i).getSelection())
+                if(details.getMedicineList().get(i).getSelection()) {
                     medicineList.add(new MedicineDetails(details.getMedicineList().get(i)));
+
+                    //Unslecting the selection
+                    details.getMedicineList().get(i).setSelection(false);
+                }
             }
     }
 
@@ -109,8 +113,10 @@ public class PrescriptionDetails {
 
     public float getCost(){
         float sum = 0;
-        for(MedicineDetails details : medicineList)
-            sum += (details.getCost() * details.getDays() * details.getQuantityPerDay());
+        for(MedicineDetails details : medicineList) {
+            if(details!=null)
+                sum += (details.getCost() * details.getDays() * details.getQuantityPerDay());
+        }
         return sum;
     }
 
@@ -124,5 +130,14 @@ public class PrescriptionDetails {
 
     public Bitmap getThumbnail(){
         return thumbnail;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        return getPrescriptionID() == ((PrescriptionDetails)o).getPrescriptionID();
+    }
+
+    public void addMedicine(MedicineDetails details){
+        medicineList.add(new MedicineDetails(details));
     }
 }

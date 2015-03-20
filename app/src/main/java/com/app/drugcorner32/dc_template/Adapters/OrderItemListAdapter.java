@@ -15,7 +15,6 @@ import android.widget.NumberPicker;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.app.drugcorner32.dc_template.Data.MedicineDetails;
 import com.app.drugcorner32.dc_template.Data.OrderItemDetails;
@@ -111,6 +110,8 @@ public class OrderItemListAdapter extends BaseAdapter {
             public CheckBox checkBox;
             public TextView costView;
 
+            public int childCount;
+
             public TextView incrementDaysView;
             public TextView decrementDaysView;
 
@@ -152,12 +153,12 @@ public class OrderItemListAdapter extends BaseAdapter {
         switch (viewType){
             case 0:
                 //TODO: ALSO WHEN THE CHILDREN ARE ALL REMOVED THE PRESCRIPTION SHOULD BE REMOVED TOO
-                final int childCount = getItem(position).getPrescriptionDetails().getMedicineList().size();
                 final ViewHolder0 holder0;
-                if(view == null) {
+              //  if(view == null) {
                     holder0 = new ViewHolder0();
-
                     view = inflater.inflate(R.layout.cards_translated_prescription, parent, false);
+
+                    holder0.childCount = getItem(position).getPrescriptionDetails().getMedicineList().size();
 
                     //The vertical layout where the children are to be added
                     holder0.parentLayout = (LinearLayout) view.findViewById(R.id.translatedPrescriptionLinearLayout4);
@@ -168,7 +169,7 @@ public class OrderItemListAdapter extends BaseAdapter {
                     holder0.checkImageButton = (ImageButton) view.findViewById(R.id.translatedPrescriptionImageButton3);
 
                     //The array contains all the child views which are being added dynamically
-                    holder0.linearLayouts = new ArrayList<>();
+                    holder0.linearLayouts = new ArrayList<>(holder0.childCount);
 
                     holder0.editLayout = (LinearLayout)view.findViewById(R.id.translatedPrescriptionLinearLayout3);
                     holder0.crossButton = (ImageButton)view.findViewById(R.id.translatedPrescriptionImageButton2);
@@ -181,49 +182,54 @@ public class OrderItemListAdapter extends BaseAdapter {
 
                     holder0.costView.setText(getItem(position).getPrescriptionDetails().getCost() + "/-");
 
-                    if(getItem(position).getDisabled())
-                        holder0.checkBox.setEnabled(false);
-
                     //The children are being set i.e. the medicines in the prescription
-                    for(int i = 0;i< childCount;i++) {
-
-                        holder0.linearLayouts.add(i, (LinearLayout) inflater.
+                    for(int i = 0;i< holder0.childCount;i++) {
+                        holder0.linearLayouts.add((LinearLayout) inflater.
                                 inflate(R.layout.cards_child_prescription, null, false));
                         LinearLayout layout = holder0.linearLayouts.get(i);
 
-                        if(getItem(position).getDisabled())
+                        if(getItem(position).getPrescriptionDetails().getMedicineList().get(i).getDisabled()) {
                             layout.findViewById(R.id.prescriptionChildCheckBox).setEnabled(false);
+                        }
 
                         /*The items are added at index 1 to add them between
                         the tick button and the main layout
                           */
-                        holder0.parentLayout.addView(layout, 0);
+
+                        holder0.parentLayout.addView(layout, i);
                     }
-                    view.setTag(holder0);
-                }
-                else
-                    holder0 = (ViewHolder0)view.getTag();
 
 
+
+                    if(getItem(position).getDisabled())
+                        holder0.checkBox.setEnabled(false);
+               //     Log.v("BIG","NEW");
+                //    view.setTag(holder0);
+              // }
+               // else
+               //     holder0 = (ViewHolder0)view.getTag();/
+
+                holder0.childCount = getItem(position).getPrescriptionDetails().getMedicineList().size();
                 holder0.checkBox.setChecked(getItem(position).getSelected());
                 holder0.count = 0;
+
 
                 if(isEditable){
                     holder0.editLayout.setVisibility(View.VISIBLE);
                     holder0.crossButton.setVisibility(View.VISIBLE);
 
-                    for(int i = 0; i <childCount; i++){
-                        final MedicineDetails medicineDetails = getItem(position).getPrescriptionDetails().getMedicineList().get(i);
-                        final int childPos = i;
+                    for(int i = 0; i <holder0.childCount; i++) {
+                        final MedicineDetails medicineDetails = getItem(position).getPrescriptionDetails().
+                                getMedicineList().get(i);
+                        final LinearLayout layout;
+                        layout = holder0.linearLayouts.get(i);
 
-                        LinearLayout layout = holder0.linearLayouts.get(i);
-
-                        ImageButton crossButton = (ImageButton)layout.findViewById(R.id.prescriptionChildImageButton1);
-                        TextView incrementView = (TextView)layout.findViewById(R.id.prescriptionChildTextView2);
-                        final TextView daysView = (TextView)layout.findViewById(R.id.prescriptionChildTextView3);
-                        TextView decrementView = (TextView)layout.findViewById(R.id.prescriptionChildTextView4);
-                        final TextView costView = (TextView)layout.findViewById(R.id.prescriptionChildTextView6);
-                        TextView quantityPerDayView = (TextView)layout.findViewById(R.id.prescriptionChildTextView5);
+                        ImageButton crossButton = (ImageButton) layout.findViewById(R.id.prescriptionChildImageButton1);
+                        TextView incrementView = (TextView) layout.findViewById(R.id.prescriptionChildTextView2);
+                        final TextView daysView = (TextView) layout.findViewById(R.id.prescriptionChildTextView3);
+                        TextView decrementView = (TextView) layout.findViewById(R.id.prescriptionChildTextView4);
+                        final TextView costView = (TextView) layout.findViewById(R.id.prescriptionChildTextView6);
+                        TextView quantityPerDayView = (TextView) layout.findViewById(R.id.prescriptionChildTextView5);
 
                         quantityPerDayView.setText("x" + medicineDetails.getQuantityPerDay());
 
@@ -238,12 +244,12 @@ public class OrderItemListAdapter extends BaseAdapter {
                         crossButton.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                Toast.makeText(context,""+childPos+"AA"+holder0.linearLayouts.size(),Toast.LENGTH_SHORT).show();
-                                if(holder0.linearLayouts.size() == 1){
+                                holder0.parentLayout.removeView(layout);
+                                holder0.linearLayouts.remove(layout);
+
+                                getItem(position).getPrescriptionDetails().getMedicineList().remove(medicineDetails);
+                                 if(holder0.linearLayouts.size() == 0)
                                     itemDetailsList.remove(position);
-                                }
-                                holder0.linearLayouts.remove(childPos);
-                                itemDetailsList.get(position).getPrescriptionDetails().getMedicineList().remove(childPos);
                                 notifyDataSetChanged();
                             }
                         });
@@ -258,7 +264,7 @@ public class OrderItemListAdapter extends BaseAdapter {
 
                                     float newCost = medicineDetails.getDays() * medicineDetails.getCost() * medicineDetails.getQuantityPerDay();
 
-                                    costView.setText(newCost+ "/-");
+                                    costView.setText(newCost + "/-");
 
                                     holder0.costView.setText(getItem(position).getPrescriptionDetails().getCost() + "/-");
                                 }
@@ -268,13 +274,13 @@ public class OrderItemListAdapter extends BaseAdapter {
                         decrementView.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                if(medicineDetails.getDays() - 1 > 0){
+                                if (medicineDetails.getDays() - 1 > 0) {
                                     medicineDetails.setDays(medicineDetails.getDays() - 1);
                                     daysView.setText(medicineDetails.getDays() + " days");
 
                                     float newCost = medicineDetails.getDays() * medicineDetails.getCost() * medicineDetails.getQuantityPerDay();
 
-                                    costView.setText(newCost+ "/-");
+                                    costView.setText(newCost + "/-");
 
                                     holder0.costView.setText(getItem(position).getPrescriptionDetails().getCost() + "/-");
                                 }
@@ -286,7 +292,7 @@ public class OrderItemListAdapter extends BaseAdapter {
 
                 if(isSelectable){
                     holder0.checkBox.setVisibility(View.VISIBLE);
-                    for(int i = 0;i<childCount;i++) {
+                    for(int i = 0;i<holder0.childCount;i++) {
                         final MedicineDetails medicineDetails = getItem(position).getPrescriptionDetails().getMedicineList().get(i);
                         LinearLayout layout = holder0.linearLayouts.get(i);
 
@@ -324,18 +330,10 @@ public class OrderItemListAdapter extends BaseAdapter {
                     holder0.parentLayout.setVisibility(View.VISIBLE);
 
                 //Events :
-
-                holder0.incrementDaysView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                    }
-                });
-
                 holder0.decrementDaysView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        for(int i = 0; i <childCount;i++){
+                        for(int i = 0; i <holder0.childCount;i++){
                             LinearLayout layout = holder0.linearLayouts.get(i);
 
                             TextView decrementView = (TextView)layout.findViewById(R.id.prescriptionChildTextView4);
@@ -348,7 +346,7 @@ public class OrderItemListAdapter extends BaseAdapter {
                 holder0.incrementDaysView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        for (int i = 0; i < childCount; i++) {
+                        for (int i = 0; i < holder0.childCount; i++) {
                             LinearLayout layout = holder0.linearLayouts.get(i);
 
                             TextView incrementView = (TextView) layout.findViewById(R.id.prescriptionChildTextView2);
@@ -363,7 +361,7 @@ public class OrderItemListAdapter extends BaseAdapter {
                     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                         getItem(position).setSelected(isChecked);
                         if(!childChnage){
-                                for (int i = 0; i < childCount; i++) {
+                                for (int i = 0; i < holder0.childCount; i++) {
                                     itemDetailsList.get(position).getPrescriptionDetails().getMedicineList().get(i).setSelection(isChecked);
                                     CheckBox c = ((CheckBox) holder0.linearLayouts.get(i).findViewById(R.id.prescriptionChildCheckBox));
                                     c.setChecked(isChecked);
