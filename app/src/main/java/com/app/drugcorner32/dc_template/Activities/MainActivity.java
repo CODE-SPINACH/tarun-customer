@@ -187,7 +187,7 @@ public class MainActivity extends ActionBarActivity implements OnFragmentInterac
                     Toast.makeText(this, "State Loss", Toast.LENGTH_SHORT).show();
                 }
 
-                frag6.addNewPreviousOrders((List<OrderDetails>) object);
+                  frag6.addNewPreviousOrders((List<OrderDetails>) object);
 
                 break;
             default:
