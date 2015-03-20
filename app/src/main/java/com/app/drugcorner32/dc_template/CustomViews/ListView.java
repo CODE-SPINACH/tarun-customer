@@ -16,7 +16,7 @@ public class ListView extends android.widget.ListView {
     private OnDetectScrollListener onDetectScrollListener;
 
     public ListView(Context context) {
-        super(context);
+           super(context);
         onCreate(context, null, null);
     }
 
