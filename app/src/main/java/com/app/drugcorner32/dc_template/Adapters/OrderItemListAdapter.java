@@ -109,8 +109,7 @@ public class OrderItemListAdapter extends BaseAdapter {
             public ImageButton crossButton;
             public CheckBox checkBox;
             public TextView costView;
-
-            public int childCount;
+            public TextView numberOfDrugsView;
 
             public TextView incrementDaysView;
             public TextView decrementDaysView;
@@ -154,11 +153,10 @@ public class OrderItemListAdapter extends BaseAdapter {
             case 0:
                 //TODO: ALSO WHEN THE CHILDREN ARE ALL REMOVED THE PRESCRIPTION SHOULD BE REMOVED TOO
                 final ViewHolder0 holder0;
-              //  if(view == null) {
+                final int childCount = getItem(position).getPrescriptionDetails().getMedicineList().size();
+                if(view == null) {
                     holder0 = new ViewHolder0();
                     view = inflater.inflate(R.layout.cards_translated_prescription, parent, false);
-
-                    holder0.childCount = getItem(position).getPrescriptionDetails().getMedicineList().size();
 
                     //The vertical layout where the children are to be added
                     holder0.parentLayout = (LinearLayout) view.findViewById(R.id.translatedPrescriptionLinearLayout4);
@@ -169,7 +167,7 @@ public class OrderItemListAdapter extends BaseAdapter {
                     holder0.checkImageButton = (ImageButton) view.findViewById(R.id.translatedPrescriptionImageButton3);
 
                     //The array contains all the child views which are being added dynamically
-                    holder0.linearLayouts = new ArrayList<>(holder0.childCount);
+                    holder0.linearLayouts = new ArrayList<>(childCount);
 
                     holder0.editLayout = (LinearLayout)view.findViewById(R.id.translatedPrescriptionLinearLayout3);
                     holder0.crossButton = (ImageButton)view.findViewById(R.id.translatedPrescriptionImageButton2);
@@ -180,10 +178,10 @@ public class OrderItemListAdapter extends BaseAdapter {
 
                     holder0.costView = (TextView)view.findViewById(R.id.translatedPrescriptionTextView2);
 
-                    holder0.costView.setText(getItem(position).getPrescriptionDetails().getCost() + "/-");
+                    holder0.numberOfDrugsView = (TextView)view.findViewById(R.id.translatedPrescriptionTextView1);
 
                     //The children are being set i.e. the medicines in the prescription
-                    for(int i = 0;i< holder0.childCount;i++) {
+                    for(int i = 0;i< childCount;i++) {
                         holder0.linearLayouts.add((LinearLayout) inflater.
                                 inflate(R.layout.cards_child_prescription, null, false));
                         LinearLayout layout = holder0.linearLayouts.get(i);
@@ -198,27 +196,36 @@ public class OrderItemListAdapter extends BaseAdapter {
 
                         holder0.parentLayout.addView(layout, i);
                     }
-
-
-
                     if(getItem(position).getDisabled())
                         holder0.checkBox.setEnabled(false);
-               //     Log.v("BIG","NEW");
-                //    view.setTag(holder0);
-              // }
-               // else
-               //     holder0 = (ViewHolder0)view.getTag();/
 
-                holder0.childCount = getItem(position).getPrescriptionDetails().getMedicineList().size();
+                    view.setTag(holder0);
+               }
+                else
+                    holder0 = (ViewHolder0)view.getTag();
+
                 holder0.checkBox.setChecked(getItem(position).getSelected());
                 holder0.count = 0;
+
+                holder0.numberOfDrugsView.setText(""+childCount + " drugs");
+                holder0.costView.setText(getItem(position).getPrescriptionDetails().getCost() + "/-");
+
+                if(childCount != holder0.linearLayouts.size()) {
+                    holder0.parentLayout.removeViews(0,holder0.linearLayouts.size());
+                    holder0.linearLayouts.clear();
+                    for (int i = 0; i < childCount; i++) {
+                        holder0.linearLayouts.add((LinearLayout) inflater.
+                                inflate(R.layout.cards_child_prescription, null, false));
+                        holder0.parentLayout.addView(holder0.linearLayouts.get(i), i);
+                    }
+                }
 
 
                 if(isEditable){
                     holder0.editLayout.setVisibility(View.VISIBLE);
                     holder0.crossButton.setVisibility(View.VISIBLE);
 
-                    for(int i = 0; i <holder0.childCount; i++) {
+                    for(int i = 0; i <childCount; i++) {
                         final MedicineDetails medicineDetails = getItem(position).getPrescriptionDetails().
                                 getMedicineList().get(i);
                         final LinearLayout layout;
@@ -246,7 +253,6 @@ public class OrderItemListAdapter extends BaseAdapter {
                             public void onClick(View v) {
                                 holder0.parentLayout.removeView(layout);
                                 holder0.linearLayouts.remove(layout);
-
                                 getItem(position).getPrescriptionDetails().getMedicineList().remove(medicineDetails);
                                  if(holder0.linearLayouts.size() == 0)
                                     itemDetailsList.remove(position);
@@ -292,9 +298,19 @@ public class OrderItemListAdapter extends BaseAdapter {
 
                 if(isSelectable){
                     holder0.checkBox.setVisibility(View.VISIBLE);
-                    for(int i = 0;i<holder0.childCount;i++) {
+                    for(int i = 0;i<childCount;i++) {
                         final MedicineDetails medicineDetails = getItem(position).getPrescriptionDetails().getMedicineList().get(i);
                         LinearLayout layout = holder0.linearLayouts.get(i);
+
+                        TextView daysView = (TextView) layout.findViewById(R.id.prescriptionChildTextView3);
+                        TextView costView = (TextView) layout.findViewById(R.id.prescriptionChildTextView6);
+                        TextView quantityPerDayView = (TextView) layout.findViewById(R.id.prescriptionChildTextView5);
+
+                        quantityPerDayView.setText("x" + medicineDetails.getQuantityPerDay());
+
+                        costView.setText(medicineDetails.getCost() * medicineDetails.getDays() * medicineDetails.getQuantityPerDay() + "/-");
+
+                        daysView.setText(medicineDetails.getDays() + " days");
 
                         CheckBox checkBox = (CheckBox) layout.findViewById(R.id.prescriptionChildCheckBox);
                         checkBox.setVisibility(View.VISIBLE);
@@ -310,7 +326,6 @@ public class OrderItemListAdapter extends BaseAdapter {
                                     holder0.count++;
                                 else
                                     holder0.count--;
-
 
                                 if(holder0.count == 0) {
                                     getItem(position).setSelected(false);
@@ -333,12 +348,11 @@ public class OrderItemListAdapter extends BaseAdapter {
                 holder0.decrementDaysView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        for(int i = 0; i <holder0.childCount;i++){
+                        for(int i = 0; i <childCount;i++){
                             LinearLayout layout = holder0.linearLayouts.get(i);
 
                             TextView decrementView = (TextView)layout.findViewById(R.id.prescriptionChildTextView4);
                             decrementView.callOnClick();
-
                         }
                     }
                 });
@@ -346,12 +360,11 @@ public class OrderItemListAdapter extends BaseAdapter {
                 holder0.incrementDaysView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        for (int i = 0; i < holder0.childCount; i++) {
+                        for (int i = 0; i < childCount; i++) {
                             LinearLayout layout = holder0.linearLayouts.get(i);
 
                             TextView incrementView = (TextView) layout.findViewById(R.id.prescriptionChildTextView2);
                             incrementView.callOnClick();
-
                         }
                     }
                 });
@@ -361,7 +374,7 @@ public class OrderItemListAdapter extends BaseAdapter {
                     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                         getItem(position).setSelected(isChecked);
                         if(!childChnage){
-                                for (int i = 0; i < holder0.childCount; i++) {
+                                for (int i = 0; i < childCount; i++) {
                                     itemDetailsList.get(position).getPrescriptionDetails().getMedicineList().get(i).setSelection(isChecked);
                                     CheckBox c = ((CheckBox) holder0.linearLayouts.get(i).findViewById(R.id.prescriptionChildCheckBox));
                                     c.setChecked(isChecked);

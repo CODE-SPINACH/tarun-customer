@@ -48,6 +48,11 @@ public class MedicineDetails {
         nameOfMedicine = details.getMedicineName();
         medicineType = details.getMedicineType();
         quantity = details.getQuantity();
+        quantityPerDay = details.getQuantityPerDay();
+        cost = details.getCost();
+        quantity = details.getQuantity();
+        daysSpecifiedInPrescription = details.getDaysSpecifiedInPrescription();
+        days = details.getDays();
     }
 
     public MedicineDetails(String name,MedicineTypes type,int quantity){
