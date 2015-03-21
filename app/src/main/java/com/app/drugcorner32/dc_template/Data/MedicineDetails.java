@@ -31,6 +31,9 @@ public class MedicineDetails {
     private int days = 1;
     private int daysSpecifiedInPrescription = (int)(Math.random()*10) + 3;
 
+    //These are only available in medicine details that are a part of Prescription
+    //otherwise they dont make sense
+    private boolean isDisabled = false;
 
     //number of medicine to be taken per day
     private int quantityPerDay = (int)(Math.random() * 10) + 1;
@@ -89,6 +92,14 @@ public class MedicineDetails {
         return  cost;
     }
 
+    public boolean getDisabled(){
+        return isDisabled;
+    }
+
+    public void setDisabled(boolean val){
+        isDisabled = val;
+    }
+
     public void setCost(int cost){
         this.cost = cost;
     }
@@ -97,8 +108,6 @@ public class MedicineDetails {
     public void setQuantityPerDay(int val){
         quantityPerDay = val;
     }
-
-
 
 
     public void setDays(int val){
@@ -121,4 +130,8 @@ public class MedicineDetails {
         medicineType = types;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        return (this.getMedicineId() == ((MedicineDetails)o).getMedicineId());
+    }
 }

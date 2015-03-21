@@ -12,6 +12,8 @@ public class OrderDetails {
 
     private boolean isSelected = false;
 
+    private boolean isDisabled = false;
+
     private int orderNo;
 
     //The net cost of the order
@@ -68,4 +70,13 @@ public class OrderDetails {
     }
 
     public boolean getSelection(){ return isSelected; }
+
+    public void setDisabled(boolean val){
+        isDisabled = val;
+    }
+
+    public boolean getDisabled(){
+        return isDisabled;
+    }
+
 }

@@ -78,9 +78,9 @@ public class OrderItemDetails {
         OrderItemDetails details = (OrderItemDetails)o;
         if(orderType == details.getOrderType()) {
             if(orderType == TypesOfOrder.OTC)
-                return medicineDetails.getMedicineId() == details.getMedicineDetails().getMedicineId();
+                return medicineDetails.equals(details.getMedicineDetails());
             else
-                return prescriptionDetails.getPrescriptionID() == details.getPrescriptionDetails().getPrescriptionID();
+                return prescriptionDetails.equals(details.getPrescriptionDetails());
         }
         else
             return false;

@@ -9,9 +9,12 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
 import android.widget.Toast;
 
+import com.app.drugcorner32.dc_template.Adapters.OrderListAdapter;
 import com.app.drugcorner32.dc_template.Data.MedicineDetails;
 import com.app.drugcorner32.dc_template.Data.OrderDetails;
 import com.app.drugcorner32.dc_template.Data.OrderItemDetails;
+import com.app.drugcorner32.dc_template.Data.PrescriptionDetails;
+import com.app.drugcorner32.dc_template.Data.Status;
 import com.app.drugcorner32.dc_template.Dialogs.PreviousOrderDialog;
 import com.app.drugcorner32.dc_template.Dialogs.SearchMedicineDialog;
 import com.app.drugcorner32.dc_template.Dialogs.SendPrescriptionDialog;
@@ -24,15 +27,17 @@ import com.app.drugcorner32.dc_template.R;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-
+//TODO after a while the medicine card sfail to display the cross buttons
+//possibly due to re creation of fragment
 public class MainActivity extends ActionBarActivity implements OnFragmentInteractionListener{
 
     private Uri fileUri;
     private final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
-
+    private OrderListAdapter orderListAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,6 +45,36 @@ public class MainActivity extends ActionBarActivity implements OnFragmentInterac
         com.app.drugcorner32.dc_template.Helpers.helperIDGenerator.init();
         //setting the home fragment
         replaceFragment(R.id.mainActivityFrameLayout,null);
+
+        orderListAdapter = new OrderListAdapter(this,R.layout.cards_order);
+
+        //Dummy Data being prepared
+        List<OrderItemDetails> itemDetailses = new ArrayList<>();
+        PrescriptionDetails prescriptionDetails1 = new PrescriptionDetails();
+
+        prescriptionDetails1.getMedicineList().add(new MedicineDetails("DD", MedicineDetails.MedicineTypes.Tablets, 42));
+        prescriptionDetails1.getMedicineList().add(new MedicineDetails("DD", MedicineDetails.MedicineTypes.Tablets,42));
+        prescriptionDetails1.getMedicineList().add(new MedicineDetails("DD", MedicineDetails.MedicineTypes.Tablets,42));
+        prescriptionDetails1.getMedicineList().add(new MedicineDetails("DD", MedicineDetails.MedicineTypes.Tablets,42));
+
+        PrescriptionDetails prescriptionDetails2 = new PrescriptionDetails();
+
+        prescriptionDetails2.getMedicineList().add(new MedicineDetails("FD", MedicineDetails.MedicineTypes.Tablets,42));
+        prescriptionDetails2.getMedicineList().add(new MedicineDetails("FFD", MedicineDetails.MedicineTypes.Tablets,42));
+        prescriptionDetails2.getMedicineList().add(new MedicineDetails("FD", MedicineDetails.MedicineTypes.Tablets, 42));
+
+        itemDetailses.add(new OrderItemDetails(OrderItemDetails.TypesOfOrder.TRANSLATED_PRESCRIPTION,prescriptionDetails1,false));
+        itemDetailses.add(new OrderItemDetails(OrderItemDetails.TypesOfOrder.TRANSLATED_PRESCRIPTION,prescriptionDetails2,false));
+
+        itemDetailses.add(new OrderItemDetails(new MedicineDetails("AA",MedicineDetails.MedicineTypes.Tablets,42),false));
+        itemDetailses.add(new OrderItemDetails(new MedicineDetails("BA",MedicineDetails.MedicineTypes.Tablets,32),false));
+
+        OrderDetails orderDetails = new OrderDetails(1030,2000f,"A - 1002 PRERNA TOWER VASTRAPUR",
+                new Status(Status.STATUSES.DELIVERED),Calendar.DATE,itemDetailses);
+
+        orderListAdapter.add(orderDetails);
+
+
     }
 
     @Override
@@ -219,4 +254,10 @@ public class MainActivity extends ActionBarActivity implements OnFragmentInterac
         file.mkdirs();
         return file;
     }
+
+    public OrderListAdapter getOrder(){
+        return orderListAdapter;
+    }
+
+
 }

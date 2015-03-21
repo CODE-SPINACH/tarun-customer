@@ -8,18 +8,10 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.app.drugcorner32.dc_template.Activities.MainActivity;
 import com.app.drugcorner32.dc_template.Adapters.OrderListAdapter;
-import com.app.drugcorner32.dc_template.Data.MedicineDetails;
-import com.app.drugcorner32.dc_template.Data.OrderDetails;
-import com.app.drugcorner32.dc_template.Data.OrderItemDetails;
-import com.app.drugcorner32.dc_template.Data.PrescriptionDetails;
-import com.app.drugcorner32.dc_template.Data.Status;
 import com.app.drugcorner32.dc_template.Interfaces.OnFragmentInteractionListener;
 import com.app.drugcorner32.dc_template.R;
-
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
 
 /*
 TODO make the selection more efficient , in the confirm button
@@ -32,8 +24,6 @@ public class PreviousOrderListFragment extends android.support.v4.app.Fragment {
     private int currentSelectedOrder = -1;
 
     private boolean isSelectable = false;
-
-    private List<OrderDetails> selectedOrders;
 
     private OrderListAdapter orderListAdapter;
     private OnFragmentInteractionListener mListener;
@@ -52,36 +42,7 @@ public class PreviousOrderListFragment extends android.support.v4.app.Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-        }
-
-        selectedOrders = new ArrayList<>();
-        orderListAdapter = new OrderListAdapter(getActivity(), R.layout.cards_order);
-        //Dummy Data being prepared
-        List<OrderItemDetails> itemDetailses = new ArrayList<>();
-        PrescriptionDetails prescriptionDetails1 = new PrescriptionDetails();
-
-        prescriptionDetails1.getMedicineList().add(new MedicineDetails("DD", MedicineDetails.MedicineTypes.Tablets, 42));
-        prescriptionDetails1.getMedicineList().add(new MedicineDetails("DD", MedicineDetails.MedicineTypes.Tablets,42));
-        prescriptionDetails1.getMedicineList().add(new MedicineDetails("DD", MedicineDetails.MedicineTypes.Tablets,42));
-        prescriptionDetails1.getMedicineList().add(new MedicineDetails("DD", MedicineDetails.MedicineTypes.Tablets,42));
-
-        PrescriptionDetails prescriptionDetails2 = new PrescriptionDetails();
-
-        prescriptionDetails2.getMedicineList().add(new MedicineDetails("FD", MedicineDetails.MedicineTypes.Tablets,42));
-        prescriptionDetails2.getMedicineList().add(new MedicineDetails("FFD", MedicineDetails.MedicineTypes.Tablets,42));
-        prescriptionDetails2.getMedicineList().add(new MedicineDetails("FD", MedicineDetails.MedicineTypes.Tablets, 42));
-
-        itemDetailses.add(new OrderItemDetails(OrderItemDetails.TypesOfOrder.TRANSLATED_PRESCRIPTION,prescriptionDetails1,false));
-        itemDetailses.add(new OrderItemDetails(OrderItemDetails.TypesOfOrder.TRANSLATED_PRESCRIPTION,prescriptionDetails2,false));
-
-        itemDetailses.add(new OrderItemDetails(new MedicineDetails("AA",MedicineDetails.MedicineTypes.Tablets,42),false));
-        itemDetailses.add(new OrderItemDetails(new MedicineDetails("BA",MedicineDetails.MedicineTypes.Tablets,32),false));
-
-        OrderDetails orderDetails = new OrderDetails(1030,2000f,"A - 1002 PRERNA TOWER VASTRAPUR",
-                new Status(Status.STATUSES.DELIVERED),Calendar.DATE,itemDetailses);
-
-        orderListAdapter.add(orderDetails);
+        orderListAdapter = ((MainActivity)getActivity()).getOrder();
     }
 
     @Override
@@ -133,10 +94,6 @@ public class PreviousOrderListFragment extends android.support.v4.app.Fragment {
 
     public void setSelectable(boolean val){
         isSelectable = val;
-    }
-
-    public List<OrderDetails> getSelectedOrdersList(){
-        return selectedOrders;
     }
 
 }

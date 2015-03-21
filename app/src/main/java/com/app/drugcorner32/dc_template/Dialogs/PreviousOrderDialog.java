@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.app.drugcorner32.dc_template.Data.MedicineDetails;
 import com.app.drugcorner32.dc_template.Data.OrderDetails;
 import com.app.drugcorner32.dc_template.Data.OrderItemDetails;
 import com.app.drugcorner32.dc_template.Fragments.OrderItemListFragment;
@@ -144,20 +145,36 @@ public class PreviousOrderDialog extends DialogFragment {
         if(!selectedOrderDetailsList.contains(selectedOrderDetails))
             selectedOrderDetailsList.add(selectedOrderDetails);
 
-        //TODO: not working as of
-        for(OrderItemDetails details : cartOrderItemsList) {
-            if(selectedOrderDetails.getOrderItemsList().contains(details))
+        for(OrderItemDetails details : selectedOrderDetails.getOrderItemsList()) {
+            if (cartOrderItemsList.contains(details)) {
+                if (details.getOrderType() == OrderItemDetails.TypesOfOrder.TRANSLATED_PRESCRIPTION) {
+                    int index = cartOrderItemsList.indexOf(details);
+                    for (MedicineDetails medicineDetails : details.getPrescriptionDetails().getMedicineList()) {
+                        if (cartOrderItemsList.get(index).getPrescriptionDetails().getMedicineList().contains(medicineDetails))
+                            medicineDetails.setDisabled(true);
+                        else
+                            medicineDetails.setDisabled(false);
+                    }
+                }
                 details.setDisabled(true);
+            } else {
+                if (details.getOrderType() == OrderItemDetails.TypesOfOrder.TRANSLATED_PRESCRIPTION)
+                    for (MedicineDetails medicineDetails : details.getPrescriptionDetails().getMedicineList()) {
+                        medicineDetails.setDisabled(false);
+                    }
+                details.setDisabled(false);
             }
+        }
+        if(getView() !=null) {
+            TextView t = (TextView) getView().findViewById(R.id.previousOrderDialogTextView1);
+            ImageButton imageButton = (ImageButton) getView().findViewById((R.id.previousOrderDialogImageButton1));
+            t.setVisibility(View.GONE);
+            imageButton.setVisibility(View.VISIBLE);
 
-        TextView t = (TextView) getView().findViewById(R.id.previousOrderDialogTextView1);
-        ImageButton imageButton = (ImageButton) getView().findViewById((R.id.previousOrderDialogImageButton1));
-        t.setVisibility(View.GONE);
-        imageButton.setVisibility(View.VISIBLE);
-
-        getChildFragmentManager().beginTransaction().replace(R.id.previousOrderDialogFrameLayout1, fragment,
-                OrderItemListFragment.TAG).setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN).
-                addToBackStack(null).commitAllowingStateLoss();
+            getChildFragmentManager().beginTransaction().replace(R.id.previousOrderDialogFrameLayout1, fragment,
+                    OrderItemListFragment.TAG).setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN).
+                    addToBackStack(null).commitAllowingStateLoss();
+        }
     }
 
     public void setCartOrderItemsList(List<OrderItemDetails> orderItemsList){

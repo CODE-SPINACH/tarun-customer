@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.app.drugcorner32.dc_template.Adapters.OrderItemListAdapter;
 import com.app.drugcorner32.dc_template.Data.MedicineDetails;
@@ -43,6 +44,7 @@ public class OrderItemListFragment extends android.support.v4.app.Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        Toast.makeText(getActivity(),"Order Item Fragment",Toast.LENGTH_SHORT).show();
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
         }
@@ -166,11 +168,31 @@ public class OrderItemListFragment extends android.support.v4.app.Fragment {
 
     public void addPreviousOrders(List<OrderDetails> orderDetailses){
         //Selection process : the selected medicines are being added to the cart
-        for(OrderDetails details : orderDetailses)
-            for(OrderItemDetails itemDetails : details.getOrderItemsList()) {
-                if(itemDetails.getSelected())
-                    itemAdapter.add(new OrderItemDetails(itemDetails, true));
+        for(OrderDetails details : orderDetailses) {
+            for (OrderItemDetails itemDetails : details.getOrderItemsList()) {
+                if (itemDetails.getSelected()) {
+                    if (itemDetails.getOrderType() == OrderItemDetails.TypesOfOrder.TRANSLATED_PRESCRIPTION) {
+                        int index = itemAdapter.getItemDetailsList().indexOf(itemDetails);
+                        if (index != -1) {
+                            for (MedicineDetails medicineDetails : itemDetails.getPrescriptionDetails().getMedicineList()) {
+                                if (medicineDetails.getSelection()) {
+                                    itemAdapter.getItemDetailsList().get(index).getPrescriptionDetails().addMedicine(medicineDetails);
+                                    medicineDetails.setSelection(false);
+                                    itemDetails.setSelected(false);
+                                }
+                            }
+                        } else {
+                            itemAdapter.add(new OrderItemDetails(itemDetails, true));
+                            itemDetails.setSelected(false);
+                        }
+                    } else  {
+                        itemAdapter.add(new OrderItemDetails(itemDetails, true));
+                        itemDetails.setSelected(false);
+                    }
+                }
             }
+            details.setSelection(false);
+        }
         itemAdapter.notifyDataSetChanged();
     }
 
