@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.app.drugcorner32.dc_template.Adapters.OrderItemListAdapter;
 import com.app.drugcorner32.dc_template.Data.MedicineDetails;
@@ -43,6 +44,7 @@ public class OrderItemListFragment extends android.support.v4.app.Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        Toast.makeText(getActivity(),"Order Item Fragment",Toast.LENGTH_SHORT).show();
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
         }
