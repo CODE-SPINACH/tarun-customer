@@ -8,7 +8,7 @@
 
     <CheckBox
         android:visibility="gone"
-        android:id="@+id/prescriptionChildCheckBox"
+        android:id="@+id/prescriptionChildCheckBox1"
         android:layout_width="0dp"
         android:layout_weight="0.3"
         android:layout_height="match_parent" />
@@ -21,14 +21,11 @@
         android:text="Crocin 240"
         android:layout_weight="0.7"/>
 
-
-    <TextView
-        android:id="@+id/prescriptionChildTextView3"
-        android:layout_width="wrap_content"
+    <Spinner
+        android:id="@+id/prescriptionChildSpinner1"
+        android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:gravity="center"
-        android:padding="5dp"
-        android:text="2 days"/>
+        android:layout_weight="0.3"/>
 
     <LinearLayout
         android:gravity="center"
@@ -43,16 +40,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="2000/-"
-            android:id="@+id/prescriptionChildTextView6"/>
+            android:id="@+id/prescriptionChildTextView2"/>
     </LinearLayout>
 
     <ImageButton
         android:visibility="gone"
-        android:background="@null"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:src="@drawable/ic_cancel"
-        android:layout_weight="0.17"
+        android:layout_weight="0.1"
         android:id="@+id/prescriptionChildImageButton1"
         android:scaleType="fitCenter"/>
 
