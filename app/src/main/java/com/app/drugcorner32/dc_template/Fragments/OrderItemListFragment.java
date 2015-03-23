@@ -11,7 +11,6 @@ import com.app.drugcorner32.dc_template.Adapters.OrderItemListAdapter;
 import com.app.drugcorner32.dc_template.Data.MedicineDetails;
 import com.app.drugcorner32.dc_template.Data.OrderDetails;
 import com.app.drugcorner32.dc_template.Data.OrderItemDetails;
-import com.app.drugcorner32.dc_template.Interfaces.OnDetectScrollListener;
 import com.app.drugcorner32.dc_template.Interfaces.OnFragmentInteractionListener;
 import com.app.drugcorner32.dc_template.R;
 
@@ -22,7 +21,6 @@ public class OrderItemListFragment extends android.support.v4.app.Fragment {
     public static String TAG = "OrderItemList";
     private boolean isSelectable = false;
     private boolean isEditable = false;
-    private Callbacks callback;
 
     private OnFragmentInteractionListener mListener;
     private OrderItemListAdapter itemAdapter;
@@ -49,14 +47,6 @@ public class OrderItemListFragment extends android.support.v4.app.Fragment {
         if (getArguments() != null) {
         }
 
-        if(getParentFragment()!=null) {
-            Bundle bundle = getParentFragment().getArguments();
-            if (bundle != null) {
-                if (bundle.get("TAG") == BuyMedicineFragment.TAG)
-                    callback = (Callbacks)getParentFragment();
-            }
-        }
-
         itemAdapter = new OrderItemListAdapter(getActivity());
 
         /*This makes the fragment reusable with selecting
@@ -78,20 +68,6 @@ public class OrderItemListFragment extends android.support.v4.app.Fragment {
                 (com.app.drugcorner32.dc_template.CustomViews.ListView)view.findViewById(R.id.orderItemListView);
 
         itemListView.setPadding(0,paddingTop,0,0);
-
-        itemListView.setOnDetectScrollListener(new OnDetectScrollListener() {
-            @Override
-            public void onUpScrolling() {
-                if(callback!=null)
-                    callback.showView();
-            }
-
-            @Override
-            public void onDownScrolling() {
-                if(callback!=null)
-                    callback.hideView();
-            }
-        });
 
         itemListView.setAdapter(itemAdapter);
 
@@ -198,11 +174,6 @@ public class OrderItemListFragment extends android.support.v4.app.Fragment {
 
     public void setListViewPaddingTop(int val){
         paddingTop = val + 50;
-    }
-
-    public static interface Callbacks{
-        public void hideView();
-        public void showView();
     }
 
 }

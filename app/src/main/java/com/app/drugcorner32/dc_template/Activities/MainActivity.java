@@ -5,8 +5,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.ActionBarActivity;
 import android.widget.Toast;
 
 import com.app.drugcorner32.dc_template.Adapters.OrderListAdapter;
@@ -33,7 +33,7 @@ import java.util.List;
 
 //TODO after a while the medicine card sfail to display the cross buttons
 //possibly due to re creation of fragment
-public class MainActivity extends ActionBarActivity implements OnFragmentInteractionListener{
+public class MainActivity extends FragmentActivity implements OnFragmentInteractionListener{
 
     private Uri fileUri;
     private final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
@@ -222,7 +222,7 @@ public class MainActivity extends ActionBarActivity implements OnFragmentInterac
                     Toast.makeText(this, "State Loss", Toast.LENGTH_SHORT).show();
                 }
 
-                  frag6.addNewPreviousOrders((List<OrderDetails>) object);
+                frag6.addNewPreviousOrders((List<OrderDetails>) object);
 
                 break;
             default:

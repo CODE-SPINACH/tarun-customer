@@ -22,49 +22,13 @@
         android:layout_weight="0.7"/>
 
 
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:orientation="horizontal"
-        android:layout_weight="0.7"
-        android:gravity="center"
-        android:id="@+id/prescriptionChildLayout2">
-
-        <TextView
-            android:visibility="gone"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:textSize="35sp"
-            android:id="@+id/prescriptionChildTextView2"
-            android:text="+"/>
-
-        <TextView
-            android:id="@+id/prescriptionChildTextView3"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:padding="5dp"
-            android:text="2 days"/>
-
-        <TextView
-            android:visibility="gone"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:textSize="45sp"
-            android:id="@+id/prescriptionChildTextView4"
-            android:text="-"/>
-
-    </LinearLayout>
-
     <TextView
-        android:layout_width="0dp"
+        android:id="@+id/prescriptionChildTextView3"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:id="@+id/prescriptionChildTextView5"
         android:gravity="center"
-        android:text="x 3"
-        android:layout_weight="0.2"/>
+        android:padding="5dp"
+        android:text="2 days"/>
 
     <LinearLayout
         android:gravity="center"

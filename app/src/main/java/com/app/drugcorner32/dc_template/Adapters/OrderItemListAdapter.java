@@ -4,16 +4,17 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.NumberPicker;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.app.drugcorner32.dc_template.Data.MedicineDetails;
@@ -51,9 +52,15 @@ public class OrderItemListAdapter extends BaseAdapter {
 
     private Context context;
 
+    private Integer[] spinnerArray = new Integer[100];
+
     public OrderItemListAdapter(Context context){
         this.context = context;
         callback = (OnFragmentInteractionListener)context;
+
+        for(int i =0;i<100;i++) {
+            spinnerArray[i] = i + 1;
+        }
     }
 
     public void add(OrderItemDetails item){
@@ -101,11 +108,10 @@ public class OrderItemListAdapter extends BaseAdapter {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         class ViewHolder0{
-            public LinearLayout parentLayout;
+            public LinearLayout maximizedLayout;
             public LinearLayout minimizedLayout;
             public LinearLayout editLayout;
             public ArrayList<LinearLayout> linearLayouts;
-            public ImageButton checkImageButton;
             public ImageButton crossButton;
             public CheckBox checkBox;
             public TextView costView;
@@ -118,14 +124,11 @@ public class OrderItemListAdapter extends BaseAdapter {
         }
 
         class ViewHolder1{
+
             public LinearLayout minimizedLayout;
-            public LinearLayout maximizedLayout;
             public ImageView prescriptionImage;
             public ImageButton crossButton;
-            public ImageButton checkButton;
-            public  EditText notesEditText;
-            public TextView daysPrescriptionTextView;
-            public NumberPicker daysPicker;
+            public TextView prescriptionCountView;
         }
 
         class ViewHolder2{
@@ -133,7 +136,6 @@ public class OrderItemListAdapter extends BaseAdapter {
             public LinearLayout maximizedLayout;
             public CheckBox checkBox;
             public TextView nameOfMedicineTextView;
-            public TextView quantityOfMedicineTextView;
             public TextView costOfMedicineTextView;
             public ImageView typeOfMedicineImageView;
             public ImageButton crossButton;
@@ -141,8 +143,7 @@ public class OrderItemListAdapter extends BaseAdapter {
             public RadioButton tabletRadioButton;
             public RadioButton stripsRadioButton;
             public RadioButton bottlesRadioButton;
-            public NumberPicker quantityPicker;
-            public ImageButton checkButton;
+            public Spinner quantityPicker;
         }
 
         //sets whether to show the children or not
@@ -151,20 +152,17 @@ public class OrderItemListAdapter extends BaseAdapter {
         int viewType = getItemViewType(position);
         switch (viewType){
             case 0:
-                //TODO: ALSO WHEN THE CHILDREN ARE ALL REMOVED THE PRESCRIPTION SHOULD BE REMOVED TOO
                 final ViewHolder0 holder0;
                 final int childCount = getItem(position).getPrescriptionDetails().getMedicineList().size();
                 if(view == null) {
                     holder0 = new ViewHolder0();
                     view = inflater.inflate(R.layout.cards_translated_prescription, parent, false);
 
-                    //The vertical layout where the children are to be added
-                    holder0.parentLayout = (LinearLayout) view.findViewById(R.id.translatedPrescriptionLinearLayout4);
+                    //The vertical layout where the children are to be added i.e. the medicines in the prescription
+                    holder0.maximizedLayout = (LinearLayout) view.findViewById(R.id.translatedPrescriptionLinearLayout4);
 
                     //The horizontal layout on whose touch event the children are to be shown
                     holder0.minimizedLayout = (LinearLayout) view.findViewById(R.id.translatedPrescriptionLinearLayout2);
-
-                    holder0.checkImageButton = (ImageButton) view.findViewById(R.id.translatedPrescriptionImageButton3);
 
                     //The array contains all the child views which are being added dynamically
                     holder0.linearLayouts = new ArrayList<>(childCount);
@@ -194,7 +192,7 @@ public class OrderItemListAdapter extends BaseAdapter {
                         the tick button and the main layout
                           */
 
-                        holder0.parentLayout.addView(layout, i);
+                        holder0.maximizedLayout.addView(layout, i);
                     }
                     if(getItem(position).getDisabled())
                         holder0.checkBox.setEnabled(false);
@@ -211,12 +209,12 @@ public class OrderItemListAdapter extends BaseAdapter {
                 holder0.costView.setText(getItem(position).getPrescriptionDetails().getCost() + "/-");
 
                 if(childCount != holder0.linearLayouts.size()) {
-                    holder0.parentLayout.removeViews(0,holder0.linearLayouts.size());
+                    holder0.maximizedLayout.removeAllViews();
                     holder0.linearLayouts.clear();
                     for (int i = 0; i < childCount; i++) {
                         holder0.linearLayouts.add((LinearLayout) inflater.
                                 inflate(R.layout.cards_child_prescription, null, false));
-                        holder0.parentLayout.addView(holder0.linearLayouts.get(i), i);
+                        holder0.maximizedLayout.addView(holder0.linearLayouts.get(i), i);
                     }
                 }
 
@@ -251,7 +249,7 @@ public class OrderItemListAdapter extends BaseAdapter {
                         crossButton.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                holder0.parentLayout.removeView(layout);
+                                holder0.maximizedLayout.removeView(layout);
                                 holder0.linearLayouts.remove(layout);
                                 getItem(position).getPrescriptionDetails().getMedicineList().remove(medicineDetails);
                                  if(holder0.linearLayouts.size() == 0)
@@ -342,7 +340,7 @@ public class OrderItemListAdapter extends BaseAdapter {
                 }
 
                 if(isExpanded)
-                    holder0.parentLayout.setVisibility(View.VISIBLE);
+                    holder0.maximizedLayout.setVisibility(View.VISIBLE);
 
                 //Events :
                 holder0.decrementDaysView.setOnClickListener(new View.OnClickListener() {
@@ -397,63 +395,52 @@ public class OrderItemListAdapter extends BaseAdapter {
                 holder0.minimizedLayout.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        holder0.parentLayout.setVisibility(View.VISIBLE);
-                        getItem(position).setExpanded(true);
-                    }
-                });
 
-                holder0.checkImageButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        holder0.parentLayout.setVisibility(View.GONE);
-                        getItem(position).setExpanded(false);
-                        notifyDataSetChanged();
+                        if(holder0.maximizedLayout.getVisibility() == View.VISIBLE) {
+                            holder0.maximizedLayout.setVisibility(View.GONE);
+                            getItem(position).setExpanded(false);
+                        }
+                        else {
+                            holder0.maximizedLayout.setVisibility(View.VISIBLE);
+                            getItem(position).setExpanded(true);
+                        }
+
                     }
                 });
 
                 break;
             case 1:
-                //TODO : make the edit text accept points i.e. bullets with every new line
-                //TODO : make the prescription image clickable with a zoom activity opening as a response
-
                 final PrescriptionDetails prescriptionDetails = getItem(position).getPrescriptionDetails();
                 final ViewHolder1 holder1;
+
+                int count = 0 ;
+
                 if(view == null) {
                     view = inflater.inflate(R.layout.cards_prescription, parent, false);
 
                     holder1 = new ViewHolder1();
 
                     holder1.minimizedLayout = (LinearLayout) view.findViewById(R.id.prescriptionCardLinearLayout1);
-                    holder1.maximizedLayout = (LinearLayout) view.findViewById(R.id.prescriptionCardLinearLayout2);
-
                     holder1.prescriptionImage = (ImageView) view.findViewById(R.id.prescriptionCardImageView1);
                     holder1.crossButton = (ImageButton) view.findViewById(R.id.prescriptionCardImageButton1);
-                    holder1.checkButton = (ImageButton) view.findViewById(R.id.prescriptionCardImageButton2);
-                    holder1.notesEditText = (EditText) view.findViewById(R.id.prescriptionCardEditText1);
-                    holder1.daysPrescriptionTextView = (TextView) view.findViewById(R.id.prescriptionCardTextView1);
-                    holder1.daysPicker = (NumberPicker) view.findViewById(R.id.prescriptionCardNumberPicker1);
+                    holder1.prescriptionCountView = (TextView) view.findViewById(R.id.prescriptionCardTextView1);
+                    holder1.prescriptionImage.setImageBitmap(prescriptionDetails.getThumbnail());
+
+                    for(OrderItemDetails details : itemDetailsList){
+                        if(details.getOrderType() == OrderItemDetails.TypesOfOrder.UNTRANSLATED_PRESCRIPTION) {
+                            if(details.equals(getItem(position)))
+                                break;
+                            count++;
+                        }
+                    }
+
+                    holder1.prescriptionCountView.setText("PRESCRIPTION " + (count+1));
 
                     view.setTag(holder1);
                 }
                 else
                      holder1 = (ViewHolder1)view.getTag();
-                if(isExpanded) {
-                    holder1.daysPicker.setVisibility(View.VISIBLE);
-                    holder1.maximizedLayout.setVisibility(View.VISIBLE);
-                }
 
-                holder1.daysPicker.setMaxValue(100);
-                holder1.daysPicker.setMinValue(0);
-
-                int days = prescriptionDetails.getDays();
-                holder1.daysPicker.setValue(days);
-                holder1.notesEditText.setText(prescriptionDetails.getNotes());
-                if(days == 0)
-                    holder1.daysPrescriptionTextView.setText("Days : as Prescribed");
-                else
-                    holder1.daysPrescriptionTextView.setText("Days : " + days);
-
-                holder1.prescriptionImage.setImageBitmap(prescriptionDetails.getThumbnail());
 
                 //events :
 
@@ -465,55 +452,18 @@ public class OrderItemListAdapter extends BaseAdapter {
                     }
                 });
 
-                holder1.prescriptionImage.setOnClickListener(new View.OnClickListener() {
+                //expand the view for edit on clicking the minimized view
+                holder1.minimizedLayout.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         callback.replaceFragment(R.id.prescriptionCardImageButton1,prescriptionDetails.getImageUri());
                     }
                 });
 
-                holder1.daysPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
-                    @Override
-                    public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-                        prescriptionDetails.setDays(newVal);
-
-                        //displaying the days set by the number picker
-                        if (newVal == 0)
-                            holder1.daysPrescriptionTextView.setText("Days : as Prescribed");
-                        else
-                            holder1.daysPrescriptionTextView.setText("Days : " + newVal);
-                    }
-                });
-
-
-
-                //expand the view for edit on clicking the minimized view
-                holder1.minimizedLayout.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        holder1.daysPicker.setVisibility(View.VISIBLE);
-                        holder1.maximizedLayout.setVisibility(View.VISIBLE);
-                        getItem(position).setExpanded(true);
-                    }
-                });
-
-                holder1.checkButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        holder1.daysPicker.setVisibility(View.GONE);
-                        holder1.maximizedLayout.setVisibility(View.GONE);
-
-                        //finalizing the details in the notes
-                        prescriptionDetails.setNotes(holder1.notesEditText.getText().toString());
-                        getItem(position).setExpanded(false);
-
-                        notifyDataSetChanged();
-                    }
-                });
-
                 break;
 
             case 2:
+                //TODO set check on the max number of medicines quantity that are allowed
                 final MedicineDetails medicineDetails = getItem(position).getMedicineDetails();
                 final ViewHolder2 holder2;
                 if(view == null) {
@@ -525,7 +475,6 @@ public class OrderItemListAdapter extends BaseAdapter {
 
                     holder2.checkBox = (CheckBox) view.findViewById(R.id.medicineCardCheckBox1);
                     holder2.nameOfMedicineTextView = (TextView) view.findViewById(R.id.medicineCardTextView1);
-                    holder2.quantityOfMedicineTextView = (TextView) view.findViewById(R.id.medicineCardTextView2);
                     holder2.costOfMedicineTextView = (TextView) view.findViewById(R.id.medicineCardTextView3);
                     holder2.radioGroup = (RadioGroup)view.findViewById(R.id.medicineCardRadioGroup1);
                     holder2.typeOfMedicineImageView = (ImageView) view.findViewById(R.id.medicineCardImageView1);
@@ -533,8 +482,11 @@ public class OrderItemListAdapter extends BaseAdapter {
                     holder2.tabletRadioButton = (RadioButton) view.findViewById(R.id.medicineCardRadioButton1);
                     holder2.stripsRadioButton = (RadioButton) view.findViewById(R.id.medicineCardRadioButton2);
                     holder2.bottlesRadioButton = (RadioButton) view.findViewById(R.id.medicineCardRadioButton3);
-                    holder2.quantityPicker = (NumberPicker) view.findViewById(R.id.medicineCardNumberPicker1);
-                    holder2.checkButton = (ImageButton) view.findViewById(R.id.medicineCardImageButton2);
+                    holder2.quantityPicker = (Spinner) view.findViewById(R.id.medicineCardSpinner1);
+
+                    ArrayAdapter<Integer> spinnerAdapter = new ArrayAdapter<Integer>(context,android.R.layout.simple_spinner_dropdown_item,spinnerArray);
+
+                    holder2.quantityPicker.setAdapter(spinnerAdapter);
 
                     if(getItem(position).getDisabled())
                         holder2.checkBox.setEnabled(false);
@@ -547,14 +499,16 @@ public class OrderItemListAdapter extends BaseAdapter {
 
                 holder2.checkBox.setChecked(getItem(position).getSelected());
                 holder2.nameOfMedicineTextView.setText(medicineDetails.getMedicineName());
-                holder2.quantityOfMedicineTextView.setText(medicineDetails.getQuantity() + "");
 
-                holder2.quantityPicker.setMaxValue(100);
-                holder2.quantityPicker.setMinValue(1);
-                holder2.quantityPicker.setValue(medicineDetails.getQuantity());
+                holder2.quantityPicker.setSelection(medicineDetails.getQuantity() - 1);
+                holder2.quantityPicker.setClickable(false);
+                holder2.quantityPicker.setEnabled(false);
 
-                if(isExpanded)
+                if(isExpanded) {
                     holder2.maximizedLayout.setVisibility(View.VISIBLE);
+                    holder2.quantityPicker.setClickable(true);
+                    holder2.quantityPicker.setEnabled(true);
+                }
 
                 if(isSelectable)
                     holder2.checkBox.setVisibility(View.VISIBLE);
@@ -578,16 +532,21 @@ public class OrderItemListAdapter extends BaseAdapter {
                         holder2.tabletRadioButton.setChecked(true);
                 }
 
-                //TODO:set the cost of medicine
-                holder2.quantityPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+                holder2.quantityPicker.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
-                    public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        int newVal = position + 1;
                         medicineDetails.setQuantity(newVal);
 
-                        holder2.quantityOfMedicineTextView.setText(""+newVal);
                         holder2.costOfMedicineTextView.setText(""+(newVal * 20) + "/-");
                     }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+
+                    }
                 });
+
 
                 holder2.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                     @Override
@@ -600,15 +559,6 @@ public class OrderItemListAdapter extends BaseAdapter {
                     @Override
                     public void onClick(View v) {
                         itemDetailsList.remove(position);
-                        notifyDataSetChanged();
-                    }
-                });
-
-                holder2.checkButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        itemDetailsList.get(position).setExpanded(false);
-                        holder2.maximizedLayout.setVisibility(View.GONE);
                         notifyDataSetChanged();
                     }
                 });
@@ -631,8 +581,16 @@ public class OrderItemListAdapter extends BaseAdapter {
                     holder2.minimizedLayout.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            itemDetailsList.get(position).setExpanded(true);
-                            holder2.maximizedLayout.setVisibility(View.VISIBLE);
+                            if(holder2.maximizedLayout.getVisibility() == View.VISIBLE) {
+                                itemDetailsList.get(position).setExpanded(false);
+                                holder2.maximizedLayout.setVisibility(View.GONE);
+                                notifyDataSetChanged();
+                            }
+                            else{
+                                itemDetailsList.get(position).setExpanded(true);
+                                holder2.maximizedLayout.setVisibility(View.VISIBLE);
+                                notifyDataSetChanged();
+                            }
                         }
                     });
 

@@ -1,12 +1,15 @@
 package com.app.drugcorner32.dc_template.Fragments;
 
 import android.app.Activity;
+import android.graphics.Typeface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.app.drugcorner32.dc_template.Activities.MainActivity;
 import com.app.drugcorner32.dc_template.Adapters.OrderListAdapter;
@@ -51,6 +54,7 @@ public class PreviousOrderListFragment extends android.support.v4.app.Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_previous_order_list, container, false);
 
+
         ListView previousOrderListView = (ListView) view.findViewById(R.id.previousOrderListView);
         orderListAdapter.setSelectable(isSelectable);
         previousOrderListView.setAdapter(orderListAdapter);
@@ -63,6 +67,7 @@ public class PreviousOrderListFragment extends android.support.v4.app.Fragment {
                  mListener.replaceFragment(R.id.previousOrderListView, orderListAdapter.getItem(position));
                 }
         });
+
         return view;
     }
 

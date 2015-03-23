@@ -9,6 +9,8 @@ public class OrderItemDetails {
         TRANSLATED_PRESCRIPTION,UNTRANSLATED_PRESCRIPTION,OTC
     }
 
+    public static int prescriptionCount = 0;
+
     private boolean isSelected = false;
 
     private boolean isExpanded = false;

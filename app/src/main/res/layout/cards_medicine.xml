@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="5dp"
-    card_view:cardCornerRadius="4dp">
+    card_view:cardCornerRadius="0dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -16,8 +16,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:paddingLeft="5dp"
+            android:layout_height="70dp"
             android:paddingRight="5dp"
             android:gravity="center"
             android:id="@+id/medicineCardLinearLayout2"
@@ -30,15 +29,14 @@
                 android:layout_height="match_parent"
                 android:layout_weight="0.3"/>
 
-                <TextView
-                    android:layout_width="@dimen/card_image_size"
-                    android:layout_height="@dimen/card_image_size"
-                    android:gravity="center"
-                    android:text="m"
-                    android:textSize="25sp"
-                    android:textColor="#eee"
-                    android:background="#999"/>
-
+            <TextView
+                android:layout_width="@dimen/card_image_size"
+                android:layout_height="@dimen/card_image_size"
+                android:gravity="center"
+                android:text="m"
+                android:textSize="35sp"
+                android:textColor="#eee"
+                android:background="#55bbcc"/>
 
             <TextView
                 android:id="@+id/medicineCardTextView1"
@@ -46,21 +44,22 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
+                android:textSize="15dp"
                 android:text="Crocin 250mg"/>
 
-            <TextView
-                android:id="@+id/medicineCardTextView2"
+            <Spinner
+                android:id="@+id/medicineCardSpinner1"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:text="3"
-                android:layout_weight="0.2"/>
+                android:layout_weight="0.5"/>
 
             <ImageView
                 android:id="@+id/medicineCardImageView1"
                 android:layout_width="0dp"
                 android:layout_weight="0.3"
                 android:layout_height="match_parent"
+                android:padding="5dp"
                 android:src="@drawable/ic_pill_dark"/>
 
             <LinearLayout
@@ -91,68 +90,60 @@
         </LinearLayout>
 
         <LinearLayout
-            android:visibility="gone"
             android:orientation="vertical"
             android:id="@+id/medicineCardLinearLayout3"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:weightSum="1">
             <LinearLayout
                 android:paddingLeft="8dp"
                 android:paddingRight="8dp"
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="90dp">
                 <RadioGroup
                     android:id="@+id/medicineCardRadioGroup1"
                     android:gravity="center"
                     android:layout_width="0dp"
-                    android:layout_weight="0.6"
+                    android:layout_weight="0.3"
                     android:layout_margin="10dp"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
 
                     <RadioButton
                         android:visibility="gone"
                         android:gravity="center"
-                        android:drawableRight="@drawable/ic_pill_dark"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:id="@+id/medicineCardRadioButton1"
-                        android:text="Tablets"/>
+                        android:text="TABLETS"
+                        android:layout_weight="0.1"
+                        android:textSize="12dp"/>
 
                     <RadioButton
                         android:visibility="gone"
                         android:gravity="center"
-                        android:drawableRight="@drawable/ic_pill_dark"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:id="@+id/medicineCardRadioButton2"
-                        android:text="Strips"/>
+                        android:text="STRIPS"
+                        android:layout_weight="0.1"
+                        android:textSize="12dp"/>
 
                     <RadioButton
+
                         android:visibility="gone"
                         android:gravity="center"
-                        android:drawableRight="@drawable/ic_pill_dark"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:id="@+id/medicineCardRadioButton3"
-                        android:text="Syrups"/>
+                        android:text="SYRUPS"
+                        android:layout_weight="0.1"
+                        android:textSize="12dp"/>
 
                     </RadioGroup>
-                <NumberPicker
-                    android:id="@+id/medicineCardNumberPicker1"
-                    android:gravity="center"
-
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="0.25"/>
 
                 </LinearLayout>
-            <ImageButton
-                android:id="@+id/medicineCardImageButton2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#FF305D"
-                android:src="@drawable/ic_tick"/>
             </LinearLayout>
         </LinearLayout>
 
