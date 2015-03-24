@@ -118,7 +118,7 @@ public class OrderListAdapter extends ArrayAdapter<OrderDetails> {
         }
 
         OrderDetails details = getItem(position);
-        holder.orderNo.setText("Order No : "+details.getOrderNo() + "");
+        holder.orderNo.setText("drugCorner"+details.getOrderNo() + "");
 
         holder.checkBox.setChecked(details.getSelection());
         //displays two decimal digits of the amount
@@ -126,7 +126,7 @@ public class OrderListAdapter extends ArrayAdapter<OrderDetails> {
 
         //holder.orderDate.setText(details.getOrderDate() + "");
         holder.orderAddress.setText(details.getOrderDeliveryAddress());
-        holder.orderStatus.setText("Status : " + details.getOrderStatus().toString());
+        holder.orderStatus.setText("STATUS : " + details.getOrderStatus().toString());
         return view;
     }
 

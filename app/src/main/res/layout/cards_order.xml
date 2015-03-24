@@ -12,7 +12,8 @@
             android:layout_width="match_parent"
             android:padding="5dp"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:background="#EEE">
 
             <CheckBox
                 android:id="@+id/orderCheckBox"
@@ -23,18 +24,33 @@
                 android:layout_height="match_parent" />
 
             <LinearLayout
-                android:layout_width="0dp"
-                android:layout_weight="2"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
-                <TextView
-                    android:padding="15dp"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/orderNoTextView"
-                    android:textSize="18dp"
-                    android:text="Order No : 12345"/>
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:paddingLeft="15dp"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/orderNoTextView"
+                        android:textSize="15dp"
+                        android:text="drugCorner125"
+                        android:layout_weight="2"/>
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/orderAmountTextView"
+                        android:textSize="18sp"
+                        android:layout_weight="1"
+                        android:text="2000/-"/>
+
+                </LinearLayout>
 
 
                 <TextView
@@ -49,43 +65,21 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingLeft="15dp"
-                    android:paddingTop="5dp"
                     android:text="A-1002 Prerna Tower Vastrapur"/>
 
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:gravity="left|center"
-                android:layout_height="match_parent">
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:id="@+id/orderStatusTextView"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/orderAmountTextView"
-                    android:textSize="22sp"
-                    android:text="2000/-"/>
+                    android:textColor="#FF305D"
+                    android:textSize="15dp"
+                    android:text="STATUS : Delivered"
+                    android:layout_margin="5dp"
+                    android:paddingLeft="9dp"/>
 
             </LinearLayout>
 
         </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:background="#aaa"
-            android:layout_height="2dp"/>
-
-        <TextView
-            android:id="@+id/orderStatusTextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#4D82B2"
-            android:textColor="#eee"
-            android:textSize="15dp"
-            android:text="Status : Delivered"
-            android:layout_margin="5dp"
-            android:padding="5dp"/>
 
     </LinearLayout>
 </android.support.v7.widget.CardView>

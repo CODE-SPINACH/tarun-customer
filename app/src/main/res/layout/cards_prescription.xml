@@ -5,9 +5,7 @@
     android:id="@+id/card_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:animateLayoutChanges="true"
-    android:layout_margin="5dp"
-    card_view:cardCornerRadius="4dp">
+    android:animateLayoutChanges="true">
 
 
     <LinearLayout
@@ -24,13 +22,22 @@
             android:scaleType="fitXY"
             android:layout_height="@dimen/card_image_size"/>
 
-        <TextView
-            android:id="@+id/prescriptionCardTextView1"
-            android:gravity="center"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="PRESCRIPTION 1"/>
+    <LinearLayout
+        android:paddingLeft="15dp"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/prescriptionCardTextView1"
+        android:layout_width="wrap_content"
+        android:gravity="center"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:text="PRESCRIPTION 1"/>
+
+</LinearLayout>
 
         <ImageButton
             android:id="@+id/prescriptionCardImageButton1"
@@ -39,7 +46,9 @@
             android:layout_height="match_parent"
             android:src="@drawable/ic_cancel"
             android:scaleType="fitCenter"
-            android:padding="2dp"/>
+            android:padding="2dp"
+            android:layout_weight="0.024"
+            android:layout_marginRight="3dp"/>
 
     </LinearLayout>
 
