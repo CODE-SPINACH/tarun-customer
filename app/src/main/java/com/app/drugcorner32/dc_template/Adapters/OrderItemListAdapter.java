@@ -164,7 +164,7 @@ public class OrderItemListAdapter extends BaseAdapter {
                     //The array contains all the child views which are being added dynamically
                     holder0.linearLayouts = new ArrayList<>(childCount);
 
-                    holder0.editLayout = (LinearLayout)view.findViewById(R.id.translatedPrescriptionLinearLayout3);
+                   // holder0.editLayout = (LinearLayout)view.findViewById(R.id.translatedPrescriptionLinearLayout3);
                     holder0.crossButton = (ImageButton)view.findViewById(R.id.translatedPrescriptionImageButton2);
                     holder0.checkBox = (CheckBox)view.findViewById(R.id.translatedPrescriptionCheckBox1);
 
@@ -293,7 +293,7 @@ public class OrderItemListAdapter extends BaseAdapter {
 
 
                 if(isEditable){
-                    holder0.editLayout.setVisibility(View.VISIBLE);
+                   // holder0.editLayout.setVisibility(View.VISIBLE);
                     holder0.crossButton.setVisibility(View.VISIBLE);
                 }
 

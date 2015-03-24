@@ -48,12 +48,12 @@
         android:id="@+id/previousOrderDialogButton1"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.5"
+        android:layout_weight="0.9"
         android:gravity="center"
         android:textAllCaps="false"
         android:textColor="#FFF"
         android:textSize="20sp"
-        android:text="Add"
+        android:text="ADD"
         android:background="@drawable/orange_button_style"/>
 
 </LinearLayout>

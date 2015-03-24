@@ -23,11 +23,12 @@
             android:orientation="horizontal">
 
             <CheckBox
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
                 android:visibility="gone"
                 android:id="@+id/medicineCardCheckBox1"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="0.3"/>
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"/>
 
             <TextView
                 android:layout_width="@dimen/card_image_size"

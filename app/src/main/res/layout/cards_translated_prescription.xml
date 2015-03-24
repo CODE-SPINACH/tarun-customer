@@ -4,9 +4,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/card_view"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-
-    card_view:cardCornerRadius="4dp">
+    android:layout_height="wrap_content">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -23,28 +21,30 @@
             android:orientation="horizontal">
 
             <CheckBox
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:id="@+id/translatedPrescriptionCheckBox1"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
                 android:visibility="gone"
-                android:layout_weight="0.3"/>
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/translatedPrescriptionCheckBox1"/>
 
-            <ImageButton
+            <ImageView
                 android:id="@+id/translatedPrescriptionImageButton1"
                 android:scaleType="fitXY"
-                android:layout_width="@dimen/card_image_size"
+                android:layout_width="90dp"
+                android:background="#CCC"
                 android:layout_height="@dimen/card_image_size"/>
 
             <TextView
-                android:gravity="center"
+                android:gravity="center|left"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:padding="2dp"
-                android:text="14 drugs"
+                android:padding="5dp"
+                android:text="14 DRUGS"
                 android:id="@+id/translatedPrescriptionTextView1"
                 android:layout_weight="0.7"/>
 
-            <LinearLayout
+          <!--  <LinearLayout
                 android:visibility="gone"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -76,17 +76,17 @@
                     android:id="@+id/translatedPrescriptionTextView4"
                     android:text="-"/>
 
-                </LinearLayout>
+                </LinearLayout>-->
 
             <LinearLayout
                 android:gravity="center"
                 android:layout_width="0dp"
-                android:layout_weight="0.6"
-                android:layout_height="match_parent">
+                android:layout_weight="0.4"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="25dp">
 
                 <TextView
-                    android:background="@drawable/rounded"
-                    android:padding="6dp"
+                    android:padding="5dp"
                     android:textColor="#FF305D"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

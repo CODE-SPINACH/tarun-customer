@@ -4,20 +4,21 @@
     android:layout_width="match_parent"
     android:gravity="center"
     android:id="@+id/prescriptionChildLayout1"
-    android:layout_height="70dp">
+    android:layout_height="70dp"
+    android:layout_marginTop="10dp">
 
     <CheckBox
-        android:visibility="gone"
+        android:layout_marginLeft="20dp"
         android:id="@+id/prescriptionChildCheckBox1"
         android:layout_width="0dp"
-        android:layout_weight="0.3"
+        android:layout_weight="0.2"
         android:layout_height="match_parent" />
 
     <TextView
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:id="@+id/prescriptionChildTextView1"
-        android:gravity="center"
+        android:gravity="center|left"
         android:text="Crocin 240"
         android:layout_weight="0.7"/>
 
@@ -34,7 +35,6 @@
         android:layout_height="match_parent">
 
         <TextView
-            android:background="@drawable/rounded"
             android:padding="6dp"
             android:textColor="#FF305D"
             android:layout_width="wrap_content"
