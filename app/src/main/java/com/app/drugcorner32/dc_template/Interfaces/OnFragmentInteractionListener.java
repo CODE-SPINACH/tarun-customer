@@ -9,4 +9,5 @@ public interface OnFragmentInteractionListener {
     public void replaceFragment(int id, Object object);
     public void takePhoto();
     public void deliverOrderToDialog(OrderDetails details);
+    public void startNotificationActivity();
 }

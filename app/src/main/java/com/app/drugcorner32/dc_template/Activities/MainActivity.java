@@ -73,8 +73,10 @@ public class MainActivity extends FragmentActivity implements OnFragmentInteract
                 new Status(Status.STATUSES.DELIVERED),Calendar.DATE,itemDetailses);
 
         orderListAdapter.add(orderDetails);
-
-
+        orderListAdapter.add(orderDetails);
+        orderListAdapter.add(orderDetails);
+        orderListAdapter.add(orderDetails);
+        orderListAdapter.add(orderDetails);
     }
 
     @Override
@@ -259,5 +261,9 @@ public class MainActivity extends FragmentActivity implements OnFragmentInteract
         return orderListAdapter;
     }
 
+    public void startNotificationActivity(){
+        Intent intent = new Intent(this,NotificationActivity.class);
+        startActivity(intent);
+    }
 
 }

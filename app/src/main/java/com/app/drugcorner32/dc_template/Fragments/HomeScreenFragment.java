@@ -1,9 +1,7 @@
 package com.app.drugcorner32.dc_template.Fragments;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.graphics.Typeface;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -67,9 +65,7 @@ public class HomeScreenFragment extends android.support.v4.app.Fragment {
         callUsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent callIntent = new Intent(Intent.ACTION_CALL);
-                callIntent.setData(Uri.parse("tel:123456789"));
-                startActivity(callIntent);
+            callback.startNotificationActivity();
             }
         });
 

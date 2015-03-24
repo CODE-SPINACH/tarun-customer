@@ -1,6 +1,8 @@
 package com.app.drugcorner32.dc_template.Dialogs;
 
 import android.app.Dialog;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
@@ -9,9 +11,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.app.drugcorner32.dc_template.Data.MedicineDetails;
@@ -52,7 +54,6 @@ public class PreviousOrderDialog extends DialogFragment {
         super();
     }
 
-
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -63,21 +64,22 @@ public class PreviousOrderDialog extends DialogFragment {
 
     @Override
     public void onStart() {
-        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-        Window window = getDialog().getWindow();
-        lp.copyFrom(window.getAttributes());
-        //This makes the dialog take up the full width
-        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-        lp.height = WindowManager.LayoutParams.MATCH_PARENT;
-        window.setAttributes(lp);
-
         super.onStart();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getDialog().getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+        getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        setStyle(R.style.full_screen_dialog, android.R.style.Theme);
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         callBack = (OnFragmentInteractionListener) getActivity();
+
     }
 
     @Override

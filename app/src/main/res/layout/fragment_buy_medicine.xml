@@ -51,8 +51,7 @@
             android:id="@+id/buyMedicineLinearLayout1"
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="130dp"
-            android:background="#77daac">
+            android:layout_height="130dp">
 
             <LinearLayout
                 android:paddingTop="15dp"
@@ -60,8 +59,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
-                android:layout_marginLeft="10dp"
-                android:background="@drawable/sea_greenish_button_style"
+                android:background="@drawable/olive_green_button_style"
                 android:layout_weight="0.3">
 
                 <ImageView
@@ -84,13 +82,8 @@
 
             </LinearLayout>
 
-            <View
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="0.05"/>
-
             <LinearLayout
-                android:background="@drawable/sea_greenish_button_style"
+                android:background="@drawable/olive_green_button_style"
                 android:paddingTop="15dp"
                 android:id="@+id/buyMedicineLinearLayout3"
                 android:layout_width="0dp"
@@ -118,16 +111,10 @@
             </LinearLayout>
 
 
-            <View
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="0.05"/>
-
             <LinearLayout
-                android:background="@drawable/sea_greenish_button_style"
+                android:background="@drawable/olive_green_button_style"
                 android:paddingTop="15dp"
                 android:id="@+id/buyMedicineLinearLayout4"
-                android:layout_marginRight="10dp"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
