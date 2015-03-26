@@ -116,13 +116,14 @@
                     android:gravity="right"/>-->
 
                 <TextView
+
                     android:padding="6dp"
                     android:layout_marginTop="20dp"
                     android:textColor="#FF305D"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="200/-"
-                    android:layout_marginRight="3dp"
+                    android:layout_marginRight="4dp"
                     android:id="@+id/medicineCardTextView3"/>
             </LinearLayout>
 

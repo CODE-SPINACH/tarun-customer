@@ -15,7 +15,7 @@
             android:padding="5dp"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:background="#EEE">
+            android:background="#FFF">
 
             <CheckBox
                 android:id="@+id/orderCheckBox"
@@ -63,11 +63,47 @@
                     android:text="22 July 2015"/>
 
                 <TextView
+                    android:id="@+id/orderAddressTextView1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="15dp"
+                    android:text="Ravi Gupta"/>
+
+                <TextView
+                    android:id="@+id/orderAddressTextView12"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="15dp"
+                    android:text="52 N 12, Pratap Nagar"/>
+
+                <TextView
+                    android:id="@+id/orderAddressTextView13"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="15dp"
+                    android:text="Sector 5, Air Force Colony"/>
+
+
+                <TextView
+                    android:id="@+id/orderAddressTextView14"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="15dp"
+                    android:text="Near Pratap Plaza"/>
+
+                <TextView
+                    android:id="@+id/orderAddressTextView15"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="15dp"
+                    android:text="Jaipur (302033), Raj"/>
+
+                <TextView
                     android:id="@+id/orderAddressTextView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingLeft="15dp"
-                    android:text="A-1002 Prerna Tower Vastrapur"/>
+                    android:text="9460109363"/>
 
                 <TextView
                     android:id="@+id/orderStatusTextView"

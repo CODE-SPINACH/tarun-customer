@@ -39,7 +39,7 @@
                 android:gravity="center|left"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:padding="5dp"
+                android:padding="13dp"
                 android:text="14 DRUGS"
                 android:id="@+id/translatedPrescriptionTextView1"
                 android:layout_weight="0.7"/>
@@ -86,7 +86,7 @@
                 android:layout_marginLeft="25dp">
 
                 <TextView
-                    android:padding="5dp"
+                    android:padding="7dp"
                     android:textColor="#FF305D"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -95,12 +95,13 @@
             </LinearLayout>
 
             <ImageButton
+                android:layout_marginRight="3dp"
                 android:visibility="gone"
                 android:background="@color/cardview_light_background"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:src="@drawable/ic_cancel"
-                android:layout_weight="0.17"
+                android:layout_weight="0.13"
                 android:id="@+id/translatedPrescriptionImageButton2"
                 android:scaleType="fitCenter"/>
 

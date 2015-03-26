@@ -199,7 +199,7 @@ public class OrderItemListAdapter extends BaseAdapter {
                 holder0.checkBox.setChecked(getItem(position).getSelected());
                 holder0.count = 0;
 
-                holder0.numberOfDrugsView.setText(""+childCount + " drugs");
+                holder0.numberOfDrugsView.setText(""+childCount + " DRUGS");
                 holder0.costView.setText(getItem(position).getPrescriptionDetails().getCost() + "/-");
 
                 if(childCount != holder0.linearLayouts.size()) {

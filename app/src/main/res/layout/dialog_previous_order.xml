@@ -10,34 +10,49 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="15dp"
             android:layout_weight="0.5"
-            android:background="#77daac"
+            android:background="#007f64"
             android:animateLayoutChanges="true"
             android:orientation="horizontal"
             android:layout_gravity="center">
 
+
+        <LinearLayout
+            android:layout_gravity="left"
+            android:gravity="left"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.6">
+            <ImageButton
+                android:padding="6dp"
+                android:layout_gravity="left"
+                android:id="@+id/previousOrderDialogImageButton1"
+                android:layout_margin="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleX="0.5"
+                android:scaleY="0.6"
+                android:maxHeight="5dp"
+                android:maxWidth="5dp"
+                android:src="@mipmap/ic_back_button"
+                android:background="#00FFFFFF"
+                />
+        </LinearLayout>
+
             <TextView
+                android:layout_weight="0.49"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:id="@+id/previousOrderDialogTextView1"
-                android:text="Previous Order"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:textSize="25dp"
+                android:text="PREVIOUS ORDERS"
+                android:layout_gravity="center|left"
+                android:gravity="center|left"
+                android:textSize="18dp"
                 android:textColor="#FFF"
                 android:layout_margin="7dp"/>
 
 
-            <ImageButton
-                android:visibility="gone"
-                android:id="@+id/previousOrderDialogImageButton1"
-                android:layout_margin="5dp"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:src="@drawable/ic_back"
-                android:background="#00000000"
-                />
 
             </LinearLayout>
 
@@ -46,18 +61,20 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:padding="10dp"
-            android:layout_weight="5"/>
+            android:layout_weight="5"
+            android:background="#DDD"/>
         <Button
             android:id="@+id/previousOrderDialogButton1"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="0.9"
+            android:layout_weight="0.5"
+            android:layout_gravity="center"
             android:gravity="center"
             android:textAllCaps="false"
             android:textColor="#FFF"
             android:textSize="20sp"
             android:text="ADD"
-            android:background="@drawable/orange_button_style"/>
+            android:background="@drawable/olive_green_button_style"/>
     </LinearLayout>
 
 </RelativeLayout>

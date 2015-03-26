@@ -8,7 +8,7 @@
     android:layout_marginTop="10dp">
 
     <CheckBox
-        android:layout_marginLeft="20dp"
+        android:layout_marginLeft="40dp"
         android:id="@+id/prescriptionChildCheckBox1"
         android:layout_width="0dp"
         android:layout_weight="0.2"
@@ -21,6 +21,14 @@
         android:gravity="center|left"
         android:text="Crocin 240"
         android:layout_weight="0.7"/>
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:id="@+id/quantityTextView"
+        android:gravity="center|left"
+        android:text="Qty"
+        android:layout_weight="0.2"/>
 
     <Spinner
         android:id="@+id/prescriptionChildSpinner1"
