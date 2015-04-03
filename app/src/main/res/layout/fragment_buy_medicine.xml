@@ -20,26 +20,31 @@
         android:layout_weight="10"
         >
         <TextView
+            android:layout_marginTop="100dp"
             android:id="@+id/buyMedicineTextView4"
-            android:textSize="40sp"
+            android:textSize="30sp"
             android:gravity="center"
-            android:text="Select your order from the options above"
+            android:text="Add your Medicines here"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:onClick="tapToAddMedicine"/>
     </RelativeLayout>
 
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:cardCornerRadius="0dp"
-        android:layout_weight="1"
+        android:layout_weight="1.05"
         >
         <Button
+            android:id="@+id/checkoutButton"
+            android:textColor="#FFF"
             android:text="Checkout"
             android:textSize="20sp"
             android:background="@drawable/olive_green_button_style"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="match_parent"
+            android:layout_gravity="bottom"/>
     </android.support.v7.widget.CardView>
     </LinearLayout>
 

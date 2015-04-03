@@ -27,7 +27,7 @@
                 android:padding="35dp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/pink_button_style"/>
+                android:background="@drawable/olive_green_button_style"/>
 
 
         </com.app.drugcorner32.dc_template.CustomViews.SquareLayout>
@@ -78,7 +78,7 @@
                 android:scaleType="fitCenter"
                 android:padding="35dp"
                 android:layout_width="match_parent"
-                android:background="@drawable/turquoize_button_style"
+                android:background="@drawable/pink_button_style"
                 android:layout_height="match_parent"/>
 
         </com.app.drugcorner32.dc_template.CustomViews.SquareLayout>

@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -58,11 +59,15 @@ public class BuyMedicineFragment extends android.support.v4.app.Fragment {
         TextView prescriptionText = (TextView)view.findViewById(R.id.buyMedicineTextView1);
         TextView manuallyText = (TextView)view.findViewById(R.id.buyMedicineTextView2);
         TextView previousOrderText = (TextView)view.findViewById(R.id.buyMedicineTextView3);
+        TextView selectOrderText = (TextView)view.findViewById(R.id.buyMedicineTextView4);
+        Button checkoutButton = (Button)view.findViewById(R.id.checkoutButton);
         Typeface typeFace=Typeface.createFromAsset(getActivity().getAssets(),"fonts/gothic.ttf");
 
         prescriptionText.setTypeface(typeFace);
+        checkoutButton.setTypeface(typeFace);
         manuallyText.setTypeface(typeFace);
         previousOrderText.setTypeface(typeFace);
+        selectOrderText.setTypeface(typeFace);
         LinearLayout linearLayout = (LinearLayout)view.findViewById(R.id.buyMedicineLinearLayout1);
         hidableLayout = (LinearLayout)view.findViewById(R.id.buyMedicineLinearLayout2);
 

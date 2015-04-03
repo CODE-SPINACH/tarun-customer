@@ -37,9 +37,9 @@
         android:layout_weight="0.3"/>
 
     <LinearLayout
-        android:gravity="center"
+        android:gravity="center|right"
         android:layout_width="0dp"
-        android:layout_weight="0.6"
+        android:layout_weight="0.40 "
         android:layout_height="match_parent">
 
         <TextView

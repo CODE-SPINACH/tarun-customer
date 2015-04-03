@@ -2,6 +2,7 @@ package com.app.drugcorner32.dc_template.Dialogs;
 
 import android.app.Dialog;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -101,6 +102,9 @@ public class PreviousOrderDialog extends DialogFragment {
         final ImageButton backButton = (ImageButton)view.findViewById(R.id.previousOrderDialogImageButton1);
         final TextView t = (TextView) view.findViewById(R.id.previousOrderDialogTextView1);
         Button addButton = (Button)view.findViewById(R.id.previousOrderDialogButton1);
+        Typeface typeFace=Typeface.createFromAsset(getActivity().getAssets(),"fonts/gothic.ttf");
+        addButton.setTypeface(typeFace);
+        t.setTypeface(typeFace);
 
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -113,7 +117,7 @@ public class PreviousOrderDialog extends DialogFragment {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                backButton.setVisibility(View.GONE);
+                //backButton.setVisibility(View.GONE);
                 t.setVisibility(View.VISIBLE);
                 OrderItemListFragment itemListFragment = (OrderItemListFragment)
                         getChildFragmentManager().findFragmentByTag(OrderItemListFragment.TAG);

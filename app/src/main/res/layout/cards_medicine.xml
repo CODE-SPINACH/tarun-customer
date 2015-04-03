@@ -15,11 +15,13 @@
         android:id="@+id/medicineCardLinearLayout1"
         android:orientation="vertical">
 
+
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="70dp"
-            android:paddingRight="5dp"
             android:gravity="center"
+            android:layout_weight="2"
             android:id="@+id/medicineCardLinearLayout2"
             android:orientation="horizontal">
 
@@ -85,25 +87,35 @@
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="0.3">
+                android:layout_weight="0.55">
 
                 <ImageView
                     android:id="@+id/medicineCardImageView1"
                     android:layout_width="0dp"
-                    android:layout_weight="0.3"
+                    android:layout_weight="0.25"
                     android:layout_height="match_parent"
-                    android:padding="8dp"
+                    android:padding="18dp"
                     android:layout_gravity="left"
                     android:src="@drawable/ic_pill_dark"/>
+
                 </LinearLayout>
 
 
             <LinearLayout
                 android:layout_width="0dp"
-                android:layout_weight="0.6"
+                android:layout_weight="0.68"
                 android:gravity="right"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:layout_marginRight="2dp"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:padding="6dp"
+                    android:layout_marginTop="20dp"
+                    android:textColor="#FF305D"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="200/-"
+                    android:id="@+id/medicineCardTextView3"/>
 
              <!--   <TextView
                     android:layout_marginTop="2dp"
@@ -115,26 +127,20 @@
                     android:text="RATE"
                     android:gravity="right"/>-->
 
-                <TextView
-
-                    android:padding="6dp"
-                    android:layout_marginTop="20dp"
-                    android:textColor="#FF305D"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="200/-"
-                    android:layout_marginRight="4dp"
-                    android:id="@+id/medicineCardTextView3"/>
             </LinearLayout>
 
-            <ImageButton
+
+
+
+
+          <!--  <ImageButton
                 android:background="@color/cardview_light_background"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:src="@drawable/ic_cancel"
-                android:layout_weight="0.25"
+                android:layout_weight="0.275"
                 android:id="@+id/medicineCardImageButton1"
-                android:scaleType="fitCenter"/>
+                android:scaleType="fitCenter"/>-->
 
         </LinearLayout>
 

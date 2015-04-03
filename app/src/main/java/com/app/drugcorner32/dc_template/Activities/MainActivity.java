@@ -18,7 +18,6 @@ import com.app.drugcorner32.dc_template.Data.Status;
 import com.app.drugcorner32.dc_template.Dialogs.PreviousOrderDialog;
 import com.app.drugcorner32.dc_template.Dialogs.SearchMedicineDialog;
 import com.app.drugcorner32.dc_template.Dialogs.SendPrescriptionDialog;
-import com.app.drugcorner32.dc_template.Dialogs.ZoomDialog;
 import com.app.drugcorner32.dc_template.Fragments.BuyMedicineFragment;
 import com.app.drugcorner32.dc_template.Fragments.HomeScreenFragment;
 import com.app.drugcorner32.dc_template.Fragments.OrderItemListFragment;
@@ -182,11 +181,11 @@ public class MainActivity extends FragmentActivity implements OnFragmentInteract
                 frag3.addNewPrescription(fileUri);
                 break;
 
-            case R.id.prescriptionCardImageButton1:
+           /* case R.id.prescriptionCardImageButton1:
                 ZoomDialog zoomDialog = new ZoomDialog();
                 zoomDialog.setImageUri((Uri) object);
                 zoomDialog.show(getSupportFragmentManager(), ZoomDialog.TAG);
-                break;
+                break;*/
 
             case R.id.searchMedicineSearchView1:
                 BuyMedicineFragment frag4 = (BuyMedicineFragment) getSupportFragmentManager().

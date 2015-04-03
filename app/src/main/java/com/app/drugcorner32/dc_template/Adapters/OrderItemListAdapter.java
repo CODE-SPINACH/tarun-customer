@@ -165,7 +165,7 @@ public class OrderItemListAdapter extends BaseAdapter {
                     holder0.linearLayouts = new ArrayList<>(childCount);
 
                    // holder0.editLayout = (LinearLayout)view.findViewById(R.id.translatedPrescriptionLinearLayout3);
-                    holder0.crossButton = (ImageButton)view.findViewById(R.id.translatedPrescriptionImageButton2);
+                   // holder0.crossButton = (ImageButton)view.findViewById(R.id.translatedPrescriptionImageButton2);
                     holder0.checkBox = (CheckBox)view.findViewById(R.id.translatedPrescriptionCheckBox1);
 
                     holder0.costView = (TextView)view.findViewById(R.id.translatedPrescriptionTextView2);
@@ -220,7 +220,7 @@ public class OrderItemListAdapter extends BaseAdapter {
                     TextView nameOfMedicineView = (TextView) layout.findViewById(R.id.prescriptionChildTextView1);
                     TextView costView = (TextView) layout.findViewById(R.id.prescriptionChildTextView2);
                     Spinner quantityPicker = (Spinner) layout.findViewById(R.id.prescriptionChildSpinner1);
-                    ImageButton crossButton = (ImageButton) layout.findViewById(R.id.prescriptionChildImageButton1);
+                   // ImageButton crossButton = (ImageButton) layout.findViewById(R.id.prescriptionChildImageButton1);
                     CheckBox checkBox = (CheckBox) layout.findViewById(R.id.prescriptionChildCheckBox1);
 
                     ArrayAdapter<Integer> spinnerAdapter = new ArrayAdapter<>(context,android.R.layout.simple_spinner_item,spinnerArray);
@@ -239,9 +239,9 @@ public class OrderItemListAdapter extends BaseAdapter {
                             holder0.count++;
                     }
 
-                    if(isEditable){
+                   /* if(isEditable){
                         crossButton.setVisibility(View.VISIBLE);
-                    }
+                    }*/
 
                     //child events
                     checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -265,7 +265,7 @@ public class OrderItemListAdapter extends BaseAdapter {
                     });
 
 
-                    crossButton.setOnClickListener(new View.OnClickListener() {
+                   /* crossButton.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             holder0.maximizedLayout.removeView(layout);
@@ -275,7 +275,7 @@ public class OrderItemListAdapter extends BaseAdapter {
                                 itemDetailsList.remove(position);
                             notifyDataSetChanged();
                         }
-                    });
+                    });*/
 
                     quantityPicker.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
@@ -294,7 +294,7 @@ public class OrderItemListAdapter extends BaseAdapter {
 
                 if(isEditable){
                    // holder0.editLayout.setVisibility(View.VISIBLE);
-                    holder0.crossButton.setVisibility(View.VISIBLE);
+                  //  holder0.crossButton.setVisibility(View.VISIBLE);
                 }
 
                 if(isSelectable){
@@ -322,13 +322,13 @@ public class OrderItemListAdapter extends BaseAdapter {
                 });
 
 
-                holder0.crossButton.setOnClickListener(new View.OnClickListener() {
+               /* holder0.crossButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         itemDetailsList.remove(position);
                         notifyDataSetChanged();
                     }
-                });
+                });*/
 
 
                 holder0.minimizedLayout.setOnClickListener(new View.OnClickListener() {
@@ -361,7 +361,7 @@ public class OrderItemListAdapter extends BaseAdapter {
 
                     holder1.minimizedLayout = (LinearLayout) view.findViewById(R.id.prescriptionCardLinearLayout1);
                     holder1.prescriptionImage = (ImageView) view.findViewById(R.id.prescriptionCardImageView1);
-                    holder1.crossButton = (ImageButton) view.findViewById(R.id.prescriptionCardImageButton1);
+                    //holder1.crossButton = (ImageButton) view.findViewById(R.id.prescriptionCardImageButton1);
                     holder1.prescriptionCountView = (TextView) view.findViewById(R.id.prescriptionCardTextView1);
                     holder1.prescriptionImage.setImageBitmap(prescriptionDetails.getThumbnail());
 
@@ -383,21 +383,21 @@ public class OrderItemListAdapter extends BaseAdapter {
 
                 //events :
 
-                holder1.crossButton.setOnClickListener(new View.OnClickListener() {
+               /* holder1.crossButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         itemDetailsList.remove(position);
                         notifyDataSetChanged();
                     }
-                });
+                });*/
 
                 //expand the view for edit on clicking the minimized view
-                holder1.minimizedLayout.setOnClickListener(new View.OnClickListener() {
+              /*  holder1.minimizedLayout.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         callback.replaceFragment(R.id.prescriptionCardImageButton1,prescriptionDetails.getImageUri());
                     }
-                });
+                });*/
 
                 break;
 
@@ -417,7 +417,7 @@ public class OrderItemListAdapter extends BaseAdapter {
                     holder2.costOfMedicineTextView = (TextView) view.findViewById(R.id.medicineCardTextView3);
                     holder2.radioGroup = (RadioGroup)view.findViewById(R.id.medicineCardRadioGroup1);
                     holder2.typeOfMedicineImageView = (ImageView) view.findViewById(R.id.medicineCardImageView1);
-                    holder2.crossButton = (ImageButton) view.findViewById(R.id.medicineCardImageButton1);
+                   // holder2.crossButton = (ImageButton) view.findViewById(R.id.medicineCardImageButton1);
                     holder2.tabletRadioButton = (RadioButton) view.findViewById(R.id.medicineCardRadioButton1);
                     holder2.stripsRadioButton = (RadioButton) view.findViewById(R.id.medicineCardRadioButton2);
                     holder2.bottlesRadioButton = (RadioButton) view.findViewById(R.id.medicineCardRadioButton3);
@@ -452,8 +452,8 @@ public class OrderItemListAdapter extends BaseAdapter {
                 if(isSelectable)
                     holder2.checkBox.setVisibility(View.VISIBLE);
 
-                if(!isEditable)
-                    holder2.crossButton.setVisibility(View.GONE);
+              /*  if(!isEditable)
+                    holder2.crossButton.setVisibility(View.GONE);*/
 
                 //TODO : change the type of medicine image view here
                 //using typeofMedicineImageView
@@ -477,7 +477,7 @@ public class OrderItemListAdapter extends BaseAdapter {
                         int newVal = position + 1;
                         medicineDetails.setQuantity(newVal);
 
-                        holder2.costOfMedicineTextView.setText(""+(newVal * 20) + "/-");
+                        holder2.costOfMedicineTextView.setText(""+(newVal * 20.0) + "/-");
                     }
 
                     @Override
@@ -494,13 +494,13 @@ public class OrderItemListAdapter extends BaseAdapter {
                     }
                 });
 
-                holder2.crossButton.setOnClickListener(new View.OnClickListener() {
+               /* holder2.crossButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         itemDetailsList.remove(position);
                         notifyDataSetChanged();
                     }
-                });
+                });*/
 
                 holder2.radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
                     @Override
