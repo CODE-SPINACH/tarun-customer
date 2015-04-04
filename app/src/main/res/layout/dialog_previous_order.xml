@@ -12,7 +12,7 @@
             android:layout_width="match_parent"
             android:layout_height="15dp"
             android:layout_weight="0.5"
-            android:background="#007f64"
+            android:background="@drawable/olive_green_button_style"
             android:animateLayoutChanges="true"
             android:orientation="horizontal"
             android:layout_gravity="center">
@@ -67,18 +67,29 @@
             android:padding="10dp"
             android:layout_weight="5"
             android:background="#DDD"/>
-        <Button
-            android:id="@+id/previousOrderDialogButton1"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="0.6"
+            android:background="#DDD">
+        <Button
+            android:layout_marginTop="2dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginBottom="5dp"
+            android:id="@+id/previousOrderDialogButton1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
             android:layout_gravity="center"
             android:gravity="center"
             android:textAllCaps="false"
             android:textColor="#FFF"
             android:textSize="20sp"
             android:text="ADD"
-            android:background="@drawable/olive_green_button_style"/>
+            android:background="@drawable/rounded"/>
+
+        </LinearLayout>
     </LinearLayout>
 
 </RelativeLayout>

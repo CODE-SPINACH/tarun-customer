@@ -1,6 +1,7 @@
 package com.app.drugcorner32.dc_template.Adapters;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -84,6 +85,9 @@ public class OrderListAdapter extends ArrayAdapter<OrderDetails> {
             holder.orderAddress = (TextView) view.findViewById(R.id.orderAddressTextView);
 
             holder.orderStatus = (TextView) view.findViewById(R.id.orderStatusTextView);
+            TextView orderStatus = (TextView)view.findViewById(R.id.orderStatusTextView);
+            Typeface typeFace=Typeface.createFromAsset(orderStatus.getContext().getAssets(),"fonts/gothic.ttf");
+            orderStatus.setTypeface(typeFace);
 
             holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
@@ -126,7 +130,7 @@ public class OrderListAdapter extends ArrayAdapter<OrderDetails> {
 
         //holder.orderDate.setText(details.getOrderDate() + "");
         holder.orderAddress.setText(details.getOrderDeliveryAddress());
-        holder.orderStatus.setText("STATUS : " + details.getOrderStatus().toString());
+        holder.orderStatus.setText("" + details.getOrderStatus().toString());
         return view;
     }
 
