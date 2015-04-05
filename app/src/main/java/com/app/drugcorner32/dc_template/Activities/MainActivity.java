@@ -5,8 +5,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -35,7 +35,7 @@ import java.util.List;
 
 //TODO OrderDetails is dummy data
 
-public class MainActivity extends FragmentActivity implements PreviousOrderDialog.Callback,
+public class MainActivity extends ActionBarActivity implements PreviousOrderDialog.Callback,
         HomeScreenFragment.Callback,SendPrescriptionDialog.Callback,SearchMedicineDialog.Callback,BuyMedicineFragment.Callback,
         OrderItemListFragment.Callback,PreviousOrderListFragment.Callback,OrderListAdapter.Callback,
         OrderItemListAdapter.Callback{
@@ -48,7 +48,14 @@ public class MainActivity extends FragmentActivity implements PreviousOrderDialo
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        android.support.v7.widget.Toolbar toolbar = (android.support.v7.widget.Toolbar)findViewById(R.id.toolbar);
+        //Toolbar will now take on default actionbar characteristics
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("Drug Corner");
+
         com.app.drugcorner32.dc_template.Helpers.helperIDGenerator.init();
+
         //setting the home fragment
         replaceFragment(R.id.mainActivityFrameLayout,null);
 
