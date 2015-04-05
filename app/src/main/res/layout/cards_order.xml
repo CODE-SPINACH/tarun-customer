@@ -57,15 +57,34 @@
                         android:text="2000/-"/>
 
                 </LinearLayout>
-
-
-                <TextView
-                    android:id="@+id/orderDateTextView"
-                    android:paddingLeft="15dp"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="22 July 2015"
-                    android:layout_marginBottom="7dp"/>
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/orderDateTextView"
+                        android:paddingLeft="15dp"
+                        android:layout_width="0dp"
+                        android:layout_weight="1.8"
+                        android:layout_height="wrap_content"
+                        android:text="22 July 2015"
+                        android:layout_marginBottom="7dp"/>
+
+                    <TextView
+                        android:background="#ea6125"
+                        android:id="@+id/orderStatusTextView"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:textColor="#FFF"
+                        android:textSize="15dp"
+                        android:text="DELIVERED"
+                        android:layout_weight="1"
+                        android:paddingLeft="9dp"/>
+
+                </LinearLayout>
+
+
 
                 <TextView
                     android:visibility="gone"
@@ -124,16 +143,33 @@
                     android:layout_height="wrap_content"
                     android:paddingLeft="15dp"
                     android:text="Paracetamol, Azithromycin, Leonadro Caprio, Acolyte Plus"/>
-
-                <TextView
-                    android:id="@+id/orderStatusTextView"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="#1f8dd6"
-                    android:textSize="15dp"
-                    android:text="DELIVERED"
-                    android:layout_margin="5dp"
-                    android:paddingLeft="9dp"/>
+                    android:orientation="horizontal"
+                    android:layout_marginTop="10dp">
+
+                    <TextView
+                        android:textColor="#ea6125"
+                        android:id="@+id/orderSelect"
+                        android:paddingLeft="15dp"
+                        android:layout_width="0dp"
+                        android:layout_weight="1.8"
+                        android:layout_height="wrap_content"
+                        android:text="Pick Medicines"
+                        android:layout_marginBottom="7dp"/>
+
+                    <TextView
+                        android:id="@+id/orderRepeat"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:textColor="#ea6125"
+                        android:textSize="15dp"
+                        android:text="Repeat"
+                        android:layout_weight="1"
+                        android:paddingLeft="9dp"/>
+
+                </LinearLayout>
 
             </LinearLayout>
 

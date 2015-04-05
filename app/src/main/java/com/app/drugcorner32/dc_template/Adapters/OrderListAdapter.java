@@ -95,6 +95,8 @@ public class OrderListAdapter extends ArrayAdapter<OrderDetails> {
             TextView orderDate = (TextView)view.findViewById(R.id.orderDateTextView);
             TextView orderAmount = (TextView)view.findViewById(R.id.orderAmountTextView);
             TextView orderNo = (TextView)view.findViewById(R.id.orderNoTextView);
+            TextView orderRepeat  = (TextView)view.findViewById(R.id.orderRepeat);
+            TextView orderSelect  = (TextView)view.findViewById(R.id.orderSelect);
 
             Typeface typeFace=Typeface.createFromAsset(orderStatus.getContext().getAssets(),"fonts/gothic.ttf");
             orderStatus.setTypeface(typeFace);
@@ -108,6 +110,8 @@ public class OrderListAdapter extends ArrayAdapter<OrderDetails> {
             orderDate.setTypeface(typeFace);
             orderAmount.setTypeface(typeFace);
             orderNo.setTypeface(typeFace);
+            orderRepeat.setTypeface(typeFace);
+            orderSelect.setTypeface(typeFace);
 
 
             holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -136,7 +140,7 @@ public class OrderListAdapter extends ArrayAdapter<OrderDetails> {
         }
 
         if(isSelctable){
-            holder.checkBox.setVisibility(View.VISIBLE);
+            holder.checkBox.setVisibility(View.GONE);
         }
         else{
             holder.checkBox.setVisibility(View.GONE);

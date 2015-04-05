@@ -34,17 +34,22 @@
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:cardCornerRadius="5dp"
         android:layout_weight="0.95"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginBottom="5dp"
         android:layout_marginTop="2dp"
         android:background="#EEE"
         android:id="@+id/checkout"
         >
-        <Button
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:background="#ea6125" />
+        <Button
+            android:visibility="gone"
             android:id="@+id/checkoutButton"
             android:textColor="#FFF"
             android:text="Checkout"
@@ -53,7 +58,71 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="bottom"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            orientation="horizontal">
+
+            <TextView
+                android:background="#ea6125"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="5"
+                android:textColor="#FFF"
+                android:textSize="20sp"
+                android:layout_gravity="center"
+                android:gravity="center|right"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="7dp"
+                android:paddingRight="4dp"
+                android:paddingLeft="4dp"
+                />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1.5"
+                android:text="items added"
+                android:textSize="12sp"
+                android:layout_gravity="center"
+                android:gravity="center|left"
+
+                />
+
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="3"
+                android:text="40/-"
+                android:textSize="20sp"
+                android:layout_gravity="center"
+                android:gravity="center|right"
+                android:layout_marginRight="10dp"
+                android:textColor="#555"
+                />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="fill_parent"
+                android:background="#FFDDDDDD" />
+
+            <ImageButton
+                android:layout_marginBottom="15dp"
+                android:layout_marginTop="15dp"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:src="@mipmap/ic_continue_button"
+                android:background="#FFF"/>
+
+            </LinearLayout>
+        </LinearLayout>
+
+
     </android.support.v7.widget.CardView>
+
+
     </LinearLayout>
 
     <android.support.v7.widget.CardView
@@ -87,13 +156,14 @@
                     android:layout_height="wrap_content"/>
 
                 <TextView
+                    android:paddingTop="5dp"
                     android:id="@+id/buyMedicineTextView1"
                     android:textSize="15sp"
                     android:gravity="center"
                     android:text="PRESCRIPTION"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="#777"
+                    android:textColor="#ea6125"
                     android:textStyle="bold"/>
 
             </LinearLayout>
@@ -117,13 +187,14 @@
                     android:layout_height="wrap_content"/>
 
                 <TextView
+                    android:paddingTop="5dp"
                     android:id="@+id/buyMedicineTextView2"
                     android:textSize="15sp"
                     android:gravity="center"
                     android:text="MANUALLY"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="#777"
+                    android:textColor="#ea6125"
                     android:textStyle="bold"/>
             </LinearLayout>
 
@@ -148,14 +219,17 @@
 
 
                 <TextView
+                    android:paddingTop="5dp"
                     android:id="@+id/buyMedicineTextView3"
                     android:textSize="15sp"
                     android:gravity="center"
                     android:text="ORDERS"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="#777"
-                    android:textStyle="bold"/>
+                    android:textColor="#ea6125"
+                    android:textStyle="bold"
+                    />
+
             </LinearLayout>
 
         </LinearLayout>
