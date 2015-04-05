@@ -1,0 +1,57 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.app.drugcorner32.dc_template.terms_and_conidtion">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="15dp"
+        android:layout_weight="0.3"
+        android:background="@drawable/olive_green_button_style"
+        android:animateLayoutChanges="true"
+        android:orientation="horizontal"
+        android:layout_gravity="center">
+
+
+        <!--<RelativeLayout
+            android:layout_gravity="left"
+            android:gravity="left"
+            android:layout_width="65dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.2"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="3dp">-->
+        <ImageButton
+            android:layout_marginTop="3dp"
+            android:layout_alignParentLeft="true"
+            android:padding="6dp"
+            android:layout_gravity="left|center"
+            android:id="@+id/feedbackBackButton"
+            android:layout_margin="5dp"
+            android:layout_width="45dp"
+            android:layout_height="match_parent"
+            android:scaleX="0.5"
+            android:scaleY="0.6"
+            android:maxHeight="5dp"
+            android:maxWidth="5dp"
+            android:src="@mipmap/ic_back_button"
+            android:background="#00FFFFFF"
+            />
+        <!-- </RelativeLayout>-->
+
+        <TextView
+            android:layout_weight="0.49"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/feedbackBackButtonText"
+            android:text="Feedback"
+            android:layout_gravity="center|left"
+            android:gravity="center|left"
+            android:textSize="18sp"
+            android:textColor="#FFF"
+            android:layout_margin="7dp"/>
+    </LinearLayout>
+
+
+</LinearLayout>

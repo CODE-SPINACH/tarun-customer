@@ -5,7 +5,6 @@
     android:id="@+id/card_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-
     android:layout_margin="0dp"
     card_view:cardCornerRadius="0dp">
 
@@ -14,8 +13,6 @@
         android:layout_height="wrap_content"
         android:id="@+id/medicineCardLinearLayout1"
         android:orientation="vertical">
-
-
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -34,13 +31,14 @@
                 android:layout_height="match_parent"/>
 
             <TextView
+                android:visibility="gone"
                 android:layout_width="@dimen/card_image_size"
                 android:layout_height="@dimen/card_image_size"
                 android:gravity="center"
                 android:text="m"
                 android:textSize="35sp"
                 android:textColor="#eee"
-                android:background="#1f8dd6"/>
+                android:background="#14C5D3"/>
 
             <LinearLayout
                 android:paddingLeft="15dp"
@@ -54,7 +52,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:textSize="15dp"
+                    android:textSize="20dp"
                     android:layout_marginTop="5dp"
                     android:text="Crocin 250mg"/>
 
@@ -64,6 +62,7 @@
                     android:orientation="horizontal">
 
                     <TextView
+                        android:visibility="gone"
                         android:gravity="center"
                         android:id="@+id/medicineCardTextViewLabel2"
                         android:layout_width="match_parent"
@@ -72,12 +71,27 @@
                         android:text="QTY."/>
 
                     <Spinner
+                        android:visibility="gone"
                         android:layout_marginTop="1dp"
                         android:id="@+id/medicineCardSpinner1"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:gravity="center"/>
 
+                    <Spinner
+                        android:id="@+id/osversions"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp" />
+
+                    <TextView
+                        android:id="@+id/selVersion"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_below="@+id/osversions"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="20dp" />
 
 
                 </LinearLayout>
@@ -90,11 +104,12 @@
                 android:layout_weight="0.55">
 
                 <ImageView
+                    android:visibility="gone"
                     android:id="@+id/medicineCardImageView1"
                     android:layout_width="0dp"
                     android:layout_weight="0.25"
                     android:layout_height="match_parent"
-                    android:padding="18dp"
+                    android:padding="15dp"
                     android:layout_gravity="left"
                     android:src="@drawable/ic_pill_dark"/>
 
@@ -103,10 +118,11 @@
 
             <LinearLayout
                 android:layout_width="0dp"
-                android:layout_weight="0.68"
-                android:gravity="right"
-                android:layout_marginRight="2dp"
-                android:layout_height="match_parent">
+                android:layout_weight="0.80"
+                android:gravity="right|top"
+                android:layout_marginRight="0dp"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
                 <TextView
                     android:padding="6dp"
@@ -116,6 +132,10 @@
                     android:layout_height="wrap_content"
                     android:text="200/-"
                     android:id="@+id/medicineCardTextView3"/>
+
+                <NumberPicker
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"></NumberPicker>
 
              <!--   <TextView
                     android:layout_marginTop="2dp"

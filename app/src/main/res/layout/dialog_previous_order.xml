@@ -12,7 +12,7 @@
             android:layout_width="match_parent"
             android:layout_height="15dp"
             android:layout_weight="0.5"
-            android:background="@drawable/olive_green_button_style"
+            android:background="#EEE"
             android:animateLayoutChanges="true"
             android:orientation="horizontal"
             android:layout_gravity="center">
@@ -39,7 +39,7 @@
                 android:scaleY="0.6"
                 android:maxHeight="5dp"
                 android:maxWidth="5dp"
-                android:src="@mipmap/ic_back_button"
+                android:src="@mipmap/ic_backbutton"
                 android:background="#00FFFFFF"
                 />
        <!-- </RelativeLayout>-->
@@ -53,7 +53,7 @@
                 android:layout_gravity="center|left"
                 android:gravity="center|left"
                 android:textSize="18sp"
-                android:textColor="#FFF"
+                android:textColor="#999"
                 android:layout_margin="7dp"/>
 
 
@@ -66,7 +66,7 @@
             android:layout_height="0dp"
             android:padding="10dp"
             android:layout_weight="5"
-            android:background="#DDD"/>
+            android:background="#FFF"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"

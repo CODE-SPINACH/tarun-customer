@@ -36,13 +36,16 @@
                     android:orientation="horizontal"
                     android:layout_marginBottom="7dp">
 
+
+
                     <TextView
-                        android:paddingLeft="15dp"
+                        android:id="@+id/orderAddressTextView1"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:id="@+id/orderNoTextView"
-                        android:textSize="15dp"
-                        android:text="drugCorner125"
+                        android:paddingLeft="15dp"
+                        android:textSize="20dp"
+                        android:textStyle="bold"
+                        android:text="Ravi Gupta"
                         android:layout_weight="2"/>
 
                     <TextView
@@ -57,7 +60,6 @@
 
 
                 <TextView
-                    android:textColor="#1f8dd6"
                     android:id="@+id/orderDateTextView"
                     android:paddingLeft="15dp"
                     android:layout_width="match_parent"
@@ -66,14 +68,17 @@
                     android:layout_marginBottom="7dp"/>
 
                 <TextView
-                    android:id="@+id/orderAddressTextView1"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:visibility="gone"
                     android:paddingLeft="15dp"
-                    android:textStyle="bold"
-                    android:text="Ravi Gupta"/>
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/orderNoTextView"
+                    android:textSize="15dp"
+                    android:text="drugCorner125"/>
+
 
                 <TextView
+                    android:visibility="gone"
                     android:id="@+id/orderAddressTextView12"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -81,6 +86,7 @@
                     android:text="52 N 12, Sector 5, Opp Haldi Ghati Gate"/>
 
                 <TextView
+                    android:visibility="gone"
                     android:id="@+id/orderAddressTextView13"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -89,6 +95,7 @@
 
 
                 <TextView
+                    android:visibility="gone"
                     android:id="@+id/orderAddressTextView14"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -96,6 +103,7 @@
                     android:text="Near Pratap Plaza"/>
 
                 <TextView
+                    android:visibility="gone"
                     android:id="@+id/orderAddressTextView15"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -103,11 +111,19 @@
                     android:text="Rajasthan 302033"/>
 
                 <TextView
+                    android:visibility="gone"
                     android:id="@+id/orderAddressTextView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingLeft="15dp"
-                    android:text="9460109363"/>
+                    android:text="Paracetamol, Azithromycin, Leonadro Caprio, Acolyte Plus "/>
+
+                <TextView
+                    android:id="@+id/orderAddressTextView16"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="15dp"
+                    android:text="Paracetamol, Azithromycin, Leonadro Caprio, Acolyte Plus"/>
 
                 <TextView
                     android:id="@+id/orderStatusTextView"
@@ -115,7 +131,7 @@
                     android:layout_height="wrap_content"
                     android:textColor="#1f8dd6"
                     android:textSize="15dp"
-                    android:text="STATUS : DELIVERED"
+                    android:text="DELIVERED"
                     android:layout_margin="5dp"
                     android:paddingLeft="9dp"/>
 

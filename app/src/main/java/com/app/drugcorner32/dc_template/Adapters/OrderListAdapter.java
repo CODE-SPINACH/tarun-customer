@@ -86,8 +86,30 @@ public class OrderListAdapter extends ArrayAdapter<OrderDetails> {
 
             holder.orderStatus = (TextView) view.findViewById(R.id.orderStatusTextView);
             TextView orderStatus = (TextView)view.findViewById(R.id.orderStatusTextView);
+            TextView orderAddress0 = (TextView)view.findViewById(R.id.orderAddressTextView);
+            TextView orderAddress1 = (TextView)view.findViewById(R.id.orderAddressTextView1);
+            TextView orderAddress3 = (TextView)view.findViewById(R.id.orderAddressTextView13);
+            TextView orderAddress2 = (TextView)view.findViewById(R.id.orderAddressTextView12);
+            TextView orderAddress4 = (TextView)view.findViewById(R.id.orderAddressTextView14);
+            TextView orderAddress5 = (TextView)view.findViewById(R.id.orderAddressTextView15);
+            TextView orderAddress6 = (TextView)view.findViewById(R.id.orderAddressTextView16);
+            TextView orderDate = (TextView)view.findViewById(R.id.orderDateTextView);
+            TextView orderAmount = (TextView)view.findViewById(R.id.orderAmountTextView);
+            TextView orderNo = (TextView)view.findViewById(R.id.orderNoTextView);
+
             Typeface typeFace=Typeface.createFromAsset(orderStatus.getContext().getAssets(),"fonts/gothic.ttf");
             orderStatus.setTypeface(typeFace);
+            orderAddress0.setTypeface(typeFace);
+            orderAddress1.setTypeface(typeFace);
+            orderAddress2.setTypeface(typeFace);
+            orderAddress3.setTypeface(typeFace);
+            orderAddress4.setTypeface(typeFace);
+            orderAddress5.setTypeface(typeFace);
+            orderAddress6.setTypeface(typeFace);
+            orderDate.setTypeface(typeFace);
+            orderAmount.setTypeface(typeFace);
+            orderNo.setTypeface(typeFace);
+
 
             holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override

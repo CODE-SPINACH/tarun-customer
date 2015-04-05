@@ -52,6 +52,7 @@
     </LinearLayout>
 
     <ImageButton
+        android:visibility="gone"
         android:background="#FFF"
         android:layout_width="0dp"
         android:layout_height="match_parent"

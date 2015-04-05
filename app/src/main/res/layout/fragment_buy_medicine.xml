@@ -41,6 +41,7 @@
         android:layout_marginBottom="5dp"
         android:layout_marginTop="2dp"
         android:background="#EEE"
+        android:id="@+id/checkout"
         >
         <Button
 
@@ -65,7 +66,7 @@
             android:id="@+id/buyMedicineLinearLayout1"
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="130dp">
+            android:layout_height="60dp">
 
             <LinearLayout
                 android:paddingTop="15dp"
@@ -73,10 +74,11 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
-                android:background="@drawable/olive_green_button_style"
-                android:layout_weight="0.3">
+                android:background="#EEE"
+                android:layout_weight="0.31">
 
                 <ImageView
+                    android:visibility="gone"
                     android:src="@drawable/ic_manually"
                     android:scaleType="fitCenter"
                     android:padding="10dp"
@@ -91,13 +93,13 @@
                     android:text="PRESCRIPTION"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="#FFFFFF"
+                    android:textColor="#777"
                     android:textStyle="bold"/>
 
             </LinearLayout>
 
             <LinearLayout
-                android:background="@drawable/olive_green_button_style"
+                android:background="#EEE"
                 android:paddingTop="15dp"
                 android:id="@+id/buyMedicineLinearLayout3"
                 android:layout_width="0dp"
@@ -106,6 +108,7 @@
                 android:layout_weight="0.3">
 
                 <ImageView
+                    android:visibility="gone"
                     android:id="@+id/buyMedicineImageButton2"
                     android:src="@drawable/ic_manually"
                     android:scaleType="fitCenter"
@@ -120,13 +123,13 @@
                     android:text="MANUALLY"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="#FFFFFF"
+                    android:textColor="#777"
                     android:textStyle="bold"/>
             </LinearLayout>
 
 
             <LinearLayout
-                android:background="@drawable/olive_green_button_style"
+                android:background="#EEE"
                 android:paddingTop="15dp"
                 android:id="@+id/buyMedicineLinearLayout4"
                 android:layout_width="0dp"
@@ -135,6 +138,7 @@
                 android:layout_weight="0.3">
 
                 <ImageView
+                    android:visibility="gone"
                     android:src="@drawable/ic_previous_orders"
                     android:id="@+id/buyMedicineImageButton3"
                     android:scaleType="fitCenter"
@@ -147,10 +151,10 @@
                     android:id="@+id/buyMedicineTextView3"
                     android:textSize="15sp"
                     android:gravity="center"
-                    android:text="LAST ORDERS"
+                    android:text="ORDERS"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="#FFFFFF"
+                    android:textColor="#777"
                     android:textStyle="bold"/>
             </LinearLayout>
 

@@ -7,6 +7,7 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.app.drugcorner32.dc_template.Adapters.OrderListAdapter;
@@ -18,6 +19,7 @@ import com.app.drugcorner32.dc_template.Data.Status;
 import com.app.drugcorner32.dc_template.Dialogs.PreviousOrderDialog;
 import com.app.drugcorner32.dc_template.Dialogs.SearchMedicineDialog;
 import com.app.drugcorner32.dc_template.Dialogs.SendPrescriptionDialog;
+import com.app.drugcorner32.dc_template.Fragments.AddressFragment;
 import com.app.drugcorner32.dc_template.Fragments.BuyMedicineFragment;
 import com.app.drugcorner32.dc_template.Fragments.HomeScreenFragment;
 import com.app.drugcorner32.dc_template.Fragments.OrderItemListFragment;
@@ -146,6 +148,19 @@ public class MainActivity extends FragmentActivity implements OnFragmentInteract
                     frag2 = BuyMedicineFragment.newInstance();
                 }
                 ft.replace(R.id.mainActivityFrameLayout, frag2, BuyMedicineFragment.TAG);
+                ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                ft.addToBackStack(null);
+                ft.commitAllowingStateLoss();
+                break;
+
+            case R.id.checkoutButton:
+                Log.v("Checking","Checkout Button");
+                AddressFragment addressFragment = (AddressFragment) getSupportFragmentManager().
+                        findFragmentByTag(AddressFragment.TAG);
+                if (addressFragment == null) {
+                    addressFragment = AddressFragment.newInstance();
+                }
+                ft.replace(R.id.mainActivityFrameLayout, addressFragment, AddressFragment.TAG);
                 ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
                 ft.addToBackStack(null);
                 ft.commitAllowingStateLoss();
