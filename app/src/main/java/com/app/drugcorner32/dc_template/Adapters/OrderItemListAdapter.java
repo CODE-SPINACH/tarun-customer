@@ -20,7 +20,6 @@ import android.widget.TextView;
 import com.app.drugcorner32.dc_template.Data.MedicineDetails;
 import com.app.drugcorner32.dc_template.Data.OrderItemDetails;
 import com.app.drugcorner32.dc_template.Data.PrescriptionDetails;
-import com.app.drugcorner32.dc_template.Interfaces.OnFragmentInteractionListener;
 import com.app.drugcorner32.dc_template.R;
 
 import java.util.ArrayList;
@@ -32,7 +31,7 @@ import java.util.List;
  */
 public class OrderItemListAdapter extends BaseAdapter {
 
-    OnFragmentInteractionListener callback;
+    Callback callback;
 
     /*Sets whether the item can be edited or not. e.g. in
     previous orders the items won't be edited. */
@@ -56,7 +55,7 @@ public class OrderItemListAdapter extends BaseAdapter {
 
     public OrderItemListAdapter(Context context){
         this.context = context;
-        callback = (OnFragmentInteractionListener)context;
+        callback = (Callback)context;
 
         for(int i =0;i<100;i++) {
             spinnerArray[i] = i + 1;
@@ -551,4 +550,8 @@ public class OrderItemListAdapter extends BaseAdapter {
     }
 
     public List<OrderItemDetails> getItemDetailsList(){ return itemDetailsList; }
+
+    public static interface Callback{
+        public void replaceFragment(int id,Object o);
+    }
 }

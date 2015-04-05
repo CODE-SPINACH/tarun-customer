@@ -1,9 +1,11 @@
 package com.app.drugcorner32.dc_template.Data;
 
+import java.io.Serializable;
+
 /**
  * Created by Tarun on 10-03-2015.
  */
-public class OrderItemDetails {
+public class OrderItemDetails implements Serializable{
 
     public static enum TypesOfOrder {
         TRANSLATED_PRESCRIPTION,UNTRANSLATED_PRESCRIPTION,OTC

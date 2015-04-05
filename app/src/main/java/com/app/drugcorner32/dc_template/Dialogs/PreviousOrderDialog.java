@@ -2,7 +2,6 @@ package com.app.drugcorner32.dc_template.Dialogs;
 
 import android.app.Dialog;
 import android.graphics.Color;
-import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -22,7 +21,6 @@ import com.app.drugcorner32.dc_template.Data.OrderDetails;
 import com.app.drugcorner32.dc_template.Data.OrderItemDetails;
 import com.app.drugcorner32.dc_template.Fragments.OrderItemListFragment;
 import com.app.drugcorner32.dc_template.Fragments.PreviousOrderListFragment;
-import com.app.drugcorner32.dc_template.Interfaces.OnFragmentInteractionListener;
 import com.app.drugcorner32.dc_template.R;
 
 import java.util.ArrayList;
@@ -43,7 +41,7 @@ public class PreviousOrderDialog extends DialogFragment {
 
     public static String TAG = "PreviousOrder";
 
-    private OnFragmentInteractionListener callBack;
+    private Callback callBack;
 
     private List<OrderItemDetails> cartOrderItemsList;
 
@@ -79,7 +77,7 @@ public class PreviousOrderDialog extends DialogFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        callBack = (OnFragmentInteractionListener) getActivity();
+        callBack = (Callback) getActivity();
 
     }
 
@@ -102,9 +100,6 @@ public class PreviousOrderDialog extends DialogFragment {
         final ImageButton backButton = (ImageButton)view.findViewById(R.id.previousOrderDialogImageButton1);
         final TextView t = (TextView) view.findViewById(R.id.previousOrderDialogTextView1);
         Button addButton = (Button)view.findViewById(R.id.previousOrderDialogButton1);
-        Typeface typeFace=Typeface.createFromAsset(getActivity().getAssets(),"fonts/gothic.ttf");
-        addButton.setTypeface(typeFace);
-        t.setTypeface(typeFace);
 
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -117,7 +112,7 @@ public class PreviousOrderDialog extends DialogFragment {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //backButton.setVisibility(View.GONE);
+                backButton.setVisibility(View.GONE);
                 t.setVisibility(View.VISIBLE);
                 OrderItemListFragment itemListFragment = (OrderItemListFragment)
                         getChildFragmentManager().findFragmentByTag(OrderItemListFragment.TAG);
@@ -194,6 +189,10 @@ public class PreviousOrderDialog extends DialogFragment {
     public void addOrderToSelectList(OrderDetails details){
         if(!selectedOrderDetailsList.contains(details))
             selectedOrderDetailsList.add(details);
+    }
+
+    public static interface Callback{
+        public void replaceFragment(int id,Object o);
     }
 
 }

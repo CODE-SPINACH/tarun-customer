@@ -1,5 +1,6 @@
 package com.app.drugcorner32.dc_template.Data;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,7 +9,7 @@ import java.util.List;
  *
  * Contains the details of the current or previous order
  */
-public class OrderDetails {
+public class OrderDetails implements Serializable{
 
     private boolean isSelected = false;
 

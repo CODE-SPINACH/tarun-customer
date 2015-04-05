@@ -3,6 +3,8 @@ package com.app.drugcorner32.dc_template.Data;
 
 import com.app.drugcorner32.dc_template.Helpers.helperIDGenerator;
 
+import java.io.Serializable;
+
 /**
  * Created by Tarun on 28-02-2015.
  *
@@ -12,7 +14,7 @@ import com.app.drugcorner32.dc_template.Helpers.helperIDGenerator;
  * TODO set limit on number of medicines in addQuantity
  * TODO cost , prescriptionDays etc have been set randomly
  */
-public class MedicineDetails {
+public class MedicineDetails implements Serializable {
 
     public enum MedicineTypes{
         Tablets,Strips,Bottles

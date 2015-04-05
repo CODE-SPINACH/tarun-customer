@@ -14,7 +14,6 @@ import android.widget.TextView;
 import com.app.drugcorner32.dc_template.Data.MedicineDetails;
 import com.app.drugcorner32.dc_template.Data.OrderDetails;
 import com.app.drugcorner32.dc_template.Data.OrderItemDetails;
-import com.app.drugcorner32.dc_template.Interfaces.OnFragmentInteractionListener;
 import com.app.drugcorner32.dc_template.R;
 
 import java.util.ArrayList;
@@ -26,7 +25,7 @@ import java.util.List;
  */
 public class OrderListAdapter extends ArrayAdapter<OrderDetails> {
 
-    private OnFragmentInteractionListener callback;
+    private Callback callback;
     public static class ViewHolder{
         //Hidden views made visible at the time of selection from previous order
         public CheckBox checkBox;
@@ -48,7 +47,7 @@ public class OrderListAdapter extends ArrayAdapter<OrderDetails> {
 
     public OrderListAdapter(Context context, int cardViewResourceId){
         super(context,cardViewResourceId);
-        callback = (OnFragmentInteractionListener)context;
+        callback = (Callback)context;
     }
 
     @Override
@@ -160,4 +159,7 @@ public class OrderListAdapter extends ArrayAdapter<OrderDetails> {
         isSelctable = value;
     }
 
+    public static interface Callback{
+        public void deliverOrderToDialog(OrderDetails details);
+    }
 }

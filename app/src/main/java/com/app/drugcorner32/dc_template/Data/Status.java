@@ -1,9 +1,11 @@
 package com.app.drugcorner32.dc_template.Data;
 
+import java.io.Serializable;
+
 /**
  * Created by Tarun on 04-03-2015.
  */
-public class Status {
+public class Status implements Serializable{
 
     public static enum STATUSES {
         BEING_PROCESSED,DELIVERED,CANCELLED,ON_THE_WAY,ORDER_NOT_PLACED_YET

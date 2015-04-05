@@ -11,7 +11,6 @@ import com.app.drugcorner32.dc_template.Adapters.OrderItemListAdapter;
 import com.app.drugcorner32.dc_template.Data.MedicineDetails;
 import com.app.drugcorner32.dc_template.Data.OrderDetails;
 import com.app.drugcorner32.dc_template.Data.OrderItemDetails;
-import com.app.drugcorner32.dc_template.Interfaces.OnFragmentInteractionListener;
 import com.app.drugcorner32.dc_template.R;
 
 import java.util.List;
@@ -22,7 +21,7 @@ public class OrderItemListFragment extends android.support.v4.app.Fragment {
     private boolean isSelectable = false;
     private boolean isEditable = false;
 
-    private OnFragmentInteractionListener mListener;
+    private Callback callback;
     private OrderItemListAdapter itemAdapter;
     private OrderDetails orderDetails;
 
@@ -56,7 +55,6 @@ public class OrderItemListFragment extends android.support.v4.app.Fragment {
 
         itemAdapter.setSelectable(isSelectable);
         itemAdapter.setEditable(isEditable);
-
     }
 
     @Override
@@ -78,10 +76,10 @@ public class OrderItemListFragment extends android.support.v4.app.Fragment {
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         try {
-            mListener = (OnFragmentInteractionListener) activity;
+            callback = (Callback) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
-                    + " must implement OnFragmentInteractionListener");
+                    + " must implement Callback");
         }
     }
 
@@ -103,7 +101,7 @@ public class OrderItemListFragment extends android.support.v4.app.Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
-        mListener = null;
+        callback = null;
     }
 
     public int countAndTell(){
@@ -174,6 +172,10 @@ public class OrderItemListFragment extends android.support.v4.app.Fragment {
 
     public void setListViewPaddingTop(int val){
         paddingTop = val + 50;
+    }
+
+    public static interface Callback{
+        public void replaceFragment(int id, Object object);
     }
 
 }

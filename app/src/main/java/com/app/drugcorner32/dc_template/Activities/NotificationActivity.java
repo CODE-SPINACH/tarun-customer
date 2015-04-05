@@ -5,19 +5,28 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
+import com.app.drugcorner32.dc_template.Adapters.OrderItemListAdapter;
+import com.app.drugcorner32.dc_template.Data.NotificationDetails;
+import com.app.drugcorner32.dc_template.Data.OrderDetails;
 import com.app.drugcorner32.dc_template.Fragments.NotificationFragment;
-import com.app.drugcorner32.dc_template.Interfaces.NotificationFragmentInteractionListener;
+import com.app.drugcorner32.dc_template.Fragments.OrderItemListFragment;
 import com.app.drugcorner32.dc_template.R;
 
-public class NotificationActivity extends ActionBarActivity implements NotificationFragmentInteractionListener {
-
+public class NotificationActivity extends ActionBarActivity implements OrderItemListFragment.Callback,
+        NotificationFragment.Callback,OrderItemListAdapter.Callback{
+    private OrderDetails orderDetails;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notification);
+        orderDetails = (OrderDetails)getIntent().getSerializableExtra("Order");
 
-        replaceFragment(R.layout.fragment_notification,null);
+        if(orderDetails == null)
+            Toast.makeText(this,"Empty",Toast.LENGTH_SHORT).show();
+
+        replaceFragment(R.layout.fragment_notification, null);
     }
 
     @Override
@@ -45,11 +54,35 @@ public class NotificationActivity extends ActionBarActivity implements Notificat
     public void replaceFragment(int id,Object object){
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         switch (id){
+
             case R.layout.fragment_notification:
                 ft.add(R.id.container,NotificationFragment.newInstance(),NotificationFragment.TAG).commitAllowingStateLoss();
                 break;
+
+            case R.id.buttonNotificationCardButton1:
+                NotificationDetails details = (NotificationDetails)object;
+
+                if(details.getType() == NotificationDetails.NOTIFICATION_TYPE.VIEW){
+                    OrderItemListFragment itemListFragment = OrderItemListFragment.newInstance();
+                    itemListFragment.setOrderDetails(orderDetails);
+                    itemListFragment.setEditable(true);
+
+                    ft.replace(R.id.container,itemListFragment,OrderItemListFragment.TAG).
+                            setTransitionStyle(FragmentTransaction.TRANSIT_FRAGMENT_OPEN).
+                            addToBackStack(null).commitAllowingStateLoss();
+                }
+                else if(details.getType() == NotificationDetails.NOTIFICATION_TYPE.EDIT){
+
+                }
+                else{
+
+                }
+                break;
+
             default:
                 break;
         }
     }
+
+
 }

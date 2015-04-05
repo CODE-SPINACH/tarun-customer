@@ -15,20 +15,17 @@ import com.app.drugcorner32.dc_template.Data.MedicineDetails;
 import com.app.drugcorner32.dc_template.Data.OrderDetails;
 import com.app.drugcorner32.dc_template.Data.OrderItemDetails;
 import com.app.drugcorner32.dc_template.Data.PrescriptionDetails;
-import com.app.drugcorner32.dc_template.Interfaces.OnFragmentInteractionListener;
 import com.app.drugcorner32.dc_template.R;
 
 import java.util.List;
 
 
 public class BuyMedicineFragment extends android.support.v4.app.Fragment {
-    private OnFragmentInteractionListener callback;
+    private Callback callback;
 
     public static String TAG = "BuyMedicine";
 
     private OrderItemListFragment itemListFragment;
-
-    private LinearLayout hidableLayout;
 
     public static BuyMedicineFragment newInstance() {
         BuyMedicineFragment fragment = new BuyMedicineFragment();
@@ -69,7 +66,7 @@ public class BuyMedicineFragment extends android.support.v4.app.Fragment {
         previousOrderText.setTypeface(typeFace);
         selectOrderText.setTypeface(typeFace);
         LinearLayout linearLayout = (LinearLayout)view.findViewById(R.id.buyMedicineLinearLayout1);
-        hidableLayout = (LinearLayout)view.findViewById(R.id.buyMedicineLinearLayout2);
+        LinearLayout hidableLayout = (LinearLayout)view.findViewById(R.id.buyMedicineLinearLayout2);
 
         LinearLayout sendPrescriptionLayout = (LinearLayout)view.findViewById(R.id.buyMedicineLinearLayout2);
         LinearLayout enterManuallyLayout = (LinearLayout)view.findViewById(R.id.buyMedicineLinearLayout3);
@@ -121,7 +118,7 @@ public class BuyMedicineFragment extends android.support.v4.app.Fragment {
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         try {
-            callback = (OnFragmentInteractionListener) activity;
+            callback = (Callback) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
                     + " must implement OnFragmentInteractionListener");
@@ -148,5 +145,8 @@ public class BuyMedicineFragment extends android.support.v4.app.Fragment {
         itemListFragment.addPreviousOrders(orderDetailses);
     }
 
+    public static interface Callback{
+        public void replaceFragment(int id,Object o);
+    }
 
 }

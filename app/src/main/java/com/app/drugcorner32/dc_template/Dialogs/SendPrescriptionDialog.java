@@ -14,12 +14,12 @@ import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import com.app.drugcorner32.dc_template.Interfaces.OnFragmentInteractionListener;
 import com.app.drugcorner32.dc_template.R;
 
 
 /**
  * Created by Tarun on 27-02-2015.
+ * This dialog gives the options whether to click the prescription from camera or from gallery
  */
 public class SendPrescriptionDialog extends DialogFragment {
 
@@ -28,7 +28,7 @@ public class SendPrescriptionDialog extends DialogFragment {
     TextView cameraTextView;
     TextView galleryTextView;
 
-    OnFragmentInteractionListener callBack;
+    Callback callBack;
 
     public static String TAG = "SendPrescriptionDialog";
 
@@ -41,7 +41,7 @@ public class SendPrescriptionDialog extends DialogFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        callBack = (OnFragmentInteractionListener)getActivity();
+        callBack = (Callback)getActivity();
 
     }
 
@@ -83,7 +83,6 @@ public class SendPrescriptionDialog extends DialogFragment {
         galleryTextView.setTypeface(typeFace);
         cameraTextView.setTypeface(typeFace);
 
-
         //Events of Buttons
         cameraButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -101,5 +100,9 @@ public class SendPrescriptionDialog extends DialogFragment {
         });
 
         return view;
+    }
+
+    public static interface Callback{
+        public void takePhoto();
     }
 }

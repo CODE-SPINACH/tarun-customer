@@ -12,7 +12,6 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.SearchView;
 
-import com.app.drugcorner32.dc_template.Interfaces.OnFragmentInteractionListener;
 import com.app.drugcorner32.dc_template.R;
 
 /**
@@ -21,7 +20,7 @@ import com.app.drugcorner32.dc_template.R;
 
 public class SearchMedicineDialog extends DialogFragment {
 
-    OnFragmentInteractionListener callBack;
+    Callback callBack;
     public static String TAG = "SearchDialog";
 
     public SearchMedicineDialog(){
@@ -31,7 +30,7 @@ public class SearchMedicineDialog extends DialogFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        callBack = (OnFragmentInteractionListener)getActivity();
+        callBack = (Callback)getActivity();
 
     }
 
@@ -78,4 +77,9 @@ public class SearchMedicineDialog extends DialogFragment {
         searchView.onActionViewExpanded();
         return view;
     }
+
+    public static interface Callback{
+        public void replaceFragment(int id ,Object o);
+    }
+
 }

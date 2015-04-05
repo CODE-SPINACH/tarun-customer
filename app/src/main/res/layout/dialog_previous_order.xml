@@ -39,7 +39,7 @@
                 android:scaleY="0.6"
                 android:maxHeight="5dp"
                 android:maxWidth="5dp"
-                android:src="@mipmap/ic_backbutton"
+                android:src="@drawable/ic_back"
                 android:background="#00FFFFFF"
                 />
        <!-- </RelativeLayout>-->

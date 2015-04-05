@@ -1,19 +1,15 @@
 package com.app.drugcorner32.dc_template.Fragments;
 
 import android.app.Activity;
-import android.graphics.Typeface;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.app.drugcorner32.dc_template.Activities.MainActivity;
 import com.app.drugcorner32.dc_template.Adapters.OrderListAdapter;
-import com.app.drugcorner32.dc_template.Interfaces.OnFragmentInteractionListener;
 import com.app.drugcorner32.dc_template.R;
 
 /*
@@ -29,7 +25,7 @@ public class PreviousOrderListFragment extends android.support.v4.app.Fragment {
     private boolean isSelectable = false;
 
     private OrderListAdapter orderListAdapter;
-    private OnFragmentInteractionListener mListener;
+    private Callback callback;
 
     public static PreviousOrderListFragment newInstance() {
         PreviousOrderListFragment fragment = new PreviousOrderListFragment();
@@ -64,7 +60,7 @@ public class PreviousOrderListFragment extends android.support.v4.app.Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 currentSelectedOrder = position;
-                 mListener.replaceFragment(R.id.previousOrderListView, orderListAdapter.getItem(position));
+                 callback.replaceFragment(R.id.previousOrderListView, orderListAdapter.getItem(position));
                 }
         });
 
@@ -84,7 +80,7 @@ public class PreviousOrderListFragment extends android.support.v4.app.Fragment {
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         try {
-            mListener = (OnFragmentInteractionListener) activity;
+            callback = (Callback) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
                     + " must implement OnFragmentInteractionListener");
@@ -94,11 +90,15 @@ public class PreviousOrderListFragment extends android.support.v4.app.Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
-        mListener = null;
+        callback = null;
     }
 
     public void setSelectable(boolean val){
         isSelectable = val;
+    }
+
+    public static interface Callback{
+        public void replaceFragment(int id , Object o);
     }
 
 }

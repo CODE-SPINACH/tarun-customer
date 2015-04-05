@@ -10,6 +10,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.app.drugcorner32.dc_template.Adapters.OrderItemListAdapter;
 import com.app.drugcorner32.dc_template.Adapters.OrderListAdapter;
 import com.app.drugcorner32.dc_template.Data.MedicineDetails;
 import com.app.drugcorner32.dc_template.Data.OrderDetails;
@@ -23,7 +24,7 @@ import com.app.drugcorner32.dc_template.Fragments.AddressFragment;
 import com.app.drugcorner32.dc_template.Fragments.BuyMedicineFragment;
 import com.app.drugcorner32.dc_template.Fragments.HomeScreenFragment;
 import com.app.drugcorner32.dc_template.Fragments.OrderItemListFragment;
-import com.app.drugcorner32.dc_template.Interfaces.OnFragmentInteractionListener;
+import com.app.drugcorner32.dc_template.Fragments.PreviousOrderListFragment;
 import com.app.drugcorner32.dc_template.R;
 
 import java.io.File;
@@ -32,13 +33,17 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-//TODO after a while the medicine card sfail to display the cross buttons
-//possibly due to re creation of fragment
-public class MainActivity extends FragmentActivity implements OnFragmentInteractionListener{
+//TODO OrderDetails is dummy data
+
+public class MainActivity extends FragmentActivity implements PreviousOrderDialog.Callback,
+        HomeScreenFragment.Callback,SendPrescriptionDialog.Callback,SearchMedicineDialog.Callback,BuyMedicineFragment.Callback,
+        OrderItemListFragment.Callback,PreviousOrderListFragment.Callback,OrderListAdapter.Callback,
+        OrderItemListAdapter.Callback{
 
     private Uri fileUri;
     private final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
     private OrderListAdapter orderListAdapter;
+    private OrderDetails orderDetails;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,7 +75,7 @@ public class MainActivity extends FragmentActivity implements OnFragmentInteract
         itemDetailses.add(new OrderItemDetails(new MedicineDetails("AA",MedicineDetails.MedicineTypes.Tablets,42),false));
         itemDetailses.add(new OrderItemDetails(new MedicineDetails("BA",MedicineDetails.MedicineTypes.Tablets,32),false));
 
-        OrderDetails orderDetails = new OrderDetails(1030,2000f,"A - 1002 PRERNA TOWER VASTRAPUR",
+        orderDetails = new OrderDetails(1030,2000f,"A - 1002 PRERNA TOWER VASTRAPUR",
                 new Status(Status.STATUSES.DELIVERED),Calendar.DATE,itemDetailses);
 
         orderListAdapter.add(orderDetails);
@@ -277,6 +282,7 @@ public class MainActivity extends FragmentActivity implements OnFragmentInteract
 
     public void startNotificationActivity(){
         Intent intent = new Intent(this,NotificationActivity.class);
+        intent.putExtra("Order",orderDetails);
         startActivity(intent);
     }
 

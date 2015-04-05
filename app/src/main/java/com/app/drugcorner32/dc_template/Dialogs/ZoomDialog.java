@@ -13,7 +13,6 @@ import android.view.WindowManager;
 import android.widget.ImageButton;
 
 import com.app.drugcorner32.dc_template.CustomViews.TouchImageView;
-import com.app.drugcorner32.dc_template.Interfaces.OnFragmentInteractionListener;
 import com.app.drugcorner32.dc_template.R;
 
 /**
@@ -21,7 +20,6 @@ import com.app.drugcorner32.dc_template.R;
  */
 public class ZoomDialog extends DialogFragment {
 
-    private OnFragmentInteractionListener callBack;
     private Uri fileUri;
     public static String TAG = "ZoomDialog";
 
@@ -57,7 +55,6 @@ public class ZoomDialog extends DialogFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        callBack = (OnFragmentInteractionListener) getActivity();
     }
 
     @Override

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    app:contentPadding="5dp"
+    app:cardCornerRadius="2dp"
+    android:layout_marginTop="10dp"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/buttonNotificationCardTextView1"
+            android:gravity="center_vertical"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:textSize="15sp"
+            android:layout_height="match_parent" />
+
+        <Button
+            android:id="@+id/buttonNotificationCardButton1"
+            android:layout_marginLeft="5dp"
+            android:layout_width="0dp"
+            android:layout_weight="0.5"
+            android:layout_height="match_parent"/>
+        </LinearLayout>
+
+</android.support.v7.widget.CardView>

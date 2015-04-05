@@ -8,6 +8,7 @@ import com.app.drugcorner32.dc_template.Helpers.HelperClass;
 import com.app.drugcorner32.dc_template.Helpers.helperIDGenerator;
 import com.app.drugcorner32.dc_template.R;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,7 +17,7 @@ import java.util.List;
  * Created by Tarun on 28-02-2015.
  *
  */
-public class PrescriptionDetails {
+public class PrescriptionDetails implements Serializable {
 
     private boolean isSelected = false;
 

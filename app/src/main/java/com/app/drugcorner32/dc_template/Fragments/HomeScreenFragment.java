@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import com.app.drugcorner32.dc_template.Interfaces.OnFragmentInteractionListener;
 import com.app.drugcorner32.dc_template.R;
 
 
@@ -17,7 +16,7 @@ public class HomeScreenFragment extends android.support.v4.app.Fragment {
 
     public static String TAG = "Home";
 
-    private OnFragmentInteractionListener callback;
+    private Callback callback;
 
     public static HomeScreenFragment newInstance() {
         HomeScreenFragment fragment = new HomeScreenFragment();
@@ -58,7 +57,7 @@ public class HomeScreenFragment extends android.support.v4.app.Fragment {
         buyMedicineButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                callback.replaceFragment(R.id.homeScreenImageButton1, null);
+            callback.replaceFragment(R.id.homeScreenImageButton1, null);
             }
         });
 
@@ -77,7 +76,7 @@ public class HomeScreenFragment extends android.support.v4.app.Fragment {
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         try {
-            callback = (OnFragmentInteractionListener) activity;
+            callback = (Callback) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
                     + " must implement OnFragmentInteractionListener");
@@ -90,5 +89,9 @@ public class HomeScreenFragment extends android.support.v4.app.Fragment {
         callback = null;
     }
 
+    public static interface Callback{
+        public void replaceFragment(int id ,Object o);
+        public void startNotificationActivity();
+    }
 
 }

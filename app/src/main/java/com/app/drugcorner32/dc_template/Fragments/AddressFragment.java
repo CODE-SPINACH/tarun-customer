@@ -8,11 +8,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import com.app.drugcorner32.dc_template.Interfaces.OnFragmentInteractionListener;
 import com.app.drugcorner32.dc_template.R;
 
 public class AddressFragment extends android.support.v4.app.Fragment {
-    private OnFragmentInteractionListener mListener;
 
     public static String TAG = "Address";
 
@@ -46,7 +44,7 @@ public class AddressFragment extends android.support.v4.app.Fragment {
         continueButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mListener.replaceFragment(R.id.placeOrderButton,null);
+               // mListener.replaceFragment(R.id.placeOrderButton,null);
             }
         });
         return view;
@@ -62,17 +60,17 @@ public class AddressFragment extends android.support.v4.app.Fragment {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        try {
+        /*try {
             mListener = (OnFragmentInteractionListener) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
                     + " must implement OnFragmentInteractionListener");
-        }
+        }*/
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        mListener = null;
+       // mListener = null;
     }
 }
