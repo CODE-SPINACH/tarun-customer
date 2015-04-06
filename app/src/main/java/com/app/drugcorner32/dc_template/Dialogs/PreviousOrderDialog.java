@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -101,6 +102,8 @@ public class PreviousOrderDialog extends DialogFragment {
         final TextView t = (TextView) view.findViewById(R.id.previousOrderDialogTextView1);
         Button addButton = (Button)view.findViewById(R.id.previousOrderDialogButton1);
 
+        Toolbar toolbar = (Toolbar)view.findViewById(R.id.previousOrderToolbar);
+        toolbar.setTitle("Previous Order");
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -167,9 +170,7 @@ public class PreviousOrderDialog extends DialogFragment {
             }
         }
         if(getView() !=null) {
-            TextView t = (TextView) getView().findViewById(R.id.previousOrderDialogTextView1);
             ImageButton imageButton = (ImageButton) getView().findViewById((R.id.previousOrderDialogImageButton1));
-            t.setVisibility(View.GONE);
             imageButton.setVisibility(View.VISIBLE);
 
             getChildFragmentManager().beginTransaction().replace(R.id.previousOrderDialogFrameLayout1, fragment,
