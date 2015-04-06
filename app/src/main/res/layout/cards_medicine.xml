@@ -1,22 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<!--<android.support.v7.widget.CardView
+
     android:id="@+id/card_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="0dp"
-    card_view:cardCornerRadius="0dp">
+    card_view:cardCornerRadius="0dp">-->
 
     <LinearLayout
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/medicineCardLinearLayout1"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="#FFF">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="70dp"
+            android:layout_height="100dp"
             android:gravity="center"
             android:layout_weight="2"
             android:id="@+id/medicineCardLinearLayout2"
@@ -47,16 +49,93 @@
                 android:orientation="vertical"
                 android:layout_weight="1.5">
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
                 <TextView
                     android:id="@+id/medicineCardTextView1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
+                    android:gravity="center|left"
                     android:textSize="20dp"
-                    android:layout_marginTop="5dp"
-                    android:text="Crocin 250mg"/>
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="15dp"
+                    android:text="Crocin 250mg"
+                    android:layout_weight="2"/>
+
+
+                <TextView
+                    android:layout_weight="1"
+                    android:padding="6dp"
+                    android:layout_marginTop="10dp"
+                    android:textColor="#777"
+                    android:layout_marginRight="40dp"
+                    android:gravity="right"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="200/-"
+                    android:textSize="20dp"
+                    android:id="@+id/medicineCardTextView3"/>
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
 
                 <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                 <TextView
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:text="Tablets"
+                     android:layout_marginTop="12dp"
+                     android:textSize="18dp"
+                     android:layout_marginLeft="15dp"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="right"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="12dp">
+
+                    <Button
+                        android:id="@+id/buttonDecrement"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:background="@drawable/circle_button"
+                        android:text="-"
+                        android:textSize="22dp"
+                        android:textColor="#999"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="5"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
+                        android:textSize="18dp"/>
+
+                    <Button
+                        android:id="@+id/buttonIncrement"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:background="@drawable/circle_button"
+                        android:text="+"
+                        android:textSize="22dp"
+                        android:textColor="#999"/>
+                </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:visibility="gone"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:orientation="horizontal">
@@ -78,20 +157,6 @@
                         android:layout_height="match_parent"
                         android:gravity="center"/>
 
-                    <Spinner
-                        android:id="@+id/osversions"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp" />
-
-                    <TextView
-                        android:id="@+id/selVersion"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentLeft="true"
-                        android:layout_below="@+id/osversions"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginTop="20dp" />
 
 
                 </LinearLayout>
@@ -99,9 +164,10 @@
                 </LinearLayout>
 
             <LinearLayout
+                android:visibility="gone"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="0.55">
+                android:layout_weight="0">
 
                 <ImageView
                     android:visibility="gone"
@@ -117,25 +183,13 @@
 
 
             <LinearLayout
+                android:visibility="gone"
                 android:layout_width="0dp"
                 android:layout_weight="0.80"
                 android:gravity="right|top"
                 android:layout_marginRight="0dp"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
-
-                <TextView
-                    android:padding="6dp"
-                    android:layout_marginTop="20dp"
-                    android:textColor="#FF305D"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="200/-"
-                    android:id="@+id/medicineCardTextView3"/>
-
-                <NumberPicker
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"></NumberPicker>
 
              <!--   <TextView
                     android:layout_marginTop="2dp"
@@ -172,6 +226,7 @@
             android:layout_height="wrap_content"
             android:weightSum="1">
             <LinearLayout
+                android:visibility="gone"
                 android:paddingLeft="8dp"
                 android:paddingRight="8dp"
                 android:orientation="horizontal"
@@ -222,4 +277,4 @@
             </LinearLayout>
         </LinearLayout>
 
-    </android.support.v7.widget.CardView>
+   <!-- </android.support.v7.widget.CardView>-->

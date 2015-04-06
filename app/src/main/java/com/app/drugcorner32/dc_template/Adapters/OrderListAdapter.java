@@ -98,6 +98,7 @@ public class OrderListAdapter extends ArrayAdapter<OrderDetails> {
             TextView orderRepeat  = (TextView)view.findViewById(R.id.orderRepeat);
             TextView orderSelect  = (TextView)view.findViewById(R.id.orderSelect);
 
+
             Typeface typeFace=Typeface.createFromAsset(orderStatus.getContext().getAssets(),"fonts/gothic.ttf");
             orderStatus.setTypeface(typeFace);
             orderAddress0.setTypeface(typeFace);

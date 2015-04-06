@@ -1,13 +1,18 @@
 package com.app.drugcorner32.dc_template.Activities;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.TypefaceSpan;
 import android.util.Log;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.app.drugcorner32.dc_template.Adapters.OrderItemListAdapter;
@@ -50,9 +55,20 @@ public class MainActivity extends ActionBarActivity implements PreviousOrderDial
         setContentView(R.layout.activity_main);
 
         android.support.v7.widget.Toolbar toolbar = (android.support.v7.widget.Toolbar)findViewById(R.id.toolbar);
+        TextView toolbarText = (TextView)findViewById(R.id.toolbarText);
+
+        Typeface typeFace=Typeface.createFromAsset(toolbar.getContext().getAssets(), "fonts/gothic.ttf");
+        toolbarText.setTypeface(typeFace);
+        //toolbar.setTypeface(typeFace);
         //Toolbar will now take on default actionbar characteristics
+
+
+        SpannableString s = new SpannableString("");
+        s.setSpan(new TypefaceSpan("fonts/gothic.ttf"), 0, s.length(),
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Drug Corner");
+        getSupportActionBar().setTitle(s);
+
 
         com.app.drugcorner32.dc_template.Helpers.helperIDGenerator.init();
 
