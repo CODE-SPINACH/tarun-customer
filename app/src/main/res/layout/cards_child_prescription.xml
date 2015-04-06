@@ -1,28 +1,135 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal"
+    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:gravity="center"
+    android:gravity="top"
+    android:layout_gravity="top"
     android:id="@+id/prescriptionChildLayout1"
-    android:layout_height="70dp"
-    android:layout_marginTop="10dp">
+    android:layout_height="100dp"
+    android:background="#FFF">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#EEE"/>
 
     <CheckBox
+        android:visibility="gone"
         android:layout_marginLeft="40dp"
         android:id="@+id/prescriptionChildCheckBox1"
         android:layout_width="0dp"
         android:layout_weight="0.2"
         android:layout_height="match_parent" />
 
-    <TextView
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:id="@+id/prescriptionChildTextView1"
-        android:gravity="center|left"
-        android:text="Crocin 240"
-        android:layout_weight="0.7"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/prescriptionChildTextView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center|left"
+            android:textSize="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="15dp"
+            android:text="Crocin 250mg"
+            android:layout_weight="2"/>
+
+
+        <TextView
+            android:layout_weight="1"
+            android:padding="6dp"
+            android:layout_marginTop="10dp"
+            android:textColor="#777"
+            android:layout_marginRight="30dp"
+            android:gravity="right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="200/-"
+            android:textSize="20dp"
+            android:id="@+id/prescriptionChildTextView2"/>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/medicineCardTabletTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="tablet"
+                android:layout_marginTop="12dp"
+                android:textSize="18dp"
+                android:layout_marginLeft="15dp"
+                android:textColor="#ea6125"/>
+
+            <TextView
+                android:id="@+id/medicineCardOrTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="or"
+                android:layout_marginTop="12dp"
+                android:textSize="18dp"
+                android:layout_marginLeft="15dp"/>
+
+            <TextView
+                android:id="@+id/medicineCardStripTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="strip"
+                android:layout_marginTop="12dp"
+                android:textSize="18dp"
+                android:layout_marginLeft="15dp"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="right"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="12dp">
+
+            <Button
+                android:id="@+id/medicineCardButtonDecrement"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:background="@drawable/circle_button"
+                android:text="-"
+                android:textSize="22dp"
+                android:textColor="#999"/>
+
+            <TextView
+                android:id="@+id/medicineCardMedicineQuantity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="5"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:textSize="18dp"/>
+
+            <Button
+                android:id="@+id/medicineCardButtonIncrement"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:background="@drawable/circle_button"
+                android:text="+"
+                android:textSize="22dp"
+                android:textColor="#999"/>
+        </LinearLayout>
+    </LinearLayout>
+
 
     <TextView
+        android:visibility="gone"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:id="@+id/quantityTextView"
@@ -31,25 +138,12 @@
         android:layout_weight="0.2"/>
 
     <Spinner
+        android:visibility="gone"
         android:id="@+id/prescriptionChildSpinner1"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="0.3"/>
 
-    <LinearLayout
-        android:gravity="center|right"
-        android:layout_width="0dp"
-        android:layout_weight="0.40 "
-        android:layout_height="match_parent">
-
-        <TextView
-            android:padding="6dp"
-            android:textColor="#FF305D"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="2000/-"
-            android:id="@+id/prescriptionChildTextView2"/>
-    </LinearLayout>
 
     <ImageButton
         android:visibility="gone"
@@ -60,6 +154,11 @@
         android:layout_weight="0.1"
         android:id="@+id/prescriptionChildImageButton1"
         android:scaleType="fitCenter"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#EEE"/>
 
 
 </LinearLayout>
