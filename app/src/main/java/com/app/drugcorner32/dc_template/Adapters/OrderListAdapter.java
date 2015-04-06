@@ -99,6 +99,7 @@ public class OrderListAdapter extends ArrayAdapter<OrderDetails> {
             TextView orderSelect  = (TextView)view.findViewById(R.id.orderSelect);
 
 
+
             Typeface typeFace=Typeface.createFromAsset(orderStatus.getContext().getAssets(),"fonts/gothic.ttf");
             orderStatus.setTypeface(typeFace);
             orderAddress0.setTypeface(typeFace);
@@ -113,6 +114,7 @@ public class OrderListAdapter extends ArrayAdapter<OrderDetails> {
             orderNo.setTypeface(typeFace);
             orderRepeat.setTypeface(typeFace);
             orderSelect.setTypeface(typeFace);
+
 
 
             holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {

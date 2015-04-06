@@ -1,6 +1,7 @@
 package com.app.drugcorner32.dc_template.Adapters;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -170,6 +171,17 @@ public class OrderItemListAdapter extends BaseAdapter {
                     holder0.costView = (TextView)view.findViewById(R.id.translatedPrescriptionTextView2);
 
                     holder0.numberOfDrugsView = (TextView)view.findViewById(R.id.translatedPrescriptionTextView1);
+                    TextView translatedPrescriptionRate = (TextView)view.findViewById(R.id.translatedPrescriptionRate);
+                    TextView translatedPrescriptionMedicinesName = (TextView)view.findViewById(R.id.translatedPrescriptionMedicinesName);
+                    TextView translatedPrescriptionAddPrescription = (TextView)view.findViewById(R.id.translatedPrescriptionAddPrescription);
+                    TextView translatedPrescriptionRemovePrescription = (TextView)view.findViewById(R.id.translatedPrescriptionRemovePrescription);
+                    Typeface typeFace=Typeface.createFromAsset(translatedPrescriptionAddPrescription.getContext().getAssets(),"fonts/gothic.ttf");
+                    translatedPrescriptionRate.setTypeface(typeFace);
+                    translatedPrescriptionMedicinesName.setTypeface(typeFace);
+                    translatedPrescriptionAddPrescription.setTypeface(typeFace);
+                    translatedPrescriptionRemovePrescription.setTypeface(typeFace);
+
+
 
                     //The children are being set i.e. the medicines in the prescription
                     for(int i = 0;i< childCount;i++) {
@@ -421,6 +433,31 @@ public class OrderItemListAdapter extends BaseAdapter {
                     holder2.stripsRadioButton = (RadioButton) view.findViewById(R.id.medicineCardRadioButton2);
                     holder2.bottlesRadioButton = (RadioButton) view.findViewById(R.id.medicineCardRadioButton3);
                     holder2.quantityPicker = (Spinner) view.findViewById(R.id.medicineCardSpinner1);
+                    //Typeface for all TextViews
+                    TextView medicineName = (TextView)view.findViewById(R.id.medicineCardTextView1);
+                    TextView medicineRate = (TextView)view.findViewById(R.id.medicineCardTextView3);
+                    TextView medicineCardTabletTextView = (TextView)view.findViewById(R.id.medicineCardTabletTextView);
+                    TextView medicineCardOrTextView = (TextView)view.findViewById(R.id.medicineCardOrTextView);
+                    TextView medicineCardStripTextView = (TextView)view.findViewById(R.id.medicineCardStripTextView);
+                    TextView medicineCardButtonIncrement = (TextView)view.findViewById(R.id.medicineCardButtonIncrement);
+                    TextView medicineCardButtonDecrement = (TextView)view.findViewById(R.id.medicineCardButtonDecrement);
+                    TextView medicineCardMedicineQuantity = (TextView)view.findViewById(R.id.medicineCardMedicineQuantity);
+
+
+
+
+
+                    Typeface typeFace=Typeface.createFromAsset(medicineName.getContext().getAssets(),"fonts/gothic.ttf");
+                    medicineName.setTypeface(typeFace);
+                    medicineRate.setTypeface(typeFace);
+                    medicineCardTabletTextView.setTypeface(typeFace);
+                    medicineCardOrTextView.setTypeface(typeFace);
+                    medicineCardStripTextView.setTypeface(typeFace);
+                    medicineCardButtonIncrement.setTypeface(typeFace);
+                    medicineCardButtonDecrement.setTypeface(typeFace);
+                    medicineCardMedicineQuantity.setTypeface(typeFace);
+
+
 
                     ArrayAdapter<Integer> spinnerAdapter = new ArrayAdapter<Integer>(context,android.R.layout.simple_spinner_dropdown_item,spinnerArray);
 
@@ -514,8 +551,7 @@ public class OrderItemListAdapter extends BaseAdapter {
                         }
                     }
                 });
-
-                if(isEditable)
+               if(isEditable)
                     holder2.minimizedLayout.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
