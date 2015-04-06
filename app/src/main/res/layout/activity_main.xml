@@ -12,7 +12,17 @@
         android:minHeight="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
         local:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        local:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+        local:popupTheme="@style/ThemeOverlay.AppCompat.Light" >
+
+        <TextView
+            android:layout_marginTop="30dp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Drug Corner"
+            android:textColor="#FFF"
+            android:textSize="20dp"
+            android:id="@+id/toolbarText"/>
+        </android.support.v7.widget.Toolbar>
 
     <FrameLayout
         android:layout_below="@+id/toolbar"
