@@ -50,7 +50,6 @@ public class PreviousOrderListFragment extends android.support.v4.app.Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_previous_order_list, container, false);
 
-
         ListView previousOrderListView = (ListView) view.findViewById(R.id.previousOrderListView);
         orderListAdapter.setSelectable(isSelectable);
         previousOrderListView.setAdapter(orderListAdapter);
