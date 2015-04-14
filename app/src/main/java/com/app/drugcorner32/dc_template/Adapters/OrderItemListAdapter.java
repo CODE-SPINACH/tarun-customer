@@ -383,7 +383,11 @@ public class OrderItemListAdapter extends BaseAdapter {
                             count++;
                         }
                     }
-
+                    TextView prescriptionCardTextView1 = (TextView)view.findViewById(R.id.prescriptionCardTextView1);
+                    TextView prescriptionCardTextView2 = (TextView)view.findViewById(R.id.prescriptionCardTextView2);
+                    Typeface typeFace=Typeface.createFromAsset(prescriptionCardTextView2.getContext().getAssets(),"fonts/gothic.ttf");
+                    prescriptionCardTextView2.setTypeface(typeFace);
+                    prescriptionCardTextView1.setTypeface(typeFace);
                     holder1.prescriptionCountView.setText("PRESCRIPTION " + (count+1));
 
                     view.setTag(holder1);
