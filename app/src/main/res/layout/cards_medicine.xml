@@ -1,306 +1,134 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--<android.support.v7.widget.CardView
-
-    android:id="@+id/card_view"
+<LinearLayout
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="0dp"
-    card_view:cardCornerRadius="0dp">-->
+    android:orientation="vertical"
+    android:id="@+id/medicineCardLinearLayout1">
 
     <LinearLayout
-        xmlns:card_view="http://schemas.android.com/apk/res-auto"
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/medicineCardLinearLayout1"
+        android:padding="15dp"
+        android:layout_marginTop="2dp"
+        android:background="#FFF"
         android:orientation="vertical"
-        android:background="#FFF">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="110dp"
-            android:gravity="center"
-            android:layout_weight="2"
-            android:id="@+id/medicineCardLinearLayout2"
-            android:orientation="horizontal">
-
-            <CheckBox
-                android:paddingLeft="5dp"
-                android:paddingRight="5dp"
-                android:visibility="gone"
-                android:id="@+id/medicineCardCheckBox1"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"/>
-
-            <TextView
-                android:visibility="gone"
-                android:layout_width="@dimen/card_image_size"
-                android:layout_height="@dimen/card_image_size"
+                android:layout_marginBottom="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="m"
-                android:textSize="35sp"
-                android:textColor="#eee"
-                android:background="#14C5D3"/>
-
-            <LinearLayout
-                android:paddingLeft="15dp"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:layout_weight="1.5">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                android:orientation="horizontal">
 
                 <TextView
                     android:id="@+id/medicineCardTextView1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center|left"
-                    android:textSize="20dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginLeft="15dp"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:textSize="20sp"
                     android:text="Crocin 250mg"
                     android:layout_weight="2"/>
 
+                <TextView
+                    android:id="@+id/medicineCardTextView2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="200/-"
+                    android:textSize="20sp"
+                    android:textColor="#777"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                         android:id="@+id/medicineCardTextView3"
+                         android:layout_width="wrap_content"
+                         android:layout_height="match_parent"
+                         android:text="tablet"
+                         android:textSize="18sp"
+                         android:textColor="#ea6125"/>
+
+                        <TextView
+                            android:id="@+id/medicineCardTextView4"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="or"
+                            android:textSize="18sp"
+                            android:layout_marginLeft="15dp"
+                            android:layout_marginRight="15dp"/>
+
+                        <TextView
+                            android:id="@+id/medicineCardTextView5"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="strip"
+                            android:textSize="18sp"/>
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="right">
+
+                        <Button
+                            android:id="@+id/medicineCardButton1"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:background="@drawable/circle_button"
+                            android:text="-"
+                            android:textSize="22sp"
+                            android:textColor="#999"/>
+
+                        <TextView
+                            android:id="@+id/medicineCardTextView6"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=""
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginRight="20dp"
+                            android:textSize="18sp"/>
+
+                        <Button
+                            android:id="@+id/medicineCardButton2"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:background="@drawable/circle_button"
+                            android:text="+"
+                            android:textSize="22sp"
+                            android:textColor="#999"/>
+
+                        </LinearLayout>
+                </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="right">
 
                 <TextView
-                    android:layout_weight="1"
-                    android:padding="6dp"
+                    android:id="@+id/medicineCardTextView7"
                     android:layout_marginTop="10dp"
-                    android:textColor="#777"
-                    android:layout_marginRight="30dp"
-                    android:gravity="right"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="200/-"
-                    android:textSize="20dp"
-                    android:id="@+id/medicineCardTextView3"/>
-
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                 <TextView
-                     android:id="@+id/medicineCardTabletTextView"
-                     android:layout_width="wrap_content"
-                     android:layout_height="wrap_content"
-                     android:text="tablet"
-                     android:layout_marginTop="12dp"
-                     android:textSize="18dp"
-                     android:layout_marginLeft="15dp"
-                     android:textColor="#ea6125"/>
-
-                    <TextView
-                        android:id="@+id/medicineCardOrTextView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="or"
-                        android:layout_marginTop="12dp"
-                        android:textSize="18dp"
-                        android:layout_marginLeft="15dp"/>
-
-                    <TextView
-                        android:id="@+id/medicineCardStripTextView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="strip"
-                        android:layout_marginTop="12dp"
-                        android:textSize="18dp"
-                        android:layout_marginLeft="15dp"/>
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="right"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginTop="12dp">
-
-                    <Button
-                        android:id="@+id/medicineCardButtonDecrement"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:background="@drawable/circle_button"
-                        android:text="-"
-                        android:textSize="22dp"
-                        android:textColor="#999"/>
-
-                    <TextView
-                        android:id="@+id/medicineCardMedicineQuantity"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="5"
-                        android:layout_marginLeft="20dp"
-                        android:layout_marginRight="20dp"
-                        android:textSize="18dp"/>
-
-                    <Button
-                        android:id="@+id/medicineCardButtonIncrement"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:background="@drawable/circle_button"
-                        android:text="+"
-                        android:textSize="22dp"
-                        android:textColor="#999"/>
-                </LinearLayout>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:visibility="gone"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:visibility="gone"
-                        android:gravity="center"
-                        android:id="@+id/medicineCardTextViewLabel2"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:textSize="12dp"
-                        android:text="QTY."/>
-
-                    <Spinner
-                        android:visibility="gone"
-                        android:layout_marginTop="1dp"
-                        android:id="@+id/medicineCardSpinner1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:gravity="center"/>
-
-
-
-                </LinearLayout>
-
-                </LinearLayout>
-
-            <LinearLayout
-                android:visibility="gone"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="0">
-
-                <ImageView
-                    android:visibility="gone"
-                    android:id="@+id/medicineCardImageView1"
-                    android:layout_width="0dp"
-                    android:layout_weight="0.25"
-                    android:layout_height="match_parent"
-                    android:padding="15dp"
-                    android:layout_gravity="left"
-                    android:src="@drawable/ic_pill_dark"/>
-
-                </LinearLayout>
-
-
-            <LinearLayout
-                android:visibility="gone"
-                android:layout_width="0dp"
-                android:layout_weight="0.80"
-                android:gravity="right|top"
-                android:layout_marginRight="0dp"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-
-             <!--   <TextView
-                    android:layout_marginTop="2dp"
-                    android:id="@+id/medicineCardTextViewLabel3"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textSize="12dp"
-                    android:paddingLeft="3dp"
-                    android:text="RATE"
-                    android:gravity="right"/>-->
+                    android:textSize="18sp"
+                    android:textColor="#ea6125"
+                    android:text="remove"/>
 
             </LinearLayout>
-
-
-
-
-
-          <!--  <ImageButton
-                android:background="@color/cardview_light_background"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:src="@drawable/ic_cancel"
-                android:layout_weight="0.275"
-                android:id="@+id/medicineCardImageButton1"
-                android:scaleType="fitCenter"/>-->
-
         </LinearLayout>
+    </LinearLayout>
 
-        <LinearLayout
-            android:visibility="gone"
-            android:orientation="vertical"
-            android:id="@+id/medicineCardLinearLayout3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:weightSum="1">
-            <LinearLayout
-                android:visibility="gone"
-                android:paddingLeft="8dp"
-                android:paddingRight="8dp"
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="50dp">
-                <RadioGroup
-                    android:id="@+id/medicineCardRadioGroup1"
-                    android:gravity="center"
-                    android:layout_width="0dp"
-                    android:layout_weight="0.5"
-                    android:layout_margin="10dp"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal">
-
-                    <RadioButton
-                        android:visibility="gone"
-                        android:gravity="center"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/medicineCardRadioButton1"
-                        android:text="TABLETS"
-                        android:textSize="12dp"
-                        android:layout_marginRight="20dp"/>
-
-                    <RadioButton
-                        android:visibility="gone"
-                        android:gravity="center"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/medicineCardRadioButton2"
-                        android:text="STRIPS"
-                        android:textSize="12dp"
-                        android:layout_marginRight="20dp"/>
-
-                    <RadioButton
-                        android:visibility="gone"
-                        android:gravity="center"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/medicineCardRadioButton3"
-                        android:text="SYRUPS"
-                        android:layout_weight="0.1"
-                        android:textSize="12dp"/>
-
-                    </RadioGroup>
-
-                </LinearLayout>
-            </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#DDD"/>
-        </LinearLayout>
-
-   <!-- </android.support.v7.widget.CardView>-->

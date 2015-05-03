@@ -8,14 +8,12 @@ import java.io.Serializable;
 public class OrderItemDetails implements Serializable{
 
     public static enum TypesOfOrder {
-        TRANSLATED_PRESCRIPTION,UNTRANSLATED_PRESCRIPTION,OTC
+        PRESCRIPTION,OTC
     }
 
     public static int prescriptionCount = 0;
 
     private boolean isSelected = false;
-
-    private boolean isExpanded = false;
 
     private boolean isDisabled = false;
 
@@ -25,8 +23,7 @@ public class OrderItemDetails implements Serializable{
 
     private MedicineDetails medicineDetails;
 
-    public OrderItemDetails(OrderItemDetails details,boolean isExpanded){
-        this.isExpanded = isExpanded;
+    public OrderItemDetails(OrderItemDetails details){
         this.orderType = details.getOrderType();
         if(orderType != TypesOfOrder.OTC) {
             this.prescriptionDetails = new PrescriptionDetails(details.getPrescriptionDetails());
@@ -35,14 +32,12 @@ public class OrderItemDetails implements Serializable{
             this.medicineDetails = new MedicineDetails(details.getMedicineDetails());
     }
 
-    public OrderItemDetails(TypesOfOrder orderType,PrescriptionDetails prescriptionDetails,boolean isExpanded){
-        this.isExpanded = isExpanded;
-        this.orderType = orderType;
+    public OrderItemDetails(PrescriptionDetails prescriptionDetails){
+        orderType = TypesOfOrder.PRESCRIPTION;
         this.prescriptionDetails = prescriptionDetails;
     }
 
     public OrderItemDetails(MedicineDetails medicineDetails,boolean isExpanded){
-        this.isExpanded = isExpanded;
         this.orderType = TypesOfOrder.OTC;
         this.medicineDetails = medicineDetails;
     }
@@ -67,9 +62,12 @@ public class OrderItemDetails implements Serializable{
         isSelected = val;
     }
 
-    public boolean getExpanded() { return isExpanded; }
-
-    public void setExpanded(boolean val) { isExpanded = val; }
+    public float getCost(){
+        if(orderType == TypesOfOrder.OTC)
+            return medicineDetails.getCost() * medicineDetails.getQuantity();
+        else
+            return prescriptionDetails.getCost();
+    }
 
     public void setDisabled(boolean val){isDisabled = val;}
 

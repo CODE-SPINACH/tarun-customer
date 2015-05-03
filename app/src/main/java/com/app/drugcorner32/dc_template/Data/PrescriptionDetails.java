@@ -19,6 +19,15 @@ import java.util.List;
  */
 public class PrescriptionDetails implements Serializable {
 
+    //Translated prescription means that it contains the medicine list.
+    //Untranslated prescription means that it is just the image of prescription
+
+    public static enum TypesOfPrescription{
+        TRANSLATED_PRESCRIPTION,UNTRANSLATED_PRESCRIPTION
+    }
+
+    private TypesOfPrescription prescriptionType;
+
     private boolean isSelected = false;
 
     //The path to the image of the subscription
@@ -29,95 +38,69 @@ public class PrescriptionDetails implements Serializable {
     //Thumbnail for faster access
     private Bitmap thumbnail;
 
-    //Notes associated with the prescription
-    private String notes;
-
-    //Days of medicine : if explicitly specified
-    private int days;
-
-    //if daysTextView of medicine is meant to be as per given in the prescription
-    public static final String defaultMessage = "as\nspecified";
-
     //The prescription will be translated to medicine list by the pharmacist. This is that list
     //Empty at the beginning
     private List<MedicineDetails> medicineList = new ArrayList<>();
 
+    //TODO this constructor needs to be removed on finalization of the app
     public PrescriptionDetails(){
         imageUri = null;
-        this.notes = "";
-        days = 0;
         prescriptionID = helperIDGenerator.getID();
+        prescriptionType = TypesOfPrescription.TRANSLATED_PRESCRIPTION;
     }
 
     public PrescriptionDetails(PrescriptionDetails details){
         prescriptionID = details.getPrescriptionID();
         imageUri = details.getImageUri();
-        notes = details.getNotes();
-        days = details.getDays();
-        if(details.getMedicineList() != null)
+        if(prescriptionType == TypesOfPrescription.TRANSLATED_PRESCRIPTION)
             for(int i = 0;i<details.getMedicineList().size();i++){
                 if(details.getMedicineList().get(i).getSelection()) {
                     medicineList.add(new MedicineDetails(details.getMedicineList().get(i)));
-
-                    //Unslecting the selection
-                    details.getMedicineList().get(i).setSelection(false);
                 }
             }
     }
 
-    public PrescriptionDetails(Uri imageUri, String notes,Context context) {
+    public PrescriptionDetails(Uri imageUri,Context context) {
         prescriptionID = helperIDGenerator.getID();
-
         this.imageUri = imageUri;
-        this.notes = notes;
-        days = 0;
-
+        prescriptionType = TypesOfPrescription.UNTRANSLATED_PRESCRIPTION;
         thumbnail = HelperClass.getPreview(imageUri,
-                (int)context.getResources().getDimension(R.dimen.card_image_size));
+                (int) context.getResources().getDimension(R.dimen.card_image_size));
     }
 
-
-    public PrescriptionDetails(Uri imageUri, String notes, int days) {
+    public PrescriptionDetails(Uri imageUri,List<MedicineDetails> medicineList,Context context) {
         prescriptionID = helperIDGenerator.getID();
         this.imageUri = imageUri;
-        this.notes = notes;
-        this.days = days;
+        this.medicineList = medicineList;
+        prescriptionType = TypesOfPrescription.TRANSLATED_PRESCRIPTION;
+        thumbnail = HelperClass.getPreview(imageUri,
+                (int) context.getResources().getDimension(R.dimen.card_image_size));
     }
 
+    public void addMedicine(MedicineDetails details){
+        medicineList.add(new MedicineDetails(details));
+    }
+
+
+    //Getters
     public Uri getImageUri(){
         return imageUri;
     }
 
-    public String getNotes(){
-        return notes;
+    public TypesOfPrescription getPrescriptionType(){
+        return prescriptionType;
     }
 
-    public int getDays(){
-        return days;
-    }
-
-    public List<MedicineDetails> getMedicineList(){
-        return medicineList;
-    }
-
-    public void setDays(int days){
-        this.days = days;
-    }
-
-    public void setNotes(String notes){
-        this.notes = notes;
-    }
-
-    public void setMedicineList(List<MedicineDetails> medicineList){
-        this.medicineList = medicineList;
+    public Bitmap getThumbnail(){
+        return thumbnail;
     }
 
     public float getCost(){
         float sum = 0;
-        for(MedicineDetails details : medicineList) {
-            if(details!=null)
-                sum += (details.getCost() * details.getDays() * details.getQuantityPerDay());
-        }
+        if(prescriptionType == TypesOfPrescription.TRANSLATED_PRESCRIPTION)
+            for(MedicineDetails details : medicineList)
+                sum += (details.getCost() * details.getQuantity());
+
         return sum;
     }
 
@@ -125,12 +108,26 @@ public class PrescriptionDetails implements Serializable {
         return prescriptionID;
     }
 
-    public void setPrescriptionID(int id){
-        prescriptionID = id;
+
+    public List<MedicineDetails> getMedicineList(){
+        return medicineList;
     }
 
-    public Bitmap getThumbnail(){
-        return thumbnail;
+    //Setters
+    public void setMedicineList(List<MedicineDetails> medicineList){
+        this.medicineList = medicineList;
+    }
+
+    public void setImageUri(Uri imageUri){
+        this.imageUri = imageUri;
+    }
+
+    public void setPrescriptionType(TypesOfPrescription prescriptionType){
+        this.prescriptionType = prescriptionType;
+    }
+
+    public void setPrescriptionID(int id){
+        prescriptionID = id;
     }
 
     @Override
@@ -138,7 +135,4 @@ public class PrescriptionDetails implements Serializable {
         return getPrescriptionID() == ((PrescriptionDetails)o).getPrescriptionID();
     }
 
-    public void addMedicine(MedicineDetails details){
-        medicineList.add(new MedicineDetails(details));
-    }
 }

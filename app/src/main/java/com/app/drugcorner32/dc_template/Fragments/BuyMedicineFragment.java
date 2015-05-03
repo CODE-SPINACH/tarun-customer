@@ -7,7 +7,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -15,23 +15,22 @@ import com.app.drugcorner32.dc_template.Data.MedicineDetails;
 import com.app.drugcorner32.dc_template.Data.OrderDetails;
 import com.app.drugcorner32.dc_template.Data.OrderItemDetails;
 import com.app.drugcorner32.dc_template.Data.PrescriptionDetails;
+import com.app.drugcorner32.dc_template.Interfaces.OnFragmentChange;
 import com.app.drugcorner32.dc_template.R;
 
-import java.util.List;
-
-
 public class BuyMedicineFragment extends android.support.v4.app.Fragment {
-    private Callback callback;
+    private OnFragmentChange callback;
 
     public static String TAG = "BuyMedicine";
 
     private OrderItemListFragment itemListFragment;
 
+    private TextView noOfItemsView;
+    private TextView costView;
+    private ImageButton continueButton;
+
     public static BuyMedicineFragment newInstance() {
         BuyMedicineFragment fragment = new BuyMedicineFragment();
-        Bundle args = new Bundle();
-        args.putCharSequence("TAG",TAG);
-        fragment.setArguments(args);
         return fragment;
     }
 
@@ -53,24 +52,23 @@ public class BuyMedicineFragment extends android.support.v4.app.Fragment {
 
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_buy_medicine, container, false);
-        TextView prescriptionText = (TextView)view.findViewById(R.id.buyMedicineTextView1);
-        TextView manuallyText = (TextView)view.findViewById(R.id.buyMedicineTextView2);
-        TextView previousOrderText = (TextView)view.findViewById(R.id.buyMedicineTextView3);
-        TextView selectOrderText = (TextView)view.findViewById(R.id.buyMedicineTextView4);
-        Button checkoutButton = (Button)view.findViewById(R.id.checkoutButton);
-        Typeface typeFace=Typeface.createFromAsset(getActivity().getAssets(),"fonts/gothic.ttf");
+        TextView sendPrescriptionTextView = (TextView)view.findViewById(R.id.buyMedicineTextView1);
+        TextView enterManuallyTextView = (TextView)view.findViewById(R.id.buyMedicineTextView2);
+        TextView previousOrderTextView = (TextView)view.findViewById(R.id.buyMedicineTextView3);
+        TextView helpView = (TextView)view.findViewById(R.id.buyMedicineTextView4);
 
-        prescriptionText.setTypeface(typeFace);
-        checkoutButton.setTypeface(typeFace);
-        manuallyText.setTypeface(typeFace);
-        previousOrderText.setTypeface(typeFace);
-        selectOrderText.setTypeface(typeFace);
+        noOfItemsView = (TextView)view.findViewById(R.id.buyMedicineTextView5);
+        costView = (TextView)view.findViewById(R.id.buyMedicineTextView6);
+        continueButton = (ImageButton)view.findViewById(R.id.buyMedicineImageButton1);
+
+        Typeface typeface=Typeface.createFromAsset(getActivity().getAssets(),"fonts/gothic.ttf");
+
+        sendPrescriptionTextView.setTypeface(typeface);
+        enterManuallyTextView.setTypeface(typeface);
+        previousOrderTextView.setTypeface(typeface);
+        helpView.setTypeface(typeface);
+
         LinearLayout linearLayout = (LinearLayout)view.findViewById(R.id.buyMedicineLinearLayout1);
-        LinearLayout hidableLayout = (LinearLayout)view.findViewById(R.id.buyMedicineLinearLayout2);
-
-        LinearLayout sendPrescriptionLayout = (LinearLayout)view.findViewById(R.id.buyMedicineLinearLayout2);
-        LinearLayout enterManuallyLayout = (LinearLayout)view.findViewById(R.id.buyMedicineLinearLayout3);
-        LinearLayout previousOrderLayout = (LinearLayout)view.findViewById(R.id.buyMedicineLinearLayout4);
 
         itemListFragment = (OrderItemListFragment)
                 getChildFragmentManager().findFragmentByTag(OrderItemListFragment.TAG);
@@ -78,24 +76,20 @@ public class BuyMedicineFragment extends android.support.v4.app.Fragment {
         if(itemListFragment == null)
             itemListFragment = OrderItemListFragment.newInstance();
 
-
         itemListFragment.setEditable(true);
-        itemListFragment.setListViewPaddingTop(linearLayout.getLayoutParams().height +
-                hidableLayout.getLayoutParams().height);
-
 
         android.support.v4.app.FragmentTransaction ft = getChildFragmentManager().beginTransaction();
         ft.replace(R.id.buyMedicineListViewContainer,itemListFragment,OrderItemListFragment.TAG).commitAllowingStateLoss();
-
         //Events on buttons
-        sendPrescriptionLayout.setOnClickListener(new View.OnClickListener() {
+
+        sendPrescriptionTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 callback.replaceFragment(R.layout.dialog_send_prescripiton, null);
             }
         });
 
-        enterManuallyLayout.setOnClickListener(new View.OnClickListener() {
+        enterManuallyTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 callback.replaceFragment(R.layout.dialog_search_medicine, null);
@@ -103,11 +97,17 @@ public class BuyMedicineFragment extends android.support.v4.app.Fragment {
         });
 
         //Here the current order list is being forwarded to the Previous Order Dialog
-        //This is being done to prevent redundant entries from being entered from the previous order
-        previousOrderLayout.setOnClickListener(new View.OnClickListener() {
+        previousOrderTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 callback.replaceFragment(R.layout.dialog_previous_order, itemListFragment.getItemDetailses());
+            }
+        });
+
+        continueButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
             }
         });
 
@@ -118,7 +118,7 @@ public class BuyMedicineFragment extends android.support.v4.app.Fragment {
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         try {
-            callback = (Callback) activity;
+            callback = (OnFragmentChange) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
                     + " must implement OnFragmentInteractionListener");
@@ -132,21 +132,34 @@ public class BuyMedicineFragment extends android.support.v4.app.Fragment {
     }
 
     public void addNewPrescription(Uri imagePath){
-        itemListFragment.addOrderItem(new OrderItemDetails
-                (OrderItemDetails.TypesOfOrder.UNTRANSLATED_PRESCRIPTION,
-                        new PrescriptionDetails(imagePath, null,getActivity()),true));
+        itemListFragment.addOrderItem(new OrderItemDetails(new PrescriptionDetails(imagePath,getActivity())));
     }
 
     public void addNewMedicine(MedicineDetails medicineDetails){
         itemListFragment.addOrderItem(new OrderItemDetails(medicineDetails,true));
     }
 
-    public void addNewPreviousOrders(List<OrderDetails> orderDetailses){
-        itemListFragment.addPreviousOrders(orderDetailses);
+    public void repeatOrder(OrderDetails details){
+        if(itemListFragment!=null)
+            itemListFragment.addPreviousOrder(details);
     }
 
-    public static interface Callback{
-        public void replaceFragment(int id,Object o);
+
+    public void updateCartAdapter(){
+        if(itemListFragment!=null)
+            itemListFragment.updateCartAdapter();
+    }
+
+    public void updateBottomMenu(){
+        //Updating the bottom menu
+        if(noOfItemsView != null) {
+            noOfItemsView.setText(itemListFragment.getItemDetailses().size() + "");
+
+            float cost = 0;
+            for (OrderItemDetails itemDetails : itemListFragment.getItemDetailses())
+                cost += itemDetails.getCost();
+            costView.setText(cost + "/-");
+        }
     }
 
 }

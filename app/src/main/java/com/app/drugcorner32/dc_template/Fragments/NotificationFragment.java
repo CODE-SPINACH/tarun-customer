@@ -84,12 +84,13 @@ public class NotificationFragment extends android.support.v4.app.Fragment {
     public void createNotificcationView(final LinearLayout layout,final LayoutInflater inflater, final NotificationDetails notificationDetails){
         final View view;
         if(notificationDetails.getType() == NotificationDetails.NOTIFICATION_TYPE.JUST_TEXT){
-            view = (View)inflater.inflate(R.layout.cards_simple_notification,null);
+            view = inflater.inflate(R.layout.cards_simple_notification,layout,false);
+
             TextView messageView = (TextView)view.findViewById(R.id.simpleNotificationCardTextView1);
             messageView.setText(notificationDetails.getMessage());
         }
         else{
-            view = (View)inflater.inflate(R.layout.cards_button_notification,null);
+            view = inflater.inflate(R.layout.cards_button_notification,layout,false);
             final TextView messageView = (TextView)view.findViewById(R.id.buttonNotificationCardTextView1);
             Button button = (Button)view.findViewById(R.id.buttonNotificationCardButton1);
 

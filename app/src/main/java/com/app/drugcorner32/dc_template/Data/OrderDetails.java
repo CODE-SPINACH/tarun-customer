@@ -2,6 +2,7 @@ package com.app.drugcorner32.dc_template.Data;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -10,6 +11,8 @@ import java.util.List;
  * Contains the details of the current or previous order
  */
 public class OrderDetails implements Serializable{
+
+    private AddressDetails addressDetails;
 
     private boolean isSelected = false;
 
@@ -27,12 +30,12 @@ public class OrderDetails implements Serializable{
     private Status orderStatus;
 
     //Date and time of the delivery
-    private int orderDate;
+    private Date orderDate;
 
     //Prescriptions that were added
     private List<OrderItemDetails> orderItemDetailses = new ArrayList<>();
 
-    public OrderDetails(int orderNo,float amount,String address,Status status,int date,
+    public OrderDetails(int orderNo,float amount,String address,Status status,Date date,
                         List<OrderItemDetails> detailses){
         this.orderNo = orderNo;
         orderAmount = amount;
@@ -40,6 +43,14 @@ public class OrderDetails implements Serializable{
         orderDate = date;
         orderStatus = status;
         orderItemDetailses = detailses;
+    }
+
+    public void setAddressDetails(AddressDetails details){
+        addressDetails = details;
+    }
+
+    public AddressDetails getAddressDetails(){
+        return addressDetails;
     }
 
     public int getOrderNo(){
@@ -54,7 +65,7 @@ public class OrderDetails implements Serializable{
         return orderAmount;
     }
 
-    public int getOrderDate(){
+    public Date getOrderDate(){
         return orderDate;
     }
 

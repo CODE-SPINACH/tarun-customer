@@ -7,8 +7,6 @@
     android:orientation="vertical"
     tools:context="com.app.drugcorner32.dc_template.Fragments.AddressFragment">
 
-
-
     <!--Horizontal Linear Layout for EDIT TEXT-->
     <LinearLayout
         android:layout_marginTop="20dp"

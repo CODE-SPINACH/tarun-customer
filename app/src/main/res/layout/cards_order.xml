@@ -1,179 +1,99 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:alpha="0.9"
-    android:descendantFocusability="blocksDescendants">
+    android:layout_height="wrap_content"
+    android:background="#FFF"
+    android:paddingLeft="15dp"
+    android:paddingTop="5dp"
+    android:id="@+id/orderCardLinearLayout1"
+    android:descendantFocusability="beforeDescendants"
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:padding="5dp"
+        android:orientation="horizontal"
+        android:layout_marginBottom="7dp">
+
+        <TextView
+            android:id="@+id/orderCardTextView1"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:background="#FFF">
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:text="Ravi Gupta"
+            android:layout_weight="2"/>
 
-            <CheckBox
-                android:id="@+id/orderCheckBox"
-                android:visibility="gone"
-                android:gravity="center"
-                android:layout_width="0dp"
-                android:layout_weight="0.3"
-                android:layout_height="match_parent" />
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/orderCardTextView2"
+            android:textSize="18sp"
+            android:layout_weight="1"
+            android:text="200/-"/>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+        </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:orientation="horizontal">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginBottom="7dp">
+        <TextView
+            android:id="@+id/orderCardTextView3"
+            android:layout_width="0dp"
+            android:layout_weight="1.8"
+            android:layout_height="wrap_content"
+            android:text="22 July 2015"/>
 
-
-
-                    <TextView
-                        android:id="@+id/orderAddressTextView1"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:paddingLeft="15dp"
-                        android:textSize="20dp"
-                        android:textStyle="bold"
-                        android:text="Ravi Gupta"
-                        android:layout_weight="2"/>
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/orderAmountTextView"
-                        android:textSize="18sp"
-                        android:layout_weight="1"
-                        android:text="2000/-"/>
-
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/orderDateTextView"
-                        android:paddingLeft="15dp"
-                        android:layout_width="0dp"
-                        android:layout_weight="1.8"
-                        android:layout_height="wrap_content"
-                        android:text="22 July 2015"
-                        android:layout_marginBottom="7dp"/>
-
-                    <TextView
-                        android:background="#ea6125"
-                        android:id="@+id/orderStatusTextView"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:textColor="#FFF"
-                        android:textSize="15dp"
-                        android:text="DELIVERED"
-                        android:layout_weight="1"
-                        android:paddingLeft="9dp"/>
-
-                </LinearLayout>
-
-
-
-                <TextView
-                    android:visibility="gone"
-                    android:paddingLeft="15dp"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/orderNoTextView"
-                    android:textSize="15dp"
-                    android:text="drugCorner125"/>
-
-
-                <TextView
-                    android:visibility="gone"
-                    android:id="@+id/orderAddressTextView12"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingLeft="15dp"
-                    android:text="52 N 12, Sector 5, Opp Haldi Ghati Gate"/>
-
-                <TextView
-                    android:visibility="gone"
-                    android:id="@+id/orderAddressTextView13"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingLeft="15dp"
-                    android:text="Pratap Nagar,Jaipur"/>
-
-
-                <TextView
-                    android:visibility="gone"
-                    android:id="@+id/orderAddressTextView14"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingLeft="15dp"
-                    android:text="Near Pratap Plaza"/>
-
-                <TextView
-                    android:visibility="gone"
-                    android:id="@+id/orderAddressTextView15"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingLeft="15dp"
-                    android:text="Rajasthan 302033"/>
-
-                <TextView
-                    android:visibility="gone"
-                    android:id="@+id/orderAddressTextView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingLeft="15dp"
-                    android:text="Paracetamol, Azithromycin, Leonadro Caprio, Acolyte Plus "/>
-
-                <TextView
-                    android:id="@+id/orderAddressTextView16"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingLeft="15dp"
-                    android:text="Paracetamol, Azithromycin, Leonadro Caprio, Acolyte Plus"/>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginTop="10dp">
-
-                    <TextView
-                        android:textColor="#ea6125"
-                        android:id="@+id/orderSelect"
-                        android:paddingLeft="15dp"
-                        android:layout_width="0dp"
-                        android:layout_weight="1.8"
-                        android:layout_height="wrap_content"
-                        android:text="Pick Medicines"
-                        android:layout_marginBottom="7dp"/>
-
-                    <TextView
-                        android:id="@+id/orderRepeat"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:textColor="#ea6125"
-                        android:textSize="15dp"
-                        android:text="Repeat"
-                        android:layout_weight="1"
-                        android:paddingLeft="9dp"/>
-
-                </LinearLayout>
-
-            </LinearLayout>
+        <TextView
+            android:background="#ea6125"
+            android:id="@+id/orderCardTextView4"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textColor="#FFF"
+            android:textSize="15sp"
+            android:text="Delivered"
+            android:layout_weight="1"
+            android:paddingLeft="9dp"/>
 
         </LinearLayout>
 
+    <TextView
+        android:id="@+id/orderCardTextView5"
+        android:layout_marginRight="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:maxLines="2"
+        android:minLines="2"
+        android:text="adfasdfasdfasd adfasdfasdfsadasdfasd asdf asdf"
+        android:ellipsize="end"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="5dp">
+
+        <TextView
+            android:textColor="#ea6125"
+            android:id="@+id/orderCardTextView6"
+            android:layout_width="0dp"
+            android:layout_weight="1.5"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:text="pick medicines"
+            android:layout_marginBottom="7dp"/>
+
+        <TextView
+            android:id="@+id/orderCardTextView7"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textColor="#ea6125"
+            android:textSize="18sp"
+            android:text="repeat"
+            android:layout_weight="1"/>
+
+        </LinearLayout>
     </LinearLayout>
-</android.support.v7.widget.CardView>

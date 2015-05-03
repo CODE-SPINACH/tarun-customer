@@ -1,58 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<LinearLayout
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:gravity="top"
-    android:layout_gravity="top"
-    android:id="@+id/prescriptionChildLayout1"
-    android:layout_height="100dp"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="15dp"
+    android:id="@+id/childMedicineCardLinearLayout1"
     android:background="#FFF">
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#EEE"/>
-
-    <CheckBox
-        android:visibility="gone"
-        android:layout_marginLeft="40dp"
-        android:id="@+id/prescriptionChildCheckBox1"
-        android:layout_width="0dp"
-        android:layout_weight="0.2"
-        android:layout_height="match_parent" />
-
     <LinearLayout
+        android:layout_marginBottom="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/prescriptionChildTextView1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center|left"
-            android:textSize="20dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="15dp"
+            android:id="@+id/childMedicineCardTextView1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:textSize="20sp"
             android:text="Crocin 250mg"
             android:layout_weight="2"/>
 
-
         <TextView
-            android:layout_weight="1"
-            android:padding="6dp"
-            android:layout_marginTop="10dp"
-            android:textColor="#777"
-            android:layout_marginRight="30dp"
-            android:gravity="right"
+            android:id="@+id/childMedicineCardTextView2"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:text="200/-"
-            android:textSize="20dp"
-            android:id="@+id/prescriptionChildTextView2"/>
+            android:textSize="20sp"
+            android:textColor="#777"/>
 
     </LinearLayout>
+
     <LinearLayout
+        android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -63,102 +46,82 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/medicineCardTabletTextView"
+                android:id="@+id/childMedicineCardTextView3"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:text="tablet"
-                android:layout_marginTop="12dp"
-                android:textSize="18dp"
-                android:layout_marginLeft="15dp"
+                android:textSize="18sp"
                 android:textColor="#ea6125"/>
 
             <TextView
-                android:id="@+id/medicineCardOrTextView"
+                android:id="@+id/childMedicineCardTextView4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="or"
-                android:layout_marginTop="12dp"
-                android:textSize="18dp"
-                android:layout_marginLeft="15dp"/>
+                android:textSize="18sp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"/>
 
             <TextView
-                android:id="@+id/medicineCardStripTextView"
+                android:id="@+id/childMedicineCardTextView5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="strip"
-                android:layout_marginTop="12dp"
-                android:textSize="18dp"
-                android:layout_marginLeft="15dp"/>
+                android:textSize="18sp"/>
+
+
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:gravity="right"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="12dp">
+            android:gravity="right">
 
             <Button
-                android:id="@+id/medicineCardButtonDecrement"
+                android:id="@+id/childMedicineCardButton1"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:background="@drawable/circle_button"
                 android:text="-"
-                android:textSize="22dp"
+                android:textSize="22sp"
                 android:textColor="#999"/>
 
             <TextView
-                android:id="@+id/medicineCardMedicineQuantity"
+                android:id="@+id/childMedicineCardTextView6"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="5"
+                android:text=""
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
-                android:textSize="18dp"/>
+                android:textSize="18sp"/>
 
             <Button
-                android:id="@+id/medicineCardButtonIncrement"
+                android:id="@+id/childMedicineCardButton2"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:background="@drawable/circle_button"
                 android:text="+"
-                android:textSize="22dp"
+                android:textSize="22sp"
                 android:textColor="#999"/>
+
         </LinearLayout>
     </LinearLayout>
 
-
-    <TextView
-        android:visibility="gone"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:id="@+id/quantityTextView"
-        android:gravity="center|left"
-        android:text="Qty"
-        android:layout_weight="0.2"/>
-
-    <Spinner
-        android:visibility="gone"
-        android:id="@+id/prescriptionChildSpinner1"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="0.3"/>
-
-
-    <ImageButton
-        android:visibility="gone"
-        android:background="#FFF"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:src="@drawable/ic_cancel"
-        android:layout_weight="0.1"
-        android:id="@+id/prescriptionChildImageButton1"
-        android:scaleType="fitCenter"/>
-
-    <View
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#EEE"/>
+        android:layout_height="wrap_content"
+        android:gravity="right">
 
+        <TextView
+            android:id="@+id/childMedicineCardTextView7"
+            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:textSize="18sp"
+            android:textColor="#ea6125"
+            android:text="remove"/>
 
+    </LinearLayout>
 </LinearLayout>
+

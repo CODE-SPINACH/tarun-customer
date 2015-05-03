@@ -13,31 +13,39 @@
         local:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         local:popupTheme="@style/ThemeOverlay.AppCompat.Light" >
 
+
         <ImageButton
             android:visibility="gone"
-            android:layout_marginTop="3dp"
-            android:padding="6dp"
+            android:padding="10dp"
             android:id="@+id/previousOrderDialogImageButton1"
-            android:layout_margin="5dp"
-            android:layout_width="45dp"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:scaleX="0.5"
-            android:scaleY="0.6"
-            android:maxHeight="5dp"
-            android:maxWidth="5dp"
-            android:src="@drawable/ic_back"
+            android:src="@drawable/abc_ic_ab_back_mtrl_am_alpha"
             android:background="#00FFFFFF"
             />
         <!-- </RelativeLayout>-->
 
         <TextView
-            android:layout_weight="0.49"
-            android:layout_width="match_parent"
+            android:padding="10dp"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:id="@+id/previousOrderDialogTextView1"
-            android:textSize="18sp"
+            android:textSize="20sp"
             android:textColor="#FFF"
-            android:layout_margin="7dp"/>
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="right|center">
+            <ImageButton
+                android:id="@+id/previousOrderDialogImageButton2"
+                android:padding="10dp"
+                android:src="@drawable/abc_ic_clear_mtrl_alpha"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#00FFFFFF"/>
+            </LinearLayout>
 
     </android.support.v7.widget.Toolbar>
 
@@ -52,11 +60,10 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="5"
-            android:background="#FFF"/>
+            android:background="#EEE"/>
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="0.6"
+            android:layout_height="55dp"
             android:background="#FFF"
             android:orientation="vertical">
 
@@ -64,44 +71,25 @@
                 android:layout_width="fill_parent"
                 android:layout_height="1dp"
                 android:background="#ea6125" />
-        <Button
-            android:visibility="gone"
-            android:layout_marginTop="2dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginBottom="5dp"
-            android:id="@+id/previousOrderDialogButton1"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:textAllCaps="false"
-            android:textColor="#FFF"
-            android:textSize="20sp"
-            android:text="ADD"
-            android:background="@drawable/rounded"/>
-
-
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:gravity="center"
                 android:orientation="horizontal">
 
                 <TextView
+                    android:id="@+id/previousOrderDialogTextView2"
                     android:background="#ea6125"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:text="5"
+                    android:text="0"
                     android:textColor="#FFF"
                     android:textSize="20sp"
-                    android:layout_gravity="center"
                     android:gravity="center|right"
                     android:layout_marginLeft="10dp"
-                    android:layout_marginRight="7dp"
-                    android:paddingRight="4dp"
-                    android:paddingLeft="4dp"
+                    android:layout_marginRight="10dp"
+                    android:padding="4dp"
                     />
 
                 <TextView
@@ -110,19 +98,17 @@
                     android:layout_weight="1.5"
                     android:text="items added"
                     android:textSize="12sp"
-                    android:layout_gravity="center"
                     android:gravity="center|left"
-
                     />
 
 
                 <TextView
+                    android:id="@+id/previousOrderDialogTextView3"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="3"
-                    android:text="40/-"
+                    android:text="0/-"
                     android:textSize="20sp"
-                    android:layout_gravity="center"
                     android:gravity="center|right"
                     android:layout_marginRight="10dp"
                     android:textColor="#555"
@@ -133,12 +119,14 @@
                     android:layout_height="fill_parent"
                     android:background="#FFDDDDDD" />
 
-                <ImageButton
-                    android:layout_marginBottom="15dp"
-                    android:layout_marginTop="15dp"
+                <TextView
+                    android:id="@+id/previousOrderDialogTextView4"
+                    android:padding="5dp"
+                    android:textColor="#ea6125"
+                    android:gravity="center"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:src="@mipmap/ic_continue_button"
+                    android:text="back to cart"
                     android:background="#FFF"/>
 
             </LinearLayout>

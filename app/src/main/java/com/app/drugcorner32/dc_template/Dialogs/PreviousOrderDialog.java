@@ -7,14 +7,12 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.widget.Button;
+import android.view.WindowManager;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.app.drugcorner32.dc_template.Data.MedicineDetails;
@@ -22,6 +20,7 @@ import com.app.drugcorner32.dc_template.Data.OrderDetails;
 import com.app.drugcorner32.dc_template.Data.OrderItemDetails;
 import com.app.drugcorner32.dc_template.Fragments.OrderItemListFragment;
 import com.app.drugcorner32.dc_template.Fragments.PreviousOrderListFragment;
+import com.app.drugcorner32.dc_template.Interfaces.OnFragmentChange;
 import com.app.drugcorner32.dc_template.R;
 
 import java.util.ArrayList;
@@ -42,13 +41,20 @@ public class PreviousOrderDialog extends DialogFragment {
 
     public static String TAG = "PreviousOrder";
 
-    private Callback callBack;
+    private OnFragmentChange callBack;
 
     private List<OrderItemDetails> cartOrderItemsList;
 
     private OrderDetails selectedOrderDetails;
 
     private List<OrderDetails> selectedOrderDetailsList = new ArrayList<>();
+
+    private TextView toolbarTitleView;
+    private ImageButton toolbarBackButton;
+    private TextView noOfItemsView;
+    private TextView costView;
+    private TextView backToCartView;
+    private ImageButton closeButton;
 
     public PreviousOrderDialog() {
         super();
@@ -65,26 +71,46 @@ public class PreviousOrderDialog extends DialogFragment {
     @Override
     public void onStart() {
         super.onStart();
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        Window window = getDialog().getWindow();
+        window.setBackgroundDrawable(new ColorDrawable((Color.TRANSPARENT)));
+        lp.copyFrom(window.getAttributes());
+        //This makes the dialog take up the full width
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        window.setAttributes(lp);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        getDialog().getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
-        getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        setStyle(R.style.full_screen_dialog, android.R.style.Theme);
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        callBack = (Callback) getActivity();
-
+        callBack = (OnFragmentChange) getActivity();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.dialog_previous_order, container, false);
+
+        toolbarBackButton = (ImageButton)view.findViewById(R.id.previousOrderDialogImageButton1);
+        toolbarTitleView = (TextView) view.findViewById(R.id.previousOrderDialogTextView1);
+        closeButton = (ImageButton)view.findViewById(R.id.previousOrderDialogImageButton2);
+        noOfItemsView = (TextView) view.findViewById(R.id.previousOrderDialogTextView2);
+        costView = (TextView) view.findViewById(R.id.previousOrderDialogTextView3);
+        backToCartView = (TextView) view.findViewById(R.id.previousOrderDialogTextView4);
+
+        toolbarTitleView.setText("Previous Orders");
+        noOfItemsView.setText(cartOrderItemsList.size() + "");
+
+        float cost = 0;
+        for(OrderItemDetails details : cartOrderItemsList)
+            cost += details.getCost();
+        costView.setText(cost + "/-");
+
         PreviousOrderListFragment previousOrderListFragment = (PreviousOrderListFragment)
                 getChildFragmentManager().findFragmentByTag(PreviousOrderListFragment.TAG);
 
@@ -96,49 +122,28 @@ public class PreviousOrderDialog extends DialogFragment {
 
         getChildFragmentManager().beginTransaction().
                 replace(R.id.previousOrderDialogFrameLayout1, previousOrderListFragment, PreviousOrderListFragment.TAG).
-                setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN).addToBackStack(null).commitAllowingStateLoss();
+                addToBackStack(null).setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN).commitAllowingStateLoss();
 
-        final ImageButton backButton = (ImageButton)view.findViewById(R.id.previousOrderDialogImageButton1);
-        final TextView t = (TextView) view.findViewById(R.id.previousOrderDialogTextView1);
-        Button addButton = (Button)view.findViewById(R.id.previousOrderDialogButton1);
-
-        Toolbar toolbar = (Toolbar)view.findViewById(R.id.previousOrderToolbar);
-        toolbar.setTitle("Previous Order");
-        addButton.setOnClickListener(new View.OnClickListener() {
+        toolbarBackButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                callBack.replaceFragment(R.id.previousOrderDialogButton1,selectedOrderDetailsList);
+                toolbarBackButton.setVisibility(View.GONE);
+                getChildFragmentManager().popBackStack();
+                toolbarTitleView.setText("Previous Orders");
+            }
+        });
+
+        closeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 dismiss();
             }
         });
 
-        backButton.setOnClickListener(new View.OnClickListener() {
+        backToCartView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                backButton.setVisibility(View.GONE);
-                t.setVisibility(View.VISIBLE);
-                OrderItemListFragment itemListFragment = (OrderItemListFragment)
-                        getChildFragmentManager().findFragmentByTag(OrderItemListFragment.TAG);
-
-                PreviousOrderListFragment orderListFragment = (PreviousOrderListFragment)
-                        getChildFragmentManager().findFragmentByTag(PreviousOrderListFragment.TAG);
-
-                //This ensures that an order that has no item in it selected, is removed
-                //result = 2 means all select
-                //         1 means some selected
-                //         0 means none selected
-
-                int result = itemListFragment.countAndTell();
-                if(result<2) {
-                    orderListFragment.selectCurrentOrder(false);
-                    if(result == 0) {
-                        selectedOrderDetailsList.remove(selectedOrderDetails);
-                    }
-                }
-                else
-                    orderListFragment.selectCurrentOrder(true);
-
-                getChildFragmentManager().popBackStack();
+                dismiss();
             }
         });
 
@@ -148,35 +153,14 @@ public class PreviousOrderDialog extends DialogFragment {
     public void changeFragment(OrderItemListFragment fragment) {
         if(!selectedOrderDetailsList.contains(selectedOrderDetails))
             selectedOrderDetailsList.add(selectedOrderDetails);
-
-        for(OrderItemDetails details : selectedOrderDetails.getOrderItemsList()) {
-            if (cartOrderItemsList.contains(details)) {
-                if (details.getOrderType() == OrderItemDetails.TypesOfOrder.TRANSLATED_PRESCRIPTION) {
-                    int index = cartOrderItemsList.indexOf(details);
-                    for (MedicineDetails medicineDetails : details.getPrescriptionDetails().getMedicineList()) {
-                        if (cartOrderItemsList.get(index).getPrescriptionDetails().getMedicineList().contains(medicineDetails))
-                            medicineDetails.setDisabled(true);
-                        else
-                            medicineDetails.setDisabled(false);
-                    }
-                }
-                details.setDisabled(true);
-            } else {
-                if (details.getOrderType() == OrderItemDetails.TypesOfOrder.TRANSLATED_PRESCRIPTION)
-                    for (MedicineDetails medicineDetails : details.getPrescriptionDetails().getMedicineList()) {
-                        medicineDetails.setDisabled(false);
-                    }
-                details.setDisabled(false);
-            }
-        }
         if(getView() !=null) {
-            ImageButton imageButton = (ImageButton) getView().findViewById((R.id.previousOrderDialogImageButton1));
-            imageButton.setVisibility(View.VISIBLE);
+            toolbarBackButton.setVisibility(View.VISIBLE);
 
             getChildFragmentManager().beginTransaction().replace(R.id.previousOrderDialogFrameLayout1, fragment,
-                    OrderItemListFragment.TAG).setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN).
-                    addToBackStack(null).commitAllowingStateLoss();
+                    OrderItemListFragment.TAG).setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN).addToBackStack(null).
+                    commitAllowingStateLoss();
         }
+        toolbarTitleView.setText("Order Items");
     }
 
     public void setCartOrderItemsList(List<OrderItemDetails> orderItemsList){
@@ -192,8 +176,37 @@ public class PreviousOrderDialog extends DialogFragment {
             selectedOrderDetailsList.add(details);
     }
 
-    public static interface Callback{
-        public void replaceFragment(int id,Object o);
+    //if details is null , then it means that the quantity of an existing item has been manipulated
+    //it would simply reflect changes in the bottom menu
+
+    public void updateCart(OrderItemDetails details){
+        if(details != null) {
+            if (cartOrderItemsList.contains(details)) {
+                if (details.getOrderType() == OrderItemDetails.TypesOfOrder.OTC) {
+                    cartOrderItemsList.remove(details);
+                } else {
+                    boolean delete = true;
+                    for (MedicineDetails medicineDetails : details.getPrescriptionDetails().getMedicineList())
+                        if (medicineDetails.getQuantity() != 0)
+                            delete = false;
+                    if (delete)
+                        cartOrderItemsList.remove(details);
+                }
+            }
+            else
+                cartOrderItemsList.add(details);
+        }
+
+        //Updating the bottom menu
+        if(noOfItemsView != null) {
+            noOfItemsView.setText(cartOrderItemsList.size() + "");
+
+            float cost = 0;
+            for (OrderItemDetails itemDetails : cartOrderItemsList)
+                cost += itemDetails.getCost();
+            costView.setText(cost + "/-");
+        }
+
     }
 
 }

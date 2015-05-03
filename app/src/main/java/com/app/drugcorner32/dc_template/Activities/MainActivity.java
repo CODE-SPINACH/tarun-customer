@@ -8,9 +8,6 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
-import android.text.Spannable;
-import android.text.SpannableString;
-import android.text.style.TypefaceSpan;
 import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,6 +22,7 @@ import com.app.drugcorner32.dc_template.Data.Status;
 import com.app.drugcorner32.dc_template.Dialogs.PreviousOrderDialog;
 import com.app.drugcorner32.dc_template.Dialogs.SearchMedicineDialog;
 import com.app.drugcorner32.dc_template.Dialogs.SendPrescriptionDialog;
+import com.app.drugcorner32.dc_template.Dialogs.ZoomDialog;
 import com.app.drugcorner32.dc_template.Fragments.AddressFragment;
 import com.app.drugcorner32.dc_template.Fragments.BuyMedicineFragment;
 import com.app.drugcorner32.dc_template.Fragments.HomeScreenFragment;
@@ -59,15 +57,9 @@ public class MainActivity extends ActionBarActivity implements PreviousOrderDial
 
         Typeface typeFace=Typeface.createFromAsset(toolbar.getContext().getAssets(), "fonts/gothic.ttf");
         toolbarText.setTypeface(typeFace);
-        //toolbar.setTypeface(typeFace);
-        //Toolbar will now take on default actionbar characteristics
 
-
-        SpannableString s = new SpannableString("");
-        s.setSpan(new TypefaceSpan("fonts/gothic.ttf"), 0, s.length(),
-                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle(s);
+        getSupportActionBar().setTitle("");
 
 
         com.app.drugcorner32.dc_template.Helpers.helperIDGenerator.init();
@@ -81,25 +73,25 @@ public class MainActivity extends ActionBarActivity implements PreviousOrderDial
         List<OrderItemDetails> itemDetailses = new ArrayList<>();
         PrescriptionDetails prescriptionDetails1 = new PrescriptionDetails();
 
-        prescriptionDetails1.getMedicineList().add(new MedicineDetails("DD", MedicineDetails.MedicineTypes.Tablets, 42));
-        prescriptionDetails1.getMedicineList().add(new MedicineDetails("DD", MedicineDetails.MedicineTypes.Tablets,42));
-        prescriptionDetails1.getMedicineList().add(new MedicineDetails("DD", MedicineDetails.MedicineTypes.Tablets,42));
-        prescriptionDetails1.getMedicineList().add(new MedicineDetails("DD", MedicineDetails.MedicineTypes.Tablets,42));
+        prescriptionDetails1.addMedicine(new MedicineDetails("Disprin", MedicineDetails.MedicineTypes.Tablets,42));
+        prescriptionDetails1.addMedicine(new MedicineDetails("Vino 200ml", MedicineDetails.MedicineTypes.Tablets,42));
+        prescriptionDetails1.addMedicine(new MedicineDetails("Saradon", MedicineDetails.MedicineTypes.Tablets,42));
+        prescriptionDetails1.addMedicine(new MedicineDetails("Vicks Action 500", MedicineDetails.MedicineTypes.Tablets,42));
 
         PrescriptionDetails prescriptionDetails2 = new PrescriptionDetails();
 
-        prescriptionDetails2.getMedicineList().add(new MedicineDetails("FD", MedicineDetails.MedicineTypes.Tablets,42));
-        prescriptionDetails2.getMedicineList().add(new MedicineDetails("FFD", MedicineDetails.MedicineTypes.Tablets,42));
-        prescriptionDetails2.getMedicineList().add(new MedicineDetails("FD", MedicineDetails.MedicineTypes.Tablets, 42));
+        prescriptionDetails2.addMedicine(new MedicineDetails("Paracitamol", MedicineDetails.MedicineTypes.Tablets,42));
+        prescriptionDetails2.addMedicine(new MedicineDetails("Calpol", MedicineDetails.MedicineTypes.Tablets,42));
+        prescriptionDetails2.addMedicine(new MedicineDetails("Anacin", MedicineDetails.MedicineTypes.Tablets, 42));
 
-        itemDetailses.add(new OrderItemDetails(OrderItemDetails.TypesOfOrder.TRANSLATED_PRESCRIPTION,prescriptionDetails1,false));
-        itemDetailses.add(new OrderItemDetails(OrderItemDetails.TypesOfOrder.TRANSLATED_PRESCRIPTION,prescriptionDetails2,false));
+        itemDetailses.add(new OrderItemDetails(prescriptionDetails1));
+        itemDetailses.add(new OrderItemDetails(prescriptionDetails2));
 
-        itemDetailses.add(new OrderItemDetails(new MedicineDetails("AA",MedicineDetails.MedicineTypes.Tablets,42),false));
-        itemDetailses.add(new OrderItemDetails(new MedicineDetails("BA",MedicineDetails.MedicineTypes.Tablets,32),false));
+        itemDetailses.add(new OrderItemDetails(new MedicineDetails("Crocin 250mg",MedicineDetails.MedicineTypes.Tablets,42),false));
+        itemDetailses.add(new OrderItemDetails(new MedicineDetails("Sumo 100mg",MedicineDetails.MedicineTypes.Tablets,32),false));
 
         orderDetails = new OrderDetails(1030,2000f,"A - 1002 PRERNA TOWER VASTRAPUR",
-                new Status(Status.STATUSES.DELIVERED),Calendar.DATE,itemDetailses);
+                new Status(Status.STATUSES.DELIVERED),Calendar.getInstance().getTime(),itemDetailses);
 
         orderListAdapter.add(orderDetails);
         orderListAdapter.add(orderDetails);
@@ -222,13 +214,14 @@ public class MainActivity extends ActionBarActivity implements PreviousOrderDial
                 }
 
                 frag3.addNewPrescription(fileUri);
+                frag3.updateBottomMenu();
                 break;
 
-           /* case R.id.prescriptionCardImageButton1:
+            case R.id.prescriptionCardImageView1:
                 ZoomDialog zoomDialog = new ZoomDialog();
                 zoomDialog.setImageUri((Uri) object);
                 zoomDialog.show(getSupportFragmentManager(), ZoomDialog.TAG);
-                break;*/
+                break;
 
             case R.id.searchMedicineSearchView1:
                 BuyMedicineFragment frag4 = (BuyMedicineFragment) getSupportFragmentManager().
@@ -237,10 +230,11 @@ public class MainActivity extends ActionBarActivity implements PreviousOrderDial
                 if (frag4 == null) {
                     Toast.makeText(this, "State Loss", Toast.LENGTH_SHORT).show();
                 }
-                frag4.addNewMedicine(new MedicineDetails((String) object, MedicineDetails.MedicineTypes.Tablets, 32));
+                frag4.addNewMedicine(new MedicineDetails((String) object, MedicineDetails.MedicineTypes.Bottles));
+                frag4.updateBottomMenu();
                 break;
 
-            case R.id.previousOrderListView:
+            case R.id.orderCardTextView6:
                 PreviousOrderDialog previousOrderDialog1 = (PreviousOrderDialog)
                         getSupportFragmentManager().findFragmentByTag(PreviousOrderDialog.TAG);
 
@@ -258,7 +252,7 @@ public class MainActivity extends ActionBarActivity implements PreviousOrderDial
                 }
                 break;
 
-            case R.id.previousOrderDialogButton1:
+            /*case R.id.previousOrderDialogButton1:
                 BuyMedicineFragment frag6 = (BuyMedicineFragment) getSupportFragmentManager().
                         findFragmentByTag(BuyMedicineFragment.TAG);
 
@@ -268,7 +262,7 @@ public class MainActivity extends ActionBarActivity implements PreviousOrderDial
 
                 frag6.addNewPreviousOrders((List<OrderDetails>) object);
 
-                break;
+                break;*/
             default:
                 break;
         }
@@ -307,6 +301,42 @@ public class MainActivity extends ActionBarActivity implements PreviousOrderDial
         Intent intent = new Intent(this,NotificationActivity.class);
         intent.putExtra("Order",orderDetails);
         startActivity(intent);
+    }
+
+    public void updateCart(OrderItemDetails details){
+        PreviousOrderDialog previousOrderDialog = (PreviousOrderDialog) getSupportFragmentManager().
+                findFragmentByTag(PreviousOrderDialog.TAG);
+        if (previousOrderDialog != null)
+            previousOrderDialog.updateCart(details);
+
+        BuyMedicineFragment buyMedicineFragment = (BuyMedicineFragment)getSupportFragmentManager().
+                findFragmentByTag(BuyMedicineFragment.TAG);
+        if(buyMedicineFragment!=null) {
+            buyMedicineFragment.updateCartAdapter();
+        }
+    }
+
+    public void updateBottomMenu(){
+        BuyMedicineFragment buyMedicineFragment = (BuyMedicineFragment)getSupportFragmentManager().
+                findFragmentByTag(BuyMedicineFragment.TAG);
+        if(buyMedicineFragment!=null) {
+            buyMedicineFragment.updateBottomMenu();
+        }
+    }
+
+    public void repeatOrder(OrderDetails details){
+        PreviousOrderDialog previousOrderDialog = (PreviousOrderDialog) getSupportFragmentManager().
+                findFragmentByTag(PreviousOrderDialog.TAG);
+        if(previousOrderDialog != null)
+            previousOrderDialog.dismiss();
+
+        BuyMedicineFragment buyMedicineFragment = (BuyMedicineFragment)getSupportFragmentManager().
+                findFragmentByTag(BuyMedicineFragment.TAG);
+        if(buyMedicineFragment!=null) {
+            buyMedicineFragment.repeatOrder(details);
+            buyMedicineFragment.updateBottomMenu();
+        }
+
     }
 
 }

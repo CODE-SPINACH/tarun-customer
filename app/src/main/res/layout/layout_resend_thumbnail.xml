@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/resendThumbnailRelativeLayout1"
+    android:layout_width="@dimen/thumbnail_size"
+    android:padding="3dp"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:background="#eee"
+        android:scaleType="fitXY"
+        android:id="@+id/resendThumbnailImageView1"
+        android:padding="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <ImageView
+        android:background="#eee"
+        android:id="@+id/resendThumbnailImageView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/resendThumbnailImageView1"/>
+
+</RelativeLayout>

@@ -6,16 +6,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.app.drugcorner32.dc_template.Data.MedicineDetails;
 import com.app.drugcorner32.dc_template.Data.OrderDetails;
 import com.app.drugcorner32.dc_template.Data.OrderItemDetails;
+import com.app.drugcorner32.dc_template.Data.PrescriptionDetails;
 import com.app.drugcorner32.dc_template.R;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,19 +24,17 @@ import java.util.List;
  */
 public class OrderListAdapter extends ArrayAdapter<OrderDetails> {
 
+    private SimpleDateFormat dateFormat=new SimpleDateFormat("dd-MMMM-yyyy");
+
     private Callback callback;
     public static class ViewHolder{
-        //Hidden views made visible at the time of selection from previous order
-        public CheckBox checkBox;
-        public ImageView orderDetailImage;
-
-        public TextView orderNo;
-        public TextView orderDate;
-        public TextView orderAddress;
-
-        public TextView orderAmount;
-
-        public TextView orderStatus;
+        public TextView orderRecipientNameView;
+        public TextView orderDateView;
+        public TextView orderMedicineNamesView;
+        public TextView orderAmountView;
+        public TextView orderStatusView;
+        public TextView pickMedicineView;
+        public TextView repeatView;
     }
 
     //Sets whether to display the hidden views . i.e. they will be displayed in selection from previous order
@@ -76,89 +73,62 @@ public class OrderListAdapter extends ArrayAdapter<OrderDetails> {
             LayoutInflater inflater = (LayoutInflater) this.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             view = inflater.inflate(R.layout.cards_order, parent, false);
 
-            holder.checkBox = (CheckBox) view.findViewById(R.id.orderCheckBox);
+            holder.orderRecipientNameView= (TextView) view.findViewById(R.id.orderCardTextView1);
+            holder.orderAmountView = (TextView) view.findViewById(R.id.orderCardTextView2);
+            holder.orderDateView= (TextView) view.findViewById(R.id.orderCardTextView3);
+            holder.orderStatusView= (TextView) view.findViewById(R.id.orderCardTextView4);
+            holder.orderMedicineNamesView = (TextView) view.findViewById(R.id.orderCardTextView5);
+            holder.pickMedicineView= (TextView) view.findViewById(R.id.orderCardTextView6);
+            holder.repeatView= (TextView) view.findViewById(R.id.orderCardTextView7);
 
-            holder.orderNo = (TextView) view.findViewById(R.id.orderNoTextView);
-            holder.orderAmount = (TextView) view.findViewById(R.id.orderAmountTextView);
-            holder.orderDate = (TextView) view.findViewById(R.id.orderDateTextView);
-            holder.orderAddress = (TextView) view.findViewById(R.id.orderAddressTextView);
-
-            holder.orderStatus = (TextView) view.findViewById(R.id.orderStatusTextView);
-            TextView orderStatus = (TextView)view.findViewById(R.id.orderStatusTextView);
-            TextView orderAddress0 = (TextView)view.findViewById(R.id.orderAddressTextView);
-            TextView orderAddress1 = (TextView)view.findViewById(R.id.orderAddressTextView1);
-            TextView orderAddress3 = (TextView)view.findViewById(R.id.orderAddressTextView13);
-            TextView orderAddress2 = (TextView)view.findViewById(R.id.orderAddressTextView12);
-            TextView orderAddress4 = (TextView)view.findViewById(R.id.orderAddressTextView14);
-            TextView orderAddress5 = (TextView)view.findViewById(R.id.orderAddressTextView15);
-            TextView orderAddress6 = (TextView)view.findViewById(R.id.orderAddressTextView16);
-            TextView orderDate = (TextView)view.findViewById(R.id.orderDateTextView);
-            TextView orderAmount = (TextView)view.findViewById(R.id.orderAmountTextView);
-            TextView orderNo = (TextView)view.findViewById(R.id.orderNoTextView);
-            TextView orderRepeat  = (TextView)view.findViewById(R.id.orderRepeat);
-            TextView orderSelect  = (TextView)view.findViewById(R.id.orderSelect);
-
-
-
-            Typeface typeFace=Typeface.createFromAsset(orderStatus.getContext().getAssets(),"fonts/gothic.ttf");
-            orderStatus.setTypeface(typeFace);
-            orderAddress0.setTypeface(typeFace);
-            orderAddress1.setTypeface(typeFace);
-            orderAddress2.setTypeface(typeFace);
-            orderAddress3.setTypeface(typeFace);
-            orderAddress4.setTypeface(typeFace);
-            orderAddress5.setTypeface(typeFace);
-            orderAddress6.setTypeface(typeFace);
-            orderDate.setTypeface(typeFace);
-            orderAmount.setTypeface(typeFace);
-            orderNo.setTypeface(typeFace);
-            orderRepeat.setTypeface(typeFace);
-            orderSelect.setTypeface(typeFace);
-
-
-
-            holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    OrderDetails details = orderList.get(position);
-
-                    details.setSelection(isChecked);
-                    for(OrderItemDetails item : details.getOrderItemsList()){
-                        if(!item.getDisabled()) {
-                            if (item.getOrderType() == OrderItemDetails.TypesOfOrder.TRANSLATED_PRESCRIPTION)
-                                for (MedicineDetails details1 : item.getPrescriptionDetails().getMedicineList())
-                                    details1.setSelection(isChecked);
-
-                            item.setSelected(isChecked);
-                        }
-                    }
-                    callback.deliverOrderToDialog(details);
-                }
-            });
+            Typeface typeFace=Typeface.createFromAsset(getContext().getAssets(),"fonts/gothic.ttf");
+            holder.repeatView.setTypeface(typeFace);
+            holder.pickMedicineView.setTypeface(typeFace);
+            holder.orderStatusView.setTypeface(typeFace);
+            holder.orderMedicineNamesView.setTypeface(typeFace);
+            holder.orderAmountView.setTypeface(typeFace);
+            holder.orderDateView.setTypeface(typeFace);
+            holder.orderRecipientNameView.setTypeface(typeFace);
 
             view.setTag(holder);
         }
-        else {
+        else
             holder = (ViewHolder)view.getTag();
+
+        final OrderDetails details = getItem(position);
+        holder.orderRecipientNameView.setText(details.getOrderNo()+"");
+        holder.orderAmountView.setText(details.getOrderAmount() + " /-");
+        holder.orderStatusView.setText("" + details.getOrderStatus().toString());
+        holder.orderDateView.setText(dateFormat.format(details.getOrderDate()));
+        String appendedMedicineName = "";
+        for(OrderItemDetails itemDetails : details.getOrderItemsList()){
+            if(itemDetails.getOrderType() == OrderItemDetails.TypesOfOrder.PRESCRIPTION)
+                if(itemDetails.getPrescriptionDetails().getPrescriptionType() ==
+                        PrescriptionDetails.TypesOfPrescription.TRANSLATED_PRESCRIPTION)
+                    for(MedicineDetails medicineDetails: itemDetails.getPrescriptionDetails().getMedicineList())
+                        appendedMedicineName += medicineDetails.getMedicineName() + ",";
+            else
+                appendedMedicineName += itemDetails.getMedicineDetails().getMedicineName() + ",";
         }
+        if(appendedMedicineName.length() > 0)
+            appendedMedicineName = appendedMedicineName.substring(0,appendedMedicineName.length() - 1);
 
-        if(isSelctable){
-            holder.checkBox.setVisibility(View.GONE);
-        }
-        else{
-            holder.checkBox.setVisibility(View.GONE);
-        }
+        holder.orderMedicineNamesView.setText(appendedMedicineName);
 
-        OrderDetails details = getItem(position);
-        holder.orderNo.setText("drugCorner"+details.getOrderNo() + "");
+        holder.pickMedicineView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                callback.replaceFragment(R.id.orderCardTextView6, getItem(position));
+            }
+        });
 
-        holder.checkBox.setChecked(details.getSelection());
-        //displays two decimal digits of the amount
-        holder.orderAmount.setText(details.getOrderAmount() + " /-");
+        holder.repeatView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                callback.repeatOrder(getItem(position));
+            }
+        });
 
-        //holder.orderDate.setText(details.getOrderDate() + "");
-        holder.orderAddress.setText(details.getOrderDeliveryAddress());
-        holder.orderStatus.setText("" + details.getOrderStatus().toString());
         return view;
     }
 
@@ -167,6 +137,7 @@ public class OrderListAdapter extends ArrayAdapter<OrderDetails> {
     }
 
     public static interface Callback{
-        public void deliverOrderToDialog(OrderDetails details);
+        public void replaceFragment(int id,Object o);
+        public void repeatOrder(OrderDetails details);
     }
 }

@@ -54,8 +54,6 @@ public class SendPrescriptionDialog extends DialogFragment {
     }
 
     public void onStart() {
-
-
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
         Window window = getDialog().getWindow();
         lp.copyFrom(window.getAttributes());
@@ -102,7 +100,7 @@ public class SendPrescriptionDialog extends DialogFragment {
         return view;
     }
 
-    public static interface Callback{
-        public void takePhoto();
+    public interface Callback{
+        void takePhoto();
     }
 }

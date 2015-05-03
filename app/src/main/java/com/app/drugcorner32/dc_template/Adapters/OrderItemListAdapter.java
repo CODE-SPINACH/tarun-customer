@@ -1,26 +1,25 @@
+
 package com.app.drugcorner32.dc_template.Adapters;
 
+import android.animation.Animator;
+import android.animation.ValueAnimator;
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.ImageButton;
+import android.widget.BaseExpandableListAdapter;
+import android.widget.Button;
+import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.app.drugcorner32.dc_template.Data.MedicineDetails;
 import com.app.drugcorner32.dc_template.Data.OrderItemDetails;
 import com.app.drugcorner32.dc_template.Data.PrescriptionDetails;
+import com.app.drugcorner32.dc_template.Interfaces.OnFragmentChange;
 import com.app.drugcorner32.dc_template.R;
 
 import java.util.ArrayList;
@@ -29,558 +28,70 @@ import java.util.List;
 
 /**
  * Created by Tarun on 10-03-2015.
+ *
  */
-public class OrderItemListAdapter extends BaseAdapter {
 
-    Callback callback;
+public class OrderItemListAdapter extends BaseExpandableListAdapter{
 
-    /*Sets whether the item can be edited or not. e.g. in
-    previous orders the items won't be edited. */
-    private boolean isEditable = false;
+    @Override
+    public boolean hasStableIds() {
+        return false;
+    }
 
-    /*Sets so as to make the item selectable.
-    The item would be selectable only in the previous order and the
-    edit the current order screen
-     */
-    private boolean isSelectable = false;
+    @Override
+    public MedicineDetails getChild(int groupPosition, int childPosition) {
+        return itemDetailsList.get(groupPosition).getPrescriptionDetails().getMedicineList().get(childPosition);
+    }
 
-    private boolean childChnage = false;
+    class ChildViewHolder {
+        public LinearLayout layout;
+        public TextView nameOfMedicineTextView;
+        public TextView costOfMedicineTextView;
+        public TextView tabletTextView;
+        public TextView orTextView;
+        public TextView stripTextView;
+        public TextView numberOfMedicineTextView;
+        public TextView removeTextView;
+        public Button incrementButton;
+        public Button decrementButton;
+    }
 
-    private List<OrderItemDetails> itemDetailsList = new ArrayList<>();
+    class GroupViewHolder0 {
+        public ImageView prescriptionImage;
+        public LinearLayout prescriptionLayout;
+        public TextView costTextView;
+        public TextView nameOfDrugsTextView;
+        public TextView removeView;
+    }
 
-    private int selectionCount = 0;
+    class GroupViewHolder1 {
+        public LinearLayout medicineLayout;
+        public TextView nameOfMedicineTextView;
+        public TextView costOfMedicineTextView;
+        public TextView tabletTextView;
+        public TextView orTextView;
+        public TextView stripTextView;
+        public TextView numberOfMedicineTextView;
+        public TextView removeTextView;
+        public Button incrementButton;
+        public Button decrementButton;
+    }
 
     private Context context;
+    private OnFragmentChange callback1;
+    private Callback callback2;
+    private List<OrderItemDetails> itemDetailsList = new ArrayList<>();
+    private boolean isSelectable;
+    private Typeface typeFace;
+    private ExpandableListView expandableListView;
 
-    private Integer[] spinnerArray = new Integer[100];
-
-    public OrderItemListAdapter(Context context){
+    public OrderItemListAdapter(Context context) {
         this.context = context;
-        callback = (Callback)context;
-
-        for(int i =0;i<100;i++) {
-            spinnerArray[i] = i + 1;
-        }
+        callback1 = (OnFragmentChange) context;
+        callback2 = (Callback) context;
+        typeFace = Typeface.createFromAsset(context.getAssets(), "fonts/gothic.ttf");
     }
 
-    public void add(OrderItemDetails item){
-        itemDetailsList.add(item);
-    }
-
-    @Override
-    public long getItemId(int position) {
-        return position;
-    }
-
-    @Override
-    public OrderItemDetails getItem(int position) {
-        return itemDetailsList.get(position);
-    }
-
-    @Override
-    public int getCount() {
-        return itemDetailsList.size();
-    }
-
-    @Override
-    public int getItemViewType(int position) {
-        switch (itemDetailsList.get(position).getOrderType())
-        {
-            case TRANSLATED_PRESCRIPTION:
-                return 0;
-            case UNTRANSLATED_PRESCRIPTION:
-                return 1;
-            case OTC:
-                return 2;
-            default:
-                return 0;
-        }
-    }
-
-    @Override
-    public int getViewTypeCount() {
-        return 3;
-    }
-
-    @Override
-    public View getView(final int position, View convertView, ViewGroup parent) {
-        View view = convertView;
-        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
-        class ViewHolder0{
-            public LinearLayout maximizedLayout;
-            public LinearLayout minimizedLayout;
-            public LinearLayout editLayout;
-            public ArrayList<LinearLayout> linearLayouts;
-            public ImageButton crossButton;
-            public CheckBox checkBox;
-            public TextView costView;
-            public TextView numberOfDrugsView;
-
-            public int count = 0;
-        }
-
-        class ViewHolder1{
-
-            public LinearLayout minimizedLayout;
-            public ImageView prescriptionImage;
-            public ImageButton crossButton;
-            public TextView prescriptionCountView;
-        }
-
-        class ViewHolder2{
-            public LinearLayout minimizedLayout;
-            public LinearLayout maximizedLayout;
-            public CheckBox checkBox;
-            public TextView nameOfMedicineTextView;
-            public TextView costOfMedicineTextView;
-            public ImageView typeOfMedicineImageView;
-            public ImageButton crossButton;
-            public RadioGroup radioGroup;
-            public RadioButton tabletRadioButton;
-            public RadioButton stripsRadioButton;
-            public RadioButton bottlesRadioButton;
-            public Spinner quantityPicker;
-        }
-
-        //sets whether to show the children or not
-        final boolean isExpanded = getItem(position).getExpanded();
-
-        int viewType = getItemViewType(position);
-        switch (viewType){
-            case 0:
-                final ViewHolder0 holder0;
-                final int childCount = getItem(position).getPrescriptionDetails().getMedicineList().size();
-                if(view == null) {
-                    holder0 = new ViewHolder0();
-                    view = inflater.inflate(R.layout.cards_translated_prescription, parent, false);
-
-                    //The vertical layout where the children are to be added i.e. the medicines in the prescription
-                    holder0.maximizedLayout = (LinearLayout) view.findViewById(R.id.translatedPrescriptionLinearLayout4);
-
-                    //The horizontal layout on whose touch event the children are to be shown
-                    holder0.minimizedLayout = (LinearLayout) view.findViewById(R.id.translatedPrescriptionLinearLayout2);
-
-                    //The array contains all the child views which are being added dynamically
-                    holder0.linearLayouts = new ArrayList<>(childCount);
-
-                   // holder0.editLayout = (LinearLayout)view.findViewById(R.id.translatedPrescriptionLinearLayout3);
-                   // holder0.crossButton = (ImageButton)view.findViewById(R.id.translatedPrescriptionImageButton2);
-                    holder0.checkBox = (CheckBox)view.findViewById(R.id.translatedPrescriptionCheckBox1);
-
-                    holder0.costView = (TextView)view.findViewById(R.id.translatedPrescriptionTextView2);
-
-                    holder0.numberOfDrugsView = (TextView)view.findViewById(R.id.translatedPrescriptionTextView1);
-                    TextView translatedPrescriptionRate = (TextView)view.findViewById(R.id.translatedPrescriptionRate);
-                    TextView translatedPrescriptionMedicinesName = (TextView)view.findViewById(R.id.translatedPrescriptionMedicinesName);
-                    TextView translatedPrescriptionAddPrescription = (TextView)view.findViewById(R.id.translatedPrescriptionAddPrescription);
-                    TextView translatedPrescriptionRemovePrescription = (TextView)view.findViewById(R.id.translatedPrescriptionRemovePrescription);
-                    Typeface typeFace=Typeface.createFromAsset(translatedPrescriptionAddPrescription.getContext().getAssets(),"fonts/gothic.ttf");
-                    translatedPrescriptionRate.setTypeface(typeFace);
-                    translatedPrescriptionMedicinesName.setTypeface(typeFace);
-                    translatedPrescriptionAddPrescription.setTypeface(typeFace);
-                    translatedPrescriptionRemovePrescription.setTypeface(typeFace);
-
-
-
-                    //The children are being set i.e. the medicines in the prescription
-                    for(int i = 0;i< childCount;i++) {
-                        holder0.linearLayouts.add((LinearLayout) inflater.
-                                inflate(R.layout.cards_child_prescription, null, false));
-                        LinearLayout layout = holder0.linearLayouts.get(i);
-
-                        if(getItem(position).getPrescriptionDetails().getMedicineList().get(i).getDisabled()) {
-                            layout.findViewById(R.id.prescriptionChildCheckBox1).setEnabled(false);
-                        }
-
-                        /*The items are added at index 1 to add them between
-                        the tick button and the main layout
-                          */
-
-                        holder0.maximizedLayout.addView(layout, i);
-                    }
-                    if(getItem(position).getDisabled())
-                        holder0.checkBox.setEnabled(false);
-
-                    view.setTag(holder0);
-               }
-                else
-                    holder0 = (ViewHolder0)view.getTag();
-
-                holder0.checkBox.setChecked(getItem(position).getSelected());
-                holder0.count = 0;
-
-                holder0.numberOfDrugsView.setText(""+childCount + " DRUGS");
-                holder0.costView.setText(getItem(position).getPrescriptionDetails().getCost() + "/-");
-
-                if(childCount != holder0.linearLayouts.size()) {
-                    holder0.maximizedLayout.removeAllViews();
-                    holder0.linearLayouts.clear();
-                    for (int i = 0; i < childCount; i++) {
-                        holder0.linearLayouts.add((LinearLayout) inflater.
-                                inflate(R.layout.cards_child_prescription, null, false));
-                        holder0.maximizedLayout.addView(holder0.linearLayouts.get(i), i);
-                    }
-                }
-
-
-                for(int i = 0;i<childCount;i++) {
-                    final MedicineDetails medicineDetails = getItem(position).getPrescriptionDetails().getMedicineList().get(i);
-                    final LinearLayout layout = holder0.linearLayouts.get(i);
-
-                    TextView nameOfMedicineView = (TextView) layout.findViewById(R.id.prescriptionChildTextView1);
-                    TextView costView = (TextView) layout.findViewById(R.id.prescriptionChildTextView2);
-                    Spinner quantityPicker = (Spinner) layout.findViewById(R.id.prescriptionChildSpinner1);
-                   // ImageButton crossButton = (ImageButton) layout.findViewById(R.id.prescriptionChildImageButton1);
-                    CheckBox checkBox = (CheckBox) layout.findViewById(R.id.prescriptionChildCheckBox1);
-
-                    ArrayAdapter<Integer> spinnerAdapter = new ArrayAdapter<>(context,android.R.layout.simple_spinner_item,spinnerArray);
-                    quantityPicker.setAdapter(spinnerAdapter);
-
-                    quantityPicker.setSelection(medicineDetails.getQuantity());
-                    nameOfMedicineView.setText(medicineDetails.getMedicineName());
-                    costView.setText(medicineDetails.getCost() * medicineDetails.getDays() * medicineDetails.getQuantityPerDay() + "/-");
-                    checkBox.setChecked(medicineDetails.getSelection());
-
-                    if(isSelectable) {
-                        quantityPicker.setClickable(false);
-                        quantityPicker.setEnabled(false);
-                        checkBox.setVisibility(View.VISIBLE);
-                        if (medicineDetails.getSelection())
-                            holder0.count++;
-                    }
-
-                   /* if(isEditable){
-                        crossButton.setVisibility(View.VISIBLE);
-                    }*/
-
-                    //child events
-                    checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                        @Override
-                        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                            medicineDetails.setSelection(isChecked);
-                            if (isChecked)
-                                holder0.count++;
-                            else
-                                holder0.count--;
-
-                            if (holder0.count == 0) {
-                                getItem(position).setSelected(false);
-                                holder0.checkBox.setChecked(false);
-                            } else if (!getItem(position).getSelected() && holder0.count == 1) {
-                                childChnage = true;
-                                getItem(position).setSelected(true);
-                                holder0.checkBox.setChecked(true);
-                            }
-                        }
-                    });
-
-
-                   /* crossButton.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            holder0.maximizedLayout.removeView(layout);
-                            holder0.linearLayouts.remove(layout);
-                            getItem(position).getPrescriptionDetails().getMedicineList().remove(medicineDetails);
-                            if(holder0.linearLayouts.size() == 0)
-                                itemDetailsList.remove(position);
-                            notifyDataSetChanged();
-                        }
-                    });*/
-
-                    quantityPicker.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                        @Override
-                        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                            medicineDetails.setQuantity(position + 1);
-                        }
-
-                        @Override
-                        public void onNothingSelected(AdapterView<?> parent) {
-
-                        }
-                    });
-                }
-
-
-
-                if(isEditable){
-                   // holder0.editLayout.setVisibility(View.VISIBLE);
-                  //  holder0.crossButton.setVisibility(View.VISIBLE);
-                }
-
-                if(isSelectable){
-                    holder0.checkBox.setVisibility(View.VISIBLE);
-                }
-
-                if(isExpanded)
-                    holder0.maximizedLayout.setVisibility(View.VISIBLE);
-
-                //Events :
-
-                holder0.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                    @Override
-                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                        getItem(position).setSelected(isChecked);
-                        if(!childChnage){
-                                for (int i = 0; i < childCount; i++) {
-                                    itemDetailsList.get(position).getPrescriptionDetails().getMedicineList().get(i).setSelection(isChecked);
-                                    CheckBox c = ((CheckBox) holder0.linearLayouts.get(i).findViewById(R.id.prescriptionChildCheckBox1));
-                                    c.setChecked(isChecked);
-                                }
-                            }
-                        childChnage = false;
-                    }
-                });
-
-
-               /* holder0.crossButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        itemDetailsList.remove(position);
-                        notifyDataSetChanged();
-                    }
-                });*/
-
-
-                holder0.minimizedLayout.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                        if(holder0.maximizedLayout.getVisibility() == View.VISIBLE) {
-                            holder0.maximizedLayout.setVisibility(View.GONE);
-                            getItem(position).setExpanded(false);
-                        }
-                        else {
-                            holder0.maximizedLayout.setVisibility(View.VISIBLE);
-                            getItem(position).setExpanded(true);
-                        }
-
-                    }
-                });
-
-                break;
-            case 1:
-                final PrescriptionDetails prescriptionDetails = getItem(position).getPrescriptionDetails();
-                final ViewHolder1 holder1;
-
-                int count = 0 ;
-
-                if(view == null) {
-                    view = inflater.inflate(R.layout.cards_prescription, parent, false);
-
-                    holder1 = new ViewHolder1();
-
-                    holder1.minimizedLayout = (LinearLayout) view.findViewById(R.id.prescriptionCardLinearLayout1);
-                    holder1.prescriptionImage = (ImageView) view.findViewById(R.id.prescriptionCardImageView1);
-                    //holder1.crossButton = (ImageButton) view.findViewById(R.id.prescriptionCardImageButton1);
-                    holder1.prescriptionCountView = (TextView) view.findViewById(R.id.prescriptionCardTextView1);
-                    holder1.prescriptionImage.setImageBitmap(prescriptionDetails.getThumbnail());
-
-                    for(OrderItemDetails details : itemDetailsList){
-                        if(details.getOrderType() == OrderItemDetails.TypesOfOrder.UNTRANSLATED_PRESCRIPTION) {
-                            if(details.equals(getItem(position)))
-                                break;
-                            count++;
-                        }
-                    }
-                    TextView prescriptionCardTextView1 = (TextView)view.findViewById(R.id.prescriptionCardTextView1);
-                    TextView prescriptionCardTextView2 = (TextView)view.findViewById(R.id.prescriptionCardTextView2);
-                    Typeface typeFace=Typeface.createFromAsset(prescriptionCardTextView2.getContext().getAssets(),"fonts/gothic.ttf");
-                    prescriptionCardTextView2.setTypeface(typeFace);
-                    prescriptionCardTextView1.setTypeface(typeFace);
-                    holder1.prescriptionCountView.setText("PRESCRIPTION " + (count+1));
-
-                    view.setTag(holder1);
-                }
-                else
-                     holder1 = (ViewHolder1)view.getTag();
-
-
-                //events :
-
-               /* holder1.crossButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        itemDetailsList.remove(position);
-                        notifyDataSetChanged();
-                    }
-                });*/
-
-                //expand the view for edit on clicking the minimized view
-              /*  holder1.minimizedLayout.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        callback.replaceFragment(R.id.prescriptionCardImageButton1,prescriptionDetails.getImageUri());
-                    }
-                });*/
-
-                break;
-
-            case 2:
-                //TODO set check on the max number of medicines quantity that are allowed
-                final MedicineDetails medicineDetails = getItem(position).getMedicineDetails();
-                final ViewHolder2 holder2;
-                if(view == null) {
-                    view = inflater.inflate(R.layout.cards_medicine, parent, false);
-                    holder2 = new ViewHolder2();
-
-                    holder2.minimizedLayout = (LinearLayout) view.findViewById(R.id.medicineCardLinearLayout2);
-                    holder2.maximizedLayout = (LinearLayout) view.findViewById(R.id.medicineCardLinearLayout3);
-
-                    holder2.checkBox = (CheckBox) view.findViewById(R.id.medicineCardCheckBox1);
-                    holder2.nameOfMedicineTextView = (TextView) view.findViewById(R.id.medicineCardTextView1);
-                    holder2.costOfMedicineTextView = (TextView) view.findViewById(R.id.medicineCardTextView3);
-                    holder2.radioGroup = (RadioGroup)view.findViewById(R.id.medicineCardRadioGroup1);
-                    holder2.typeOfMedicineImageView = (ImageView) view.findViewById(R.id.medicineCardImageView1);
-                   // holder2.crossButton = (ImageButton) view.findViewById(R.id.medicineCardImageButton1);
-                    holder2.tabletRadioButton = (RadioButton) view.findViewById(R.id.medicineCardRadioButton1);
-                    holder2.stripsRadioButton = (RadioButton) view.findViewById(R.id.medicineCardRadioButton2);
-                    holder2.bottlesRadioButton = (RadioButton) view.findViewById(R.id.medicineCardRadioButton3);
-                    holder2.quantityPicker = (Spinner) view.findViewById(R.id.medicineCardSpinner1);
-                    //Typeface for all TextViews
-                    TextView medicineName = (TextView)view.findViewById(R.id.medicineCardTextView1);
-                    TextView medicineRate = (TextView)view.findViewById(R.id.medicineCardTextView3);
-                    TextView medicineCardTabletTextView = (TextView)view.findViewById(R.id.medicineCardTabletTextView);
-                    TextView medicineCardOrTextView = (TextView)view.findViewById(R.id.medicineCardOrTextView);
-                    TextView medicineCardStripTextView = (TextView)view.findViewById(R.id.medicineCardStripTextView);
-                    TextView medicineCardButtonIncrement = (TextView)view.findViewById(R.id.medicineCardButtonIncrement);
-                    TextView medicineCardButtonDecrement = (TextView)view.findViewById(R.id.medicineCardButtonDecrement);
-                    TextView medicineCardMedicineQuantity = (TextView)view.findViewById(R.id.medicineCardMedicineQuantity);
-
-
-
-
-
-                    Typeface typeFace=Typeface.createFromAsset(medicineName.getContext().getAssets(),"fonts/gothic.ttf");
-                    medicineName.setTypeface(typeFace);
-                    medicineRate.setTypeface(typeFace);
-                    medicineCardTabletTextView.setTypeface(typeFace);
-                    medicineCardOrTextView.setTypeface(typeFace);
-                    medicineCardStripTextView.setTypeface(typeFace);
-                    medicineCardButtonIncrement.setTypeface(typeFace);
-                    medicineCardButtonDecrement.setTypeface(typeFace);
-                    medicineCardMedicineQuantity.setTypeface(typeFace);
-
-
-
-                    ArrayAdapter<Integer> spinnerAdapter = new ArrayAdapter<Integer>(context,android.R.layout.simple_spinner_dropdown_item,spinnerArray);
-
-                    holder2.quantityPicker.setAdapter(spinnerAdapter);
-
-                    if(getItem(position).getDisabled())
-                        holder2.checkBox.setEnabled(false);
-
-                    view.setTag(holder2);
-                }
-                else
-                    holder2 = (ViewHolder2)view.getTag();
-
-
-                holder2.checkBox.setChecked(getItem(position).getSelected());
-                holder2.nameOfMedicineTextView.setText(medicineDetails.getMedicineName());
-
-                holder2.quantityPicker.setSelection(medicineDetails.getQuantity() - 1);
-                holder2.quantityPicker.setClickable(false);
-                holder2.quantityPicker.setEnabled(false);
-
-                if(isExpanded) {
-                    holder2.maximizedLayout.setVisibility(View.VISIBLE);
-                    holder2.quantityPicker.setClickable(true);
-                    holder2.quantityPicker.setEnabled(true);
-                }
-
-                if(isSelectable)
-                    holder2.checkBox.setVisibility(View.VISIBLE);
-
-              /*  if(!isEditable)
-                    holder2.crossButton.setVisibility(View.GONE);*/
-
-                //TODO : change the type of medicine image view here
-                //using typeofMedicineImageView
-
-                if(medicineDetails.getMedicineType() == MedicineDetails.MedicineTypes.Bottles){
-                    holder2.bottlesRadioButton.setVisibility(View.VISIBLE);
-                    holder2.bottlesRadioButton.setChecked(true);
-                }
-                else{
-                    holder2.tabletRadioButton.setVisibility(View.VISIBLE);
-                    holder2.stripsRadioButton.setVisibility(View.VISIBLE);
-                    if(medicineDetails.getMedicineType() == MedicineDetails.MedicineTypes.Strips)
-                        holder2.stripsRadioButton.setChecked(true);
-                    else
-                        holder2.tabletRadioButton.setChecked(true);
-                }
-
-                holder2.quantityPicker.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                    @Override
-                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                        int newVal = position + 1;
-                        medicineDetails.setQuantity(newVal);
-
-                        holder2.costOfMedicineTextView.setText(""+(newVal * 20.0) + "/-");
-                    }
-
-                    @Override
-                    public void onNothingSelected(AdapterView<?> parent) {
-
-                    }
-                });
-
-
-                holder2.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                    @Override
-                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                        getItem(position).setSelected(isChecked);
-                    }
-                });
-
-               /* holder2.crossButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        itemDetailsList.remove(position);
-                        notifyDataSetChanged();
-                    }
-                });*/
-
-                holder2.radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-                    @Override
-                    public void onCheckedChanged(RadioGroup group, int checkedId) {
-                        switch (checkedId){
-                            case R.id.medicineCardRadioButton1:
-                                medicineDetails.setMedicineType(MedicineDetails.MedicineTypes.Tablets);
-                                break;
-                            case R.id.medicineCardRadioButton2:
-                                medicineDetails.setMedicineType(MedicineDetails.MedicineTypes.Strips);
-                                break;
-                        }
-                    }
-                });
-               if(isEditable)
-                    holder2.minimizedLayout.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            if(holder2.maximizedLayout.getVisibility() == View.VISIBLE) {
-                                itemDetailsList.get(position).setExpanded(false);
-                                holder2.maximizedLayout.setVisibility(View.GONE);
-                                notifyDataSetChanged();
-                            }
-                            else{
-                                itemDetailsList.get(position).setExpanded(true);
-                                holder2.maximizedLayout.setVisibility(View.VISIBLE);
-                                notifyDataSetChanged();
-                            }
-                        }
-                    });
-
-                break;
-
-        }
-        return view;
-    }
-
-    public void setEditable(boolean val){
-        isEditable = val;
-    }
     public void setSelectable(boolean val){
         isSelectable = val;
     }
@@ -591,7 +102,481 @@ public class OrderItemListAdapter extends BaseAdapter {
 
     public List<OrderItemDetails> getItemDetailsList(){ return itemDetailsList; }
 
-    public static interface Callback{
-        public void replaceFragment(int id,Object o);
+
+    @Override
+    public boolean isChildSelectable(int groupPosition, int childPosition) {
+        return false;
     }
+
+    @Override
+    public int getGroupCount() {
+        return itemDetailsList.size();
+    }
+
+    @Override
+    public int getChildrenCount(int groupPosition) {
+        if(getGroupType(groupPosition) == 0)
+            if(getGroup(groupPosition).getPrescriptionDetails().getPrescriptionType() == PrescriptionDetails.TypesOfPrescription.TRANSLATED_PRESCRIPTION)
+                return itemDetailsList.get(groupPosition).getPrescriptionDetails().getMedicineList().size();
+        return 0;
+    }
+
+    @Override
+    public int getGroupTypeCount() {
+        return 2;
+    }
+
+    @Override
+    public View getGroupView(final int groupPosition, boolean isExpanded, final View convertView, final ViewGroup parent) {
+
+        View view = convertView;
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+
+        int viewType = getGroupType(groupPosition);
+        switch (viewType){
+            case 0:
+                final GroupViewHolder0 holder0;
+                final PrescriptionDetails prescriptionDetails1 = getGroup(groupPosition).getPrescriptionDetails();
+                final int childCount = prescriptionDetails1.getMedicineList().size();
+
+                if(view == null) {
+                    holder0 = new GroupViewHolder0();
+                    view = inflater.inflate(R.layout.cards_prescription, parent, false);
+
+                    //The horizontal layout on whose touch event the children are to be shown
+                    holder0.prescriptionLayout = (LinearLayout) view.findViewById(R.id.prescriptionCardLinearLayout1);
+
+                    holder0.prescriptionImage = (ImageView)view.findViewById(R.id.prescriptionCardImageView1);
+                    holder0.costTextView = (TextView)view.findViewById(R.id.prescriptionCardTextView1);
+                    holder0.nameOfDrugsTextView = (TextView)view.findViewById(R.id.prescriptionCardTextView2);
+                    holder0.removeView = (TextView) view.findViewById(R.id.prescriptionCardTextView3);
+
+                    holder0.nameOfDrugsTextView.setTypeface(typeFace);
+                    holder0.costTextView.setTypeface(typeFace);
+                    holder0.removeView.setTypeface(typeFace);
+
+                    if(isSelectable)
+                        holder0.removeView.setVisibility(View.GONE);
+
+                    view.setTag(holder0);
+                }
+                else
+                    holder0 = (GroupViewHolder0)view.getTag();
+
+                String appendedMedicineNames = "";
+
+                if(prescriptionDetails1.getPrescriptionType() == PrescriptionDetails.TypesOfPrescription.TRANSLATED_PRESCRIPTION) {
+                    for (int i = 0; i < childCount; i++) {
+                        MedicineDetails details = prescriptionDetails1.getMedicineList().get(i);
+                        appendedMedicineNames += (details.getMedicineName() + ",");
+                    }
+                    if (appendedMedicineNames.length() > 0)
+                        appendedMedicineNames = appendedMedicineNames.substring(0, appendedMedicineNames.length() - 1);
+                }
+                else {
+                    appendedMedicineNames = "Prescription not translated yet";
+                    holder0.costTextView.setVisibility(View.GONE);
+                }
+
+                holder0.prescriptionImage.setImageBitmap(prescriptionDetails1.getThumbnail());
+
+                holder0.nameOfDrugsTextView.setText(appendedMedicineNames);
+                holder0.costTextView.setText(prescriptionDetails1.getCost()+"/-");
+
+                //Events :
+                holder0.removeView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        for(MedicineDetails details : prescriptionDetails1.getMedicineList())
+                            details.setQuantity(0);
+                        expandableListView.collapseGroup(groupPosition);
+                        collapse(holder0.prescriptionLayout, groupPosition);
+                    }
+                });
+
+                holder0.prescriptionImage.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        callback1.replaceFragment(R.id.prescriptionCardImageView1,prescriptionDetails1.getImageUri());
+                    }
+                });
+
+                break;
+
+            case 1:
+                //TODO set check on the max number of medicines quantity that are allowed
+                final MedicineDetails medicineDetails = getGroup(groupPosition).getMedicineDetails();
+                final GroupViewHolder1 holder1;
+                if(view == null) {
+                    view = inflater.inflate(R.layout.cards_medicine, parent, false);
+                    holder1 = new GroupViewHolder1();
+
+                    holder1.medicineLayout = (LinearLayout) view.findViewById(R.id.medicineCardLinearLayout1);
+                    holder1.nameOfMedicineTextView = (TextView) view.findViewById(R.id.medicineCardTextView1);
+                    holder1.costOfMedicineTextView = (TextView) view.findViewById(R.id.medicineCardTextView2);
+                    holder1.tabletTextView = (TextView) view.findViewById(R.id.medicineCardTextView3);
+                    holder1.orTextView = (TextView) view.findViewById(R.id.medicineCardTextView4);
+                    holder1.stripTextView = (TextView) view.findViewById(R.id.medicineCardTextView5);
+                    holder1.numberOfMedicineTextView = (TextView) view.findViewById(R.id.medicineCardTextView6);
+                    holder1.removeTextView = (TextView) view.findViewById(R.id.medicineCardTextView7);
+                    holder1.decrementButton = (Button) view.findViewById(R.id.medicineCardButton1);
+                    holder1.incrementButton = (Button) view.findViewById(R.id.medicineCardButton2);
+
+                    holder1.numberOfMedicineTextView.setTypeface(typeFace);
+                    holder1.removeTextView.setTypeface(typeFace);
+                    holder1.stripTextView.setTypeface(typeFace);
+                    holder1.orTextView.setTypeface(typeFace);
+                    holder1.tabletTextView.setTypeface(typeFace);
+                    holder1.costOfMedicineTextView.setTypeface(typeFace);
+                    holder1.nameOfMedicineTextView.setTypeface(typeFace);
+                    holder1.decrementButton.setTypeface(typeFace);
+                    holder1.incrementButton.setTypeface(typeFace);
+
+                    view.setTag(holder1);
+                }
+                else
+                    holder1 = (GroupViewHolder1)view.getTag();
+
+
+                holder1.nameOfMedicineTextView.setText(medicineDetails.getMedicineName());
+                holder1.costOfMedicineTextView.setText(medicineDetails.getCost() * medicineDetails.getQuantity() + "/-");
+                holder1.numberOfMedicineTextView.setText(medicineDetails.getQuantity() + "");
+
+                if(medicineDetails.getMedicineType() == MedicineDetails.MedicineTypes.Strips) {
+                    holder1.orTextView.setVisibility(View.VISIBLE);
+                    holder1.stripTextView.setVisibility(View.VISIBLE);
+                    holder1.tabletTextView.setText("strip");
+                    holder1.stripTextView.setTextColor(Color.parseColor("#ea6125"));
+                    holder1.tabletTextView.setTextColor(Color.parseColor("#777777"));
+                }
+                else if(medicineDetails.getMedicineType() == MedicineDetails.MedicineTypes.Tablets) {
+                    holder1.orTextView.setVisibility(View.VISIBLE);
+                    holder1.stripTextView.setVisibility(View.VISIBLE);
+                    holder1.tabletTextView.setText("tablet");
+                    holder1.tabletTextView.setTextColor(Color.parseColor("#ea6125"));
+                    holder1.stripTextView.setTextColor(Color.parseColor("#777777"));
+                }
+                else if(medicineDetails.getMedicineType() == MedicineDetails.MedicineTypes.Bottles){
+                    holder1.orTextView.setVisibility(View.GONE);
+                    holder1.stripTextView.setVisibility(View.GONE);
+                    holder1.tabletTextView.setText("Bottles");
+                }
+
+                if(isSelectable)
+                    holder1.removeTextView.setVisibility(View.INVISIBLE);
+
+                holder1.tabletTextView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        medicineDetails.setMedicineType(MedicineDetails.MedicineTypes.Tablets);
+                        if(isSelectable)
+                            callback2.updateCart(null);
+                        holder1.tabletTextView.setTextColor(Color.parseColor("#ea6125"));
+                        holder1.stripTextView.setTextColor(Color.parseColor("#777777"));
+                    }
+                });
+
+                holder1.stripTextView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        medicineDetails.setMedicineType(MedicineDetails.MedicineTypes.Strips);
+                        if(isSelectable)
+                            callback2.updateCart(null);
+                        holder1.stripTextView.setTextColor(Color.parseColor("#ea6125"));
+                        holder1.tabletTextView.setTextColor(Color.parseColor("#777777"));
+                    }
+                });
+
+                holder1.incrementButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        int quantity = medicineDetails.getQuantity() + 1;
+                        medicineDetails.setQuantity(quantity);
+                        holder1.costOfMedicineTextView.setText(medicineDetails.getCost() * quantity + "/-");
+                        holder1.numberOfMedicineTextView.setText(""+quantity);
+                        if(isSelectable) {
+                            if (quantity == 1)
+                                callback2.updateCart(itemDetailsList.get(groupPosition));
+                            else
+                                callback2.updateCart(null);
+                        }
+                        callback2.updateBottomMenu();
+                    }
+                });
+
+                holder1.decrementButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        int quantity = medicineDetails.getQuantity() - 1;
+                        medicineDetails.setQuantity(quantity);
+                        holder1.costOfMedicineTextView.setText(medicineDetails.getCost() * quantity + "/-");
+                        holder1.numberOfMedicineTextView.setText(""+quantity);
+
+                        if(isSelectable) {
+                            if (quantity == 0)
+                                callback2.updateCart(itemDetailsList.get(groupPosition));
+                            else
+                                callback2.updateCart(null);
+                        }
+                        callback2.updateBottomMenu();
+                    }
+                });
+
+                holder1.removeTextView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        medicineDetails.setQuantity(0);
+                        collapse(holder1.medicineLayout,groupPosition);
+                    }
+                });
+                break;
+        }
+        return view;
+    }
+
+    @Override
+    public View getChildView(final int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
+
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+
+        final MedicineDetails medicineDetails = getGroup(groupPosition).getPrescriptionDetails().getMedicineList().get(childPosition);
+        final ChildViewHolder childHolder;
+        if (convertView == null) {
+            convertView = inflater.inflate(R.layout.cards_child_prescription, parent, false);
+            childHolder = new ChildViewHolder();
+
+            childHolder.layout = (LinearLayout) convertView.findViewById(R.id.childMedicineCardLinearLayout1);
+            childHolder.nameOfMedicineTextView = (TextView) convertView.findViewById(R.id.childMedicineCardTextView1);
+            childHolder.costOfMedicineTextView = (TextView) convertView.findViewById(R.id.childMedicineCardTextView2);
+            childHolder.tabletTextView = (TextView) convertView.findViewById(R.id.childMedicineCardTextView3);
+            childHolder.orTextView = (TextView) convertView.findViewById(R.id.childMedicineCardTextView4);
+            childHolder.stripTextView = (TextView) convertView.findViewById(R.id.childMedicineCardTextView5);
+            childHolder.numberOfMedicineTextView = (TextView) convertView.findViewById(R.id.childMedicineCardTextView6);
+            childHolder.removeTextView = (TextView) convertView.findViewById(R.id.childMedicineCardTextView7);
+            childHolder.decrementButton = (Button) convertView.findViewById(R.id.childMedicineCardButton1);
+            childHolder.incrementButton = (Button) convertView.findViewById(R.id.childMedicineCardButton2);
+
+            childHolder.numberOfMedicineTextView.setTypeface(typeFace);
+            childHolder.removeTextView.setTypeface(typeFace);
+            childHolder.stripTextView.setTypeface(typeFace);
+            childHolder.orTextView.setTypeface(typeFace);
+            childHolder.tabletTextView.setTypeface(typeFace);
+            childHolder.costOfMedicineTextView.setTypeface(typeFace);
+            childHolder.nameOfMedicineTextView.setTypeface(typeFace);
+            childHolder.decrementButton.setTypeface(typeFace);
+            childHolder.incrementButton.setTypeface(typeFace);
+
+            convertView.setTag(childHolder);
+        } else
+            childHolder = (ChildViewHolder) convertView.getTag();
+
+        childHolder.nameOfMedicineTextView.setText(medicineDetails.getMedicineName());
+        childHolder.costOfMedicineTextView.setText(medicineDetails.getCost() * medicineDetails.getQuantity() + "");
+        childHolder.numberOfMedicineTextView.setText(medicineDetails.getQuantity() + "");
+
+        if (medicineDetails.getMedicineType() == MedicineDetails.MedicineTypes.Strips) {
+            childHolder.stripTextView.setTextColor(Color.parseColor("#ea6125"));
+            childHolder.tabletTextView.setTextColor(Color.parseColor("#777777"));
+        } else if (medicineDetails.getMedicineType() == MedicineDetails.MedicineTypes.Tablets) {
+            childHolder.tabletTextView.setTextColor(Color.parseColor("#ea6125"));
+            childHolder.stripTextView.setTextColor(Color.parseColor("#777777"));
+        } else {
+            childHolder.orTextView.setVisibility(View.GONE);
+            childHolder.stripTextView.setVisibility(View.GONE);
+            childHolder.tabletTextView.setText("Bottles");
+        }
+
+        if (isSelectable) {
+            childHolder.removeTextView.setVisibility(View.INVISIBLE);
+        }
+
+
+        childHolder.tabletTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                medicineDetails.setMedicineType(MedicineDetails.MedicineTypes.Tablets);
+                childHolder.tabletTextView.setTextColor(Color.parseColor("#ea6125"));
+                childHolder.stripTextView.setTextColor(Color.parseColor("#777777"));
+                if (isSelectable)
+                    callback2.updateCart(null);
+            }
+        });
+
+        childHolder.stripTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                medicineDetails.setMedicineType(MedicineDetails.MedicineTypes.Strips);
+                childHolder.stripTextView.setTextColor(Color.parseColor("#ea6125"));
+                childHolder.tabletTextView.setTextColor(Color.parseColor("#777777"));
+                if (isSelectable)
+                    callback2.updateCart(null);
+            }
+        });
+
+        childHolder.incrementButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int quantity = medicineDetails.getQuantity() + 1;
+                medicineDetails.setQuantity(quantity);
+
+                if (isSelectable) {
+                    if (quantity == 1)
+                        callback2.updateCart(getGroup(groupPosition));
+                    else
+                        callback2.updateCart(null);
+                }
+                callback2.updateBottomMenu();
+                childHolder.costOfMedicineTextView.setText(medicineDetails.getCost() * quantity + "/-");
+                childHolder.numberOfMedicineTextView.setText("" + quantity);
+                notifyDataSetChanged();
+            }
+        });
+
+        childHolder.decrementButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int quantity = medicineDetails.getQuantity() - 1;
+                if (quantity < 0)
+                    return;
+
+                if (isSelectable) {
+                    if (quantity == 0) {
+                        medicineDetails.setQuantity(quantity);
+                        callback2.updateCart(getGroup(groupPosition));
+                    } else
+                        callback2.updateCart(null);
+                } else if (quantity == 0)
+                    return;
+
+                medicineDetails.setQuantity(quantity);
+                callback2.updateBottomMenu();
+                childHolder.costOfMedicineTextView.setText(medicineDetails.getCost() * quantity + "/-");
+                childHolder.numberOfMedicineTextView.setText("" + quantity);
+                notifyDataSetChanged();
+            }
+        });
+
+        childHolder.removeTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                medicineDetails.setQuantity(0);
+                //This ensures that if all the medicines have been removed then the prescription gets removed too
+                boolean delete = true;
+                for (MedicineDetails details : getGroup(groupPosition).getPrescriptionDetails().getMedicineList())
+                    if (details.getQuantity() != 0)
+                        delete = false;
+                if (delete) {
+                    itemDetailsList.remove(groupPosition);
+                    notifyDataSetChanged();
+                }
+
+                View parentView = getGroupView(groupPosition,true,null,null);
+                GroupViewHolder0 holder0 = (GroupViewHolder0)parentView.getTag();
+
+                expandableListView.collapseGroup(groupPosition);
+                collapse(holder0.prescriptionLayout, groupPosition);
+                callback2.updateBottomMenu();
+                notifyDataSetChanged();
+            }
+        });
+        return convertView;
+
+    }
+
+    @Override
+    public int getGroupType(int groupPosition) {
+        switch (itemDetailsList.get(groupPosition).getOrderType())
+        {
+            case PRESCRIPTION:
+                return 0;
+            case OTC:
+                return 1;
+            default:
+                return 0;
+        }
+
+    }
+
+    public void add(OrderItemDetails item){
+        itemDetailsList.add(item);
+    }
+
+    @Override
+    public OrderItemDetails getGroup(int groupPosition) {
+        return itemDetailsList.get(groupPosition);
+    }
+
+    @Override
+    public long getGroupId(int groupPosition) {
+        return groupPosition;
+    }
+
+    @Override
+    public long getChildId(int groupPosition, int childPosition) {
+        return childPosition;
+    }
+
+    private ValueAnimator slideAnimator(final LinearLayout mLinearLayout,int start, int end) {
+
+        ValueAnimator animator = ValueAnimator.ofInt(start, end);
+
+        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator valueAnimator) {
+                //Update Height
+                int value = (Integer) valueAnimator.getAnimatedValue();
+                ViewGroup.LayoutParams layoutParams = mLinearLayout.getLayoutParams();
+                layoutParams.height = value;
+                mLinearLayout.setLayoutParams(layoutParams);
+            }
+        });
+        return animator;
+    }
+
+    private void collapse(final LinearLayout mLinearLayout, final int position) {
+        int finalHeight = mLinearLayout.getHeight();
+
+        ValueAnimator mAnimator = slideAnimator(mLinearLayout,finalHeight, 0);
+
+        mAnimator.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationEnd(Animator animator) {
+                ViewGroup.LayoutParams layoutParams = mLinearLayout.getLayoutParams();
+                layoutParams.height = ViewGroup.LayoutParams.WRAP_CONTENT;
+                mLinearLayout.setLayoutParams(layoutParams);
+
+                itemDetailsList.remove(position);
+                notifyDataSetChanged();
+                callback2.updateBottomMenu();
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationStart(Animator animation) {
+
+            }
+        });
+        mAnimator.start();
+    }
+
+    public void setExpandableListView(ExpandableListView listView){
+        expandableListView = listView;
+    }
+
+    public interface Callback{
+        void updateCart(OrderItemDetails details);
+        void updateBottomMenu();
+    }
+
 }

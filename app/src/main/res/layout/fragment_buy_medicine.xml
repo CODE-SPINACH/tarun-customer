@@ -1,10 +1,9 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#eeeeee"
-    android:orientation="vertical"
     tools:context="com.app.tarun.dc2.Fragments.BuyMedicineFragment"
     android:id="@+id/container">
 
@@ -12,218 +11,143 @@
         android:layout_width="match_parent"
         android:orientation="vertical"
         android:layout_height="match_parent">
-    <RelativeLayout
-        android:id="@+id/buyMedicineListViewContainer"
-        android:background="#eee"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="10"
-        >
-        <TextView
-            android:layout_marginTop="60dp"
-            android:id="@+id/buyMedicineTextView4"
-            android:textSize="30sp"
-            android:gravity="center"
-            android:textColor="#BBB"
-            android:text="Add your Medicines here"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:onClick="tapToAddMedicine"/>
-    </RelativeLayout>
-
-    <android.support.v7.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1.2"
-        android:layout_marginTop="2dp"
-        android:background="#EEE"
-        android:id="@+id/checkout"
-        >
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <View
-                android:layout_width="fill_parent"
-                android:layout_height="1dp"
-                android:background="#ea6125" />
-        <Button
-            android:visibility="gone"
-            android:id="@+id/checkoutButton"
-            android:textColor="#FFF"
-            android:text="Checkout"
-            android:textSize="20sp"
-            android:background="@drawable/rounded"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="bottom"/>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            orientation="horizontal">
-
-            <TextView
-                android:background="#ea6125"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="5"
-                android:textColor="#FFF"
-                android:textSize="20sp"
-                android:layout_gravity="center"
-                android:gravity="center|right"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="7dp"
-                android:paddingRight="4dp"
-                android:paddingLeft="4dp"
-                />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1.5"
-                android:text="items added"
-                android:textSize="12sp"
-                android:layout_gravity="center"
-                android:gravity="center|left"
-
-                />
-
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="3"
-                android:text="40/-"
-                android:textSize="20sp"
-                android:layout_gravity="center"
-                android:gravity="center|right"
-                android:layout_marginRight="10dp"
-                android:textColor="#555"
-                />
-
-            <View
-                android:layout_width="1dp"
-                android:layout_height="fill_parent"
-                android:background="#FFDDDDDD" />
-
-            <ImageButton
-                android:layout_marginBottom="15dp"
-                android:layout_marginTop="15dp"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:src="@mipmap/ic_continue_button"
-                android:background="#FFF"/>
-
-            </LinearLayout>
-        </LinearLayout>
-
-
-    </android.support.v7.widget.CardView>
-
-
-    </LinearLayout>
 
         <LinearLayout
             android:background="#ea6125"
             android:id="@+id/buyMedicineLinearLayout1"
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="60dp">
+            android:layout_height="?attr/actionBarSize">
 
-            <LinearLayout
-                android:paddingTop="15dp"
-                android:id="@+id/buyMedicineLinearLayout2"
+            <TextView
+                android:paddingTop="5dp"
+                android:id="@+id/buyMedicineTextView1"
+                android:textSize="15sp"
+                android:gravity="center"
+                android:text="PRESCRIPTION"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:layout_weight="0.31">
+                android:layout_weight="0.31"
+                android:textColor="#FFF"
+                android:textStyle="bold"/>
 
-                <ImageView
-                    android:visibility="gone"
-                    android:src="@drawable/ic_manually"
-                    android:scaleType="fitCenter"
-                    android:padding="10dp"
-                    android:id="@+id/buyMedicineImageButton1"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+            <TextView
+                android:layout_weight="0.3"
+                android:paddingTop="5dp"
+                android:id="@+id/buyMedicineTextView2"
+                android:textSize="15sp"
+                android:gravity="center"
+                android:text="MEDICINE"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:textColor="#FFF"
+                android:textStyle="bold"/>
 
-                <TextView
-                    android:paddingTop="5dp"
-                    android:id="@+id/buyMedicineTextView1"
-                    android:textSize="15sp"
-                    android:gravity="center"
-                    android:text="PRESCRIPTION"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textColor="#FFF"
-                    android:textStyle="bold"/>
+            <TextView
+                android:layout_weight="0.3"
+                android:paddingTop="5dp"
+                android:id="@+id/buyMedicineTextView3"
+                android:textSize="15sp"
+                android:gravity="center"
+                android:text="ORDERS"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:textColor="#FFF"
+                android:textStyle="bold"/>
 
             </LinearLayout>
 
-            <LinearLayout
-                android:paddingTop="15dp"
-                android:id="@+id/buyMedicineLinearLayout3"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:layout_weight="0.3">
 
-                <ImageView
-                    android:visibility="gone"
-                    android:id="@+id/buyMedicineImageButton2"
-                    android:src="@drawable/ic_manually"
-                    android:scaleType="fitCenter"
-                    android:padding="10dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+        <FrameLayout
+            android:id="@+id/buyMedicineListViewContainer"
+            android:background="#eee"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="5">
+            <TextView
+                android:id="@+id/buyMedicineTextView4"
+                android:textSize="30sp"
+                android:gravity="center"
+                android:textColor="#BBB"
+                android:text="Add your Medicines here"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+        </FrameLayout>
 
-                <TextView
-                    android:paddingTop="5dp"
-                    android:id="@+id/buyMedicineTextView2"
-                    android:textSize="15sp"
-                    android:gravity="center"
-                    android:text="MANUALLY"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textColor="#FFF"
-                    android:textStyle="bold"/>
-            </LinearLayout>
+        <LinearLayout
+            android:layout_height="55dp"
+            android:layout_width="match_parent"
+            android:background="#FFF"
+            android:orientation="vertical">
 
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:background="#ea6125" />
 
             <LinearLayout
-                android:paddingTop="15dp"
-                android:id="@+id/buyMedicineLinearLayout4"
-                android:layout_width="0dp"
+                android:gravity="center"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:layout_weight="0.3">
-
-                <ImageView
-                    android:visibility="gone"
-                    android:src="@drawable/ic_previous_orders"
-                    android:id="@+id/buyMedicineImageButton3"
-                    android:scaleType="fitCenter"
-                    android:padding="10dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
-
+                android:orientation="horizontal">
 
                 <TextView
-                    android:paddingTop="5dp"
-                    android:id="@+id/buyMedicineTextView3"
-                    android:textSize="15sp"
-                    android:gravity="center"
-                    android:text="ORDERS"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:id="@+id/buyMedicineTextView5"
+                    android:background="#ea6125"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="0"
                     android:textColor="#FFF"
-                    android:textStyle="bold"
+                    android:textSize="20sp"
+                    android:gravity="center|right"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:padding="4dp"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1.5"
+                    android:text="items added"
+                    android:textSize="12sp"
+                    android:gravity="center|left"
+
                     />
 
+                <TextView
+                    android:id="@+id/buyMedicineTextView6"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="3"
+                    android:text="0/-"
+                    android:textSize="20sp"
+                    android:layout_gravity="center"
+                    android:gravity="center|right"
+                    android:layout_marginRight="10dp"
+                    android:textColor="#555"
+                    />
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="fill_parent"
+                    android:background="#FFDDDDDD" />
+
+
+                <ImageButton
+                    android:id="@+id/buyMedicineImageButton1"
+                    android:scaleType="centerInside"
+                    android:layout_width="50dp"
+                    android:layout_height="match_parent"
+                    android:src="@mipmap/ic_continue_button"
+                    android:background="#FFF"/>
+
+                </LinearLayout>
             </LinearLayout>
 
-        </LinearLayout>
 
-</FrameLayout>
+
+
+    </LinearLayout>
+
+
+</RelativeLayout>

@@ -3,16 +3,17 @@
     android:layout_height="match_parent"
     tools:context="com.app.drugcorner32.dc_template.Fragments.OrderItemListFragment">
 
-    <com.app.drugcorner32.dc_template.CustomViews.ListView
+    <ExpandableListView
+        android:groupIndicator="@android:color/transparent"
+        android:dividerHeight="0dp"
+        android:scrollbars="none"
         android:clipToPadding="false"
+        android:paddingTop="10dp"
         android:background="#00eeeeee"
         android:id="@+id/orderItemListView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:dividerHeight="5dp"
         android:paddingBottom="10dp"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:divider="#00eeeeee"/>
+        />
 
 </FrameLayout>

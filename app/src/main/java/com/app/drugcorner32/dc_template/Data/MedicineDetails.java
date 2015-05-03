@@ -37,10 +37,11 @@ public class MedicineDetails implements Serializable {
     //otherwise they dont make sense
     private boolean isDisabled = false;
 
-    //number of medicine to be taken per day
-    private int quantityPerDay = (int)(Math.random() * 10) + 1;
+    //In case of repeating a previous order, quantity = previousQuantity
+    private int quantity = 0;
 
-    private int quantity;
+    //This is the quantity with which the medicine was ordered in the previous order
+    private int previousQuantity;
 
     private float cost = (int)(Math.random() * 50f);
 
@@ -50,19 +51,26 @@ public class MedicineDetails implements Serializable {
         nameOfMedicine = details.getMedicineName();
         medicineType = details.getMedicineType();
         quantity = details.getQuantity();
-        quantityPerDay = details.getQuantityPerDay();
         cost = details.getCost();
         quantity = details.getQuantity();
         daysSpecifiedInPrescription = details.getDaysSpecifiedInPrescription();
         days = details.getDays();
+        previousQuantity = details.getPreviousQuantity();
     }
 
-    public MedicineDetails(String name,MedicineTypes type,int quantity){
+    public MedicineDetails(String name,MedicineTypes type,int previousQuantity){
         //temporary way of id ing the medicines
         medicineID = helperIDGenerator.getID();
         nameOfMedicine = name;
         medicineType = type;
-        this.quantity = quantity;
+        this.previousQuantity = previousQuantity;
+    }
+
+    public MedicineDetails(String name,MedicineTypes type){
+        medicineID = helperIDGenerator.getID();
+        nameOfMedicine = name;
+        medicineType = type;
+        quantity = 1;
     }
 
     public String getMedicineName(){
@@ -91,10 +99,6 @@ public class MedicineDetails implements Serializable {
         return daysSpecifiedInPrescription;
     }
 
-    public int getQuantityPerDay(){
-        return quantityPerDay;
-    }
-
     public float getCost(){
         return  cost;
     }
@@ -111,9 +115,12 @@ public class MedicineDetails implements Serializable {
         this.cost = cost;
     }
 
+    public int getPreviousQuantity(){
+        return previousQuantity;
+    }
 
-    public void setQuantityPerDay(int val){
-        quantityPerDay = val;
+    public void setPreviousQuantity(int quantity){
+        previousQuantity = quantity;
     }
 
 
@@ -130,6 +137,8 @@ public class MedicineDetails implements Serializable {
     }
 
     public void setQuantity(int quantity){
+        if(quantity < 0)
+            return;
         this.quantity = quantity;
     }
 

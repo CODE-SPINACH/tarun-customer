@@ -5,6 +5,7 @@
     app:contentPadding="5dp"
     app:cardCornerRadius="2dp"
     android:layout_marginTop="10dp"
+    android:id="@+id/buttonNotificationCardView1"
     android:layout_height="wrap_content">
 
     <LinearLayout

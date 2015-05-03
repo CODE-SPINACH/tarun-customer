@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.app.drugcorner32.dc_template.Activities.MainActivity;
@@ -54,25 +53,7 @@ public class PreviousOrderListFragment extends android.support.v4.app.Fragment {
         orderListAdapter.setSelectable(isSelectable);
         previousOrderListView.setAdapter(orderListAdapter);
 
-        //Events
-        previousOrderListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                currentSelectedOrder = position;
-                 callback.replaceFragment(R.id.previousOrderListView, orderListAdapter.getItem(position));
-                }
-        });
-
         return view;
-    }
-
-    /* This method is used to unselect an order which has been selected but
-    individual prescriptions and medicines have been modified or unselected
-    i.e. Primarily Selecting an order selects all the items inside of it
-    But as soon as those items are unslelected individually this unchecks the select all of the order */
-
-    public void selectCurrentOrder(boolean val){
-        orderListAdapter.getItem(currentSelectedOrder).setSelection(val);
     }
 
     @Override
