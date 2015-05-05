@@ -66,7 +66,7 @@
 
                     <TextView
                         android:background="#ea6125"
-                        android:id="@+id/orderStatusTextView"
+                        android:id="@+id/notificationStatus"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:textColor="#FFF"
@@ -84,86 +84,42 @@
                   android:layout_height="wrap_content"
                   android:orientation="vertical">
 
-                <TextView
-                    android:paddingLeft="15dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/orderNoTextView"
-                    android:textSize="15dp"
-                    android:text="drugCorner125"/>
-
 
                 <TextView
-                    android:id="@+id/orderAddressTextView12"
+                    android:id="@+id/notificationAddressOne"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingLeft="15dp"
+                    android:layout_marginBottom="5dp"
                     android:text="52 N 12, Sector 5, Opp Haldi Ghati Gate"/>
 
                 <TextView
-                    android:id="@+id/orderAddressTextView13"
+                    android:id="@+id/notificationAddressTwo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingLeft="15dp"
-                    android:text="Pratap Nagar,Jaipur"/>
+                    android:layout_marginBottom="5dp"
+                    android:text="Pratap Nagar near Pratap Plaza"/>
 
 
                 <TextView
-                    android:id="@+id/orderAddressTextView14"
+                    android:id="@+id/notificationAddressThree"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingLeft="15dp"
-                    android:text="Near Pratap Plaza"/>
+                    android:layout_marginBottom="5dp"
+                    android:text="Jaipur 302033"/>
+
 
                 <TextView
-                    android:id="@+id/orderAddressTextView15"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingLeft="15dp"
-                    android:text="Rajasthan 302033"/>
-
-                <TextView
-                    android:id="@+id/orderAddressTextView"
+                    android:id="@+id/notificationContactNumber"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingLeft="15dp"
                     android:text="9460109363 "/>
 
-                <TextView
-                    android:id="@+id/orderAddressTextView16"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingLeft="15dp"
-                    android:text="Paracetamol, Azithromycin, Leonadro Caprio, Acolyte Plus"/>
+
               </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginTop="10dp">
-
-                    <TextView
-                        android:textColor="#ea6125"
-                        android:id="@+id/orderSelect"
-                        android:paddingLeft="15dp"
-                        android:layout_width="0dp"
-                        android:layout_weight="1.8"
-                        android:layout_height="wrap_content"
-                        android:text="Pick Medicines"
-                        android:layout_marginBottom="7dp"/>
-
-                    <TextView
-                        android:id="@+id/orderRepeat"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:textColor="#ea6125"
-                        android:textSize="15dp"
-                        android:text="Repeat"
-                        android:layout_weight="1"
-                        android:paddingLeft="9dp"/>
-
-                </LinearLayout>
-
             </LinearLayout>
 
         </LinearLayout>

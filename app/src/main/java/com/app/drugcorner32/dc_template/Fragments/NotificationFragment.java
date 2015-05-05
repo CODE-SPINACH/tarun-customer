@@ -1,6 +1,7 @@
 package com.app.drugcorner32.dc_template.Fragments;
 
 import android.app.Activity;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.LayoutInflater;
@@ -86,12 +87,17 @@ public class NotificationFragment extends android.support.v4.app.Fragment {
         if(notificationDetails.getType() == NotificationDetails.NOTIFICATION_TYPE.JUST_TEXT){
             view = (View)inflater.inflate(R.layout.cards_simple_notification,null);
             TextView messageView = (TextView)view.findViewById(R.id.simpleNotificationCardTextView1);
+            Typeface typeFace=Typeface.createFromAsset(getActivity().getAssets(),"fonts/gothic.ttf");
+            messageView.setTypeface(typeFace);
             messageView.setText(notificationDetails.getMessage());
         }
         else{
             view = (View)inflater.inflate(R.layout.cards_button_notification,null);
             final TextView messageView = (TextView)view.findViewById(R.id.buttonNotificationCardTextView1);
+            Typeface typeFace=Typeface.createFromAsset(getActivity().getAssets(),"fonts/gothic.ttf");
+            messageView.setTypeface(typeFace);
             Button button = (Button)view.findViewById(R.id.buttonNotificationCardButton1);
+            button.setTypeface(typeFace);
 
             messageView.setText(notificationDetails.getMessage());
             if(notificationDetails.getType() == NotificationDetails.NOTIFICATION_TYPE.VIEW)
@@ -111,11 +117,13 @@ public class NotificationFragment extends android.support.v4.app.Fragment {
                     public void onFinish() {
                         layout.removeView(view);
                         notificationDetailses.remove(notificationDetails);
-                        NotificationDetails details1 = new NotificationDetails("Your estimated delivery time is 10minutes",
+                        NotificationDetails details1 = new NotificationDetails("Your estimated delivery time is 10 minutes",
                                 NotificationDetails.NOTIFICATION_TYPE.JUST_TEXT);
 
                         NotificationDetails details2 = new NotificationDetails("Your order has been finalized.",
                                 NotificationDetails.NOTIFICATION_TYPE.JUST_TEXT);
+                        Typeface typeFace=Typeface.createFromAsset(getActivity().getAssets(),"fonts/gothic.ttf");
+
 
                         notificationDetailses.add(details2);
                         notificationDetailses.add(details1);
