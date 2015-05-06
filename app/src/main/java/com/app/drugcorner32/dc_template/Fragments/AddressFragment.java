@@ -1,6 +1,7 @@
 package com.app.drugcorner32.dc_template.Fragments;
 
 import android.app.Activity;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -50,6 +51,17 @@ public class AddressFragment extends android.support.v4.app.Fragment {
         final TextView streetNameView = (TextView) view.findViewById(R.id.addressTextView5);
         TextView landamrkNameView = (TextView) view.findViewById(R.id.addressTextView6);
         TextView pincodeNoView = (TextView) view.findViewById(R.id.addressTextView7);
+
+        Typeface typeface=Typeface.createFromAsset(getActivity().getAssets(),"fonts/gothic.ttf");
+
+        firstNameView.setTypeface(typeface);
+        lastNameView.setTypeface(typeface);
+        phoneNoView.setTypeface(typeface);
+        houseNameView.setTypeface(typeface);
+        streetNameView.setTypeface(typeface);
+        landamrkNameView.setTypeface(typeface);
+        pincodeNoView.setTypeface(typeface);
+        continueButton.setTypeface(typeface);
 
         continueButton.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -69,16 +69,17 @@
         <LinearLayout
             android:padding="10dp"
             android:layout_width="match_parent"
-            android:layout_height="55dp">
+            android:layout_height="wrap_content">
 
             <TextView
                 android:id="@+id/editMedicinesTextView2"
-                android:background="@drawable/rounded"
+                android:background="@drawable/resend_button"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:textSize="25sp"
+                android:textSize="20sp"
                 android:gravity="center"
-                android:textColor="#FFF"
+                android:textColor="#2E9C58"
+                android:paddingBottom="5dp"
                 android:text="Total Cost : 250 Rs"/>
 
         </LinearLayout>
