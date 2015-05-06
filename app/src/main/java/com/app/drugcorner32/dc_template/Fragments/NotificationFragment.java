@@ -1,9 +1,7 @@
 package com.app.drugcorner32.dc_template.Fragments;
 
 import android.app.Activity;
-import android.graphics.Typeface;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +10,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.app.drugcorner32.dc_template.Data.NotificationDetails;
-import com.app.drugcorner32.dc_template.Data.OrderDetails;
 import com.app.drugcorner32.dc_template.Interfaces.OnFragmentChange;
 import com.app.drugcorner32.dc_template.R;
 
@@ -20,13 +17,12 @@ import java.util.ArrayList;
 
 //TODO remove the notification list if of no use in the future
 public class NotificationFragment extends android.support.v4.app.Fragment {
-    private OrderDetails orderDetails;
-    private ArrayList<NotificationDetails> notificationDetailses = new ArrayList<>();
-    private OnFragmentChange callback1;
-    private Callback callback2;
-    private LinearLayout layout;
     public static String TAG = "Notification";
-    private TextView messageView;
+
+    private OnFragmentChange callback1;
+    private LinearLayout layout;
+
+    private ArrayList<NotificationDetails> notificationDetailses = new ArrayList<>();
 
     public static NotificationFragment newInstance() {
         NotificationFragment fragment = new NotificationFragment();
@@ -53,18 +49,8 @@ public class NotificationFragment extends android.support.v4.app.Fragment {
         View view = inflater.inflate(R.layout.fragment_notification, container, false);
         layout = (LinearLayout)view.findViewById(R.id.notificationLinearLayout1);
 
-        notificationDetailses.add(new NotificationDetails
-                ("Some of the prescription images you sent were incomprehensible. " +
-                        "We request you to send them again.",
-                NotificationDetails.NOTIFICATION_TYPE.CLICK_AGAIN));
-
-        notificationDetailses.add(new NotificationDetails("You may view your order.", NotificationDetails.NOTIFICATION_TYPE.VIEW));
-
-        notificationDetailses.add(new NotificationDetails("You may now edit your medicines now.\nYou have to do so in :",
-                NotificationDetails.NOTIFICATION_TYPE.EDIT));
-
         for(NotificationDetails details : notificationDetailses){
-            createNotificationView(inflater,details);
+            createNotificationView(details);
         }
 
         return view;
@@ -75,7 +61,6 @@ public class NotificationFragment extends android.support.v4.app.Fragment {
         super.onAttach(activity);
         try {
             callback1 = (OnFragmentChange) activity;
-            callback2 = (Callback) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
                     + " must implement OnFragmentInteractionListener");
@@ -86,65 +71,29 @@ public class NotificationFragment extends android.support.v4.app.Fragment {
     public void onDetach() {
         super.onDetach();
         callback1 = null;
-        callback2 = null;
     }
 
     //The view of the notification cards is being created here
-    public void createNotificationView(final LayoutInflater inflater, final NotificationDetails notificationDetails){
+    public void createNotificationView( final NotificationDetails notificationDetails){
         final View view;
-        if(notificationDetails.getType() == NotificationDetails.NOTIFICATION_TYPE.JUST_TEXT){
+        LayoutInflater inflater = getActivity().getLayoutInflater();
+
+        if(notificationDetails.getType() == NotificationDetails.NOTIFICATION_TYPE.TEXT ||
+                notificationDetails.getType() == NotificationDetails.NOTIFICATION_TYPE.DELIVERY_TIME){
             view = inflater.inflate(R.layout.cards_simple_notification,layout,false);
-            messageView = (TextView)view.findViewById(R.id.simpleNotificationCardTextView1);
-
-            Typeface typeface=Typeface.createFromAsset(getActivity().getAssets(),"fonts/gothic.ttf");
-
-            messageView.setTypeface(typeface);
+            TextView messageView = (TextView)view.findViewById(R.id.simpleNotificationCardTextView1);
             messageView.setText(notificationDetails.getMessage());
         }
         else{
             view = inflater.inflate(R.layout.cards_button_notification,layout,false);
             Button button = (Button)view.findViewById(R.id.buttonNotificationCardButton1);
-            messageView = (TextView)view.findViewById(R.id.buttonNotificationCardTextView1);
-
-            Typeface typeface=Typeface.createFromAsset(getActivity().getAssets(),"fonts/gothic.ttf");
-
-            button.setTypeface(typeface);
-            messageView.setTypeface(typeface);
+            TextView messageView = (TextView)view.findViewById(R.id.buttonNotificationCardTextView1);
 
             messageView.setText(notificationDetails.getMessage());
             if(notificationDetails.getType() == NotificationDetails.NOTIFICATION_TYPE.VIEW)
                 button.setText("View");
-            else if (notificationDetails.getType() == NotificationDetails.NOTIFICATION_TYPE.EDIT) {
+            else if (notificationDetails.getType() == NotificationDetails.NOTIFICATION_TYPE.EDIT)
                 button.setText("Edit");
-                callback2.startTimer();
-                new CountDownTimer(10*1000, 1000) {
-                    public void onTick(long millisUntilFinished) {
-                        int minutes = (int)(millisUntilFinished / (60 * 1000));
-                        int seconds = (int)((millisUntilFinished / 1000) % 60);
-                        String str = String.format("%d:%02d", minutes, seconds - 1);
-
-                        messageView.setText(notificationDetails.getMessage() + " " + str);
-                        callback1.replaceFragment(R.id.editMedicinesTextView1, str);
-                    }
-
-                    public void onFinish() {
-                        layout.removeView(view);
-                        notificationDetailses.remove(notificationDetails);
-                        NotificationDetails details1 = new NotificationDetails("Your estimated delivery time is 10minutes",
-                                NotificationDetails.NOTIFICATION_TYPE.JUST_TEXT);
-
-                        NotificationDetails details2 = new NotificationDetails("Your order has been finalized.",
-                                NotificationDetails.NOTIFICATION_TYPE.JUST_TEXT);
-
-                        notificationDetailses.add(details2);
-                        notificationDetailses.add(details1);
-
-                        createNotificationView(inflater, details2);
-                        createNotificationView(inflater,details1);
-                    }
-                }.start();
-
-            }
             else
                 button.setText("Click Again");
 
@@ -158,12 +107,40 @@ public class NotificationFragment extends android.support.v4.app.Fragment {
         layout.addView(view);
     }
 
-    public void setOrderDetails(OrderDetails details){
-        orderDetails = details;
+    public void addNewNotification(NotificationDetails details){
+        notificationDetailses.add(details);
+        createNotificationView(details);
     }
 
-    public interface Callback{
-        void startTimer();
+    //This is function is used to update the timers present in the various cards like the ones indicating
+    // delivery time or time left to edit medicine
+    public void updateTimer(String timeString,NotificationDetails.NOTIFICATION_TYPE notificationType){
+        int index = -1;
+        for(int i = 0; i < notificationDetailses.size(); i++)
+            if(notificationDetailses.get(i).getType() == notificationType)
+                index = i;
+        if(index != -1){
+            View view = layout.getChildAt(index);
+            if(view != null) {
+                TextView messageView = (TextView) view.findViewById(R.id.buttonNotificationCardTextView1);
+                messageView.setText(notificationDetailses.get(index).getMessage() + timeString);
+            }
+        }
     }
 
+    public void deleteNotificationCard(NotificationDetails.NOTIFICATION_TYPE notificationType){
+        int index = -1;
+        for(int i = 0; i < notificationDetailses.size(); i++)
+            if(notificationDetailses.get(i).getType() == notificationType)
+                index = i;
+        if(index != -1){
+            layout.removeViewAt(index);
+            notificationDetailses.remove(index);
+        }
+    }
+
+    public void deleteAllNotifications(){
+        notificationDetailses.clear();
+        layout.removeAllViews();
+    }
 }

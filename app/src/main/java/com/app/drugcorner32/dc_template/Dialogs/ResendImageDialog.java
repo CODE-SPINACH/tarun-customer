@@ -101,7 +101,7 @@ public class ResendImageDialog extends android.support.v4.app.DialogFragment{
             ImageView thumbnailView = (ImageView)relativeLayout.findViewById(R.id.resendThumbnailImageView1);
             ImageView imageStatusView = (ImageView)relativeLayout.findViewById(R.id.resendThumbnailImageView2);
 
-            thumbnailView.setImageBitmap(prescriptionDetailsList.get(i).getThumbnail());
+            thumbnailView.setImageURI(prescriptionDetails.getThumbnailUri());
             linearLayout.addView(relativeLayout);
 
             relativeLayout.setOnClickListener(new View.OnClickListener() {

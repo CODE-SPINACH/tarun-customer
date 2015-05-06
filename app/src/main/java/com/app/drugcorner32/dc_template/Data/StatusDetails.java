@@ -4,11 +4,13 @@ import java.io.Serializable;
 
 /**
  * Created by Tarun on 04-03-2015.
+ * Shows all the possible status
  */
+
 public class StatusDetails implements Serializable{
 
-    public static enum STATUSES {
-        BEING_PROCESSED,DELIVERED,CANCELLED,ON_THE_WAY,ORDER_NOT_PLACED_YET
+    public enum STATUSES {
+        BEING_PROCESSED,RESEND_IMAGE,EDIT_MEDICINE,DELIVERED,CANCELLED,ON_THE_WAY,ORDER_NOT_PLACED_YET
     }
 
     private STATUSES currentStatus;
@@ -25,7 +27,7 @@ public class StatusDetails implements Serializable{
     public String toString() {
         switch (currentStatus){
             case BEING_PROCESSED:
-                return "Being Processed";
+                return "Order being processed";
             case DELIVERED:
                 return "Delivered";
             case CANCELLED:
@@ -33,9 +35,20 @@ public class StatusDetails implements Serializable{
             case ON_THE_WAY:
                 return "Order on the Way!";
             case ORDER_NOT_PLACED_YET:
-                return "You haven't placed the order yet!!";
+                return "Order not placed yet";
+            case EDIT_MEDICINE:
+                return "Confirm order";
+            case RESEND_IMAGE:
+                return "Bad image";
             default:
                 return "";
         }
+    }
+
+    public STATUSES getCurrentStatus(){
+        return currentStatus;
+    }
+    public void setCurrentStatus(STATUSES status){
+        currentStatus = status;
     }
 }

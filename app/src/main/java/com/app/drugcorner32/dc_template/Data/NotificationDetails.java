@@ -8,15 +8,17 @@ package com.app.drugcorner32.dc_template.Data;
 public class NotificationDetails {
 
     /*Notification types might appear confusing here's me dumbing them down for u
-        JUST_TEXT   : this is used to inform the user of some info and that is it. It comprises of simply text
+        TEXT          : this is used to inform the user of some info and that is it. It comprises of simply text
+        DELIVERY_TIME : it is also a TEXT notification, used for showing the delivery time of the order,
+                        which is updated periodically hence a new type
 
         The rest are cards with buttons
         VIEW        : Clicking on it makes the medicines list visible (used when some medicines are not found)
         EDIT        : Clicking on it makes the medicines list visible plus they are editable
         CLICK_AGAIN : Clicking on it lets u recapture images that might have been bad or incomprehensible
          */
-    public static enum NOTIFICATION_TYPE{
-        JUST_TEXT,VIEW,EDIT,CLICK_AGAIN
+    public enum NOTIFICATION_TYPE{
+        TEXT,DELIVERY_TIME,VIEW,EDIT,CLICK_AGAIN
     }
 
     //The message to be displayed with the notification card

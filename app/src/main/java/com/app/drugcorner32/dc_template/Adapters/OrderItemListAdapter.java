@@ -184,8 +184,11 @@ public class OrderItemListAdapter extends BaseExpandableListAdapter{
                     appendedMedicineNames = "Prescription not translated yet";
                     holder0.costTextView.setVisibility(View.GONE);
                 }
-
-                holder0.prescriptionImage.setImageBitmap(prescriptionDetails1.getThumbnail());
+                //TODO change this on finalization
+                if(prescriptionDetails1.getPrescriptionType() == PrescriptionDetails.TypesOfPrescription.UNTRANSLATED_PRESCRIPTION)
+                    holder0.prescriptionImage.setImageURI(prescriptionDetails1.getThumbnailUri());
+                else
+                    holder0.prescriptionImage.setImageBitmap(null);
 
                 holder0.nameOfDrugsTextView.setText(appendedMedicineNames);
                 holder0.costTextView.setText(prescriptionDetails1.getCost()+"/-");

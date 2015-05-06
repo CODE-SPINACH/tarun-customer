@@ -141,8 +141,8 @@ public class BuyMedicineFragment extends android.support.v4.app.Fragment {
         callback2 = null;
     }
 
-    public void addNewPrescription(Uri imagePath){
-        itemListFragment.addOrderItem(new OrderItemDetails(new PrescriptionDetails(imagePath)));
+    public void addNewPrescription(Uri imagePath,Uri thumbnailUri){
+        itemListFragment.addOrderItem(new OrderItemDetails(new PrescriptionDetails(imagePath,thumbnailUri)));
     }
 
     public void addNewMedicine(MedicineDetails medicineDetails){

@@ -1,7 +1,10 @@
 package com.app.drugcorner32.dc_template.Activities;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
+import android.media.ThumbnailUtils;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -30,6 +33,7 @@ import com.app.drugcorner32.dc_template.Interfaces.OnFragmentChange;
 import com.app.drugcorner32.dc_template.R;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -196,8 +200,25 @@ public class MainActivity extends ActionBarActivity implements OnFragmentChange,
                     Toast.makeText(this, "State Loss", Toast.LENGTH_SHORT).show();
                     break;
                 }
+                //Thumbnail is being saved
+                Calendar calendar = Calendar.getInstance();
+                File dir = getPicStorageDir("prescription_images_thumbnails");
+                File imageFile = new File(dir, calendar.getTimeInMillis() + ".jpeg");
 
-                frag3.addNewPrescription(fileUri);
+                File oldFile = new File(fileUri.getPath());
+                Uri thumbnailUri = Uri.fromFile(imageFile);
+                Bitmap bitmap = ThumbnailUtils.extractThumbnail(BitmapFactory.decodeFile(oldFile.getPath()),
+                        100, 100);
+                try {
+                    FileOutputStream out = new FileOutputStream(imageFile);
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
+                    out.flush();
+                    out.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                frag3.addNewPrescription(fileUri,thumbnailUri);
                 frag3.updateBottomMenu();
                 break;
 

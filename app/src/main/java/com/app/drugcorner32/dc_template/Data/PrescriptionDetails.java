@@ -1,9 +1,7 @@
 package com.app.drugcorner32.dc_template.Data;
 
-import android.graphics.Bitmap;
 import android.net.Uri;
 
-import com.app.drugcorner32.dc_template.Helpers.HelperClass;
 import com.app.drugcorner32.dc_template.Helpers.helperIDGenerator;
 
 import java.io.Serializable;
@@ -31,6 +29,8 @@ public class PrescriptionDetails implements Serializable {
     //The path to the image of the subscription
     private String imageUri;
 
+    private String thumbnailUri;
+
     private int prescriptionID;
 
     //The prescription will be translated to medicine list by the pharmacist. This is that list
@@ -55,9 +55,10 @@ public class PrescriptionDetails implements Serializable {
             }
     }
 
-    public PrescriptionDetails(Uri imageUri) {
+    public PrescriptionDetails(Uri imageUri,Uri thumbnailUri) {
         prescriptionID = helperIDGenerator.getID();
         this.imageUri = imageUri.toString();
+        this.thumbnailUri = thumbnailUri.toString();
         prescriptionType = TypesOfPrescription.UNTRANSLATED_PRESCRIPTION;
     }
 
@@ -82,11 +83,8 @@ public class PrescriptionDetails implements Serializable {
         return prescriptionType;
     }
 
-    public Bitmap getThumbnail() {
-        Bitmap thumbnail = null;
-        if (imageUri != null)
-            thumbnail = HelperClass.getPreview(Uri.parse(imageUri), 100);
-        return thumbnail;
+    public Uri getThumbnailUri() {
+        return Uri.parse(thumbnailUri);
     }
 
     public float getCost(){
@@ -114,6 +112,10 @@ public class PrescriptionDetails implements Serializable {
 
     public void setImageUri(Uri imageUri){
         this.imageUri = imageUri.toString();
+    }
+
+    public void setThumbnailUri(Uri thumbnailUri){
+        this.thumbnailUri = thumbnailUri.toString();
     }
 
     public void setPrescriptionType(TypesOfPrescription prescriptionType){
