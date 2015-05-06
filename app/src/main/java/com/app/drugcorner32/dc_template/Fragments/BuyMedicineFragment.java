@@ -29,6 +29,7 @@ public class BuyMedicineFragment extends android.support.v4.app.Fragment {
     private TextView noOfItemsView;
     private TextView costView;
     private ImageButton continueButton;
+    private TextView itemAdded;
 
     public static BuyMedicineFragment newInstance() {
         BuyMedicineFragment fragment = new BuyMedicineFragment();
@@ -61,6 +62,7 @@ public class BuyMedicineFragment extends android.support.v4.app.Fragment {
         noOfItemsView = (TextView)view.findViewById(R.id.buyMedicineTextView5);
         costView = (TextView)view.findViewById(R.id.buyMedicineTextView6);
         continueButton = (ImageButton)view.findViewById(R.id.buyMedicineImageButton1);
+        itemAdded = (TextView)view.findViewById(R.id.buyMedicineTextView7);
 
         Typeface typeface=Typeface.createFromAsset(getActivity().getAssets(),"fonts/gothic.ttf");
 
@@ -68,6 +70,9 @@ public class BuyMedicineFragment extends android.support.v4.app.Fragment {
         enterManuallyTextView.setTypeface(typeface);
         previousOrderTextView.setTypeface(typeface);
         helpView.setTypeface(typeface);
+        itemAdded.setTypeface(typeface);
+        costView.setTypeface(typeface);
+        noOfItemsView.setTypeface(typeface);
 
         LinearLayout linearLayout = (LinearLayout)view.findViewById(R.id.buyMedicineLinearLayout1);
 

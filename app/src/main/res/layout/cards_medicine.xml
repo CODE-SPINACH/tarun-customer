@@ -57,7 +57,7 @@
                          android:layout_height="match_parent"
                          android:text="tablet"
                          android:textSize="18sp"
-                         android:textColor="#ea6125"/>
+                         android:textColor="#2E9C58"/>
 
                         <TextView
                             android:id="@+id/medicineCardTextView4"
@@ -125,7 +125,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:textSize="18sp"
-                    android:textColor="#ea6125"
+                    android:textColor="#2E9C58"
                     android:text="remove"/>
 
             </LinearLayout>

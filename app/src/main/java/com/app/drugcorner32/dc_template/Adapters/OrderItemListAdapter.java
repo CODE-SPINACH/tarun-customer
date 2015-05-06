@@ -263,11 +263,11 @@ public class OrderItemListAdapter extends BaseExpandableListAdapter{
                 holder1.tabletTextView.setText("tablet");
 
                 if(medicineDetails.getMedicineType() == MedicineDetails.MedicineTypes.Strips) {
-                    holder1.stripTextView.setTextColor(Color.parseColor("#ea6125"));
+                    holder1.stripTextView.setTextColor(Color.parseColor("#2E9C58"));
                     holder1.tabletTextView.setTextColor(Color.parseColor("#777777"));
                 }
                 else if(medicineDetails.getMedicineType() == MedicineDetails.MedicineTypes.Tablets) {
-                    holder1.tabletTextView.setTextColor(Color.parseColor("#ea6125"));
+                    holder1.tabletTextView.setTextColor(Color.parseColor("#2E9C58"));
                     holder1.stripTextView.setTextColor(Color.parseColor("#777777"));
                 }
                 else if(medicineDetails.getMedicineType() == MedicineDetails.MedicineTypes.Bottles){
@@ -283,7 +283,7 @@ public class OrderItemListAdapter extends BaseExpandableListAdapter{
                             medicineDetails.setMedicineType(MedicineDetails.MedicineTypes.Tablets);
                             if (isRemovable)
                                 callback2.updateCart(null);
-                            holder1.tabletTextView.setTextColor(Color.parseColor("#ea6125"));
+                            holder1.tabletTextView.setTextColor(Color.parseColor("#2E9C58"));
                             holder1.stripTextView.setTextColor(Color.parseColor("#777777"));
                         }
                     });
@@ -294,7 +294,7 @@ public class OrderItemListAdapter extends BaseExpandableListAdapter{
                             medicineDetails.setMedicineType(MedicineDetails.MedicineTypes.Strips);
                             if (isRemovable)
                                 callback2.updateCart(null);
-                            holder1.stripTextView.setTextColor(Color.parseColor("#ea6125"));
+                            holder1.stripTextView.setTextColor(Color.parseColor("#2E9C58"));
                             holder1.tabletTextView.setTextColor(Color.parseColor("#777777"));
                         }
                     });
@@ -401,10 +401,10 @@ public class OrderItemListAdapter extends BaseExpandableListAdapter{
 
 
         if (medicineDetails.getMedicineType() == MedicineDetails.MedicineTypes.Strips) {
-            childHolder.stripTextView.setTextColor(Color.parseColor("#ea6125"));
+            childHolder.stripTextView.setTextColor(Color.parseColor("#2E9C58"));
             childHolder.tabletTextView.setTextColor(Color.parseColor("#777777"));
         } else if (medicineDetails.getMedicineType() == MedicineDetails.MedicineTypes.Tablets) {
-            childHolder.tabletTextView.setTextColor(Color.parseColor("#ea6125"));
+            childHolder.tabletTextView.setTextColor(Color.parseColor("#2E9C58"));
             childHolder.stripTextView.setTextColor(Color.parseColor("#777777"));
         } else {
             childHolder.orTextView.setVisibility(View.GONE);
@@ -418,7 +418,7 @@ public class OrderItemListAdapter extends BaseExpandableListAdapter{
                 @Override
                 public void onClick(View v) {
                     medicineDetails.setMedicineType(MedicineDetails.MedicineTypes.Tablets);
-                    childHolder.tabletTextView.setTextColor(Color.parseColor("#ea6125"));
+                    childHolder.tabletTextView.setTextColor(Color.parseColor("#2E9C58"));
                     childHolder.stripTextView.setTextColor(Color.parseColor("#777777"));
                     if (isRemovable)
                         callback2.updateCart(null);
@@ -429,7 +429,7 @@ public class OrderItemListAdapter extends BaseExpandableListAdapter{
                 @Override
                 public void onClick(View v) {
                     medicineDetails.setMedicineType(MedicineDetails.MedicineTypes.Strips);
-                    childHolder.stripTextView.setTextColor(Color.parseColor("#ea6125"));
+                    childHolder.stripTextView.setTextColor(Color.parseColor("#2E9C58"));
                     childHolder.tabletTextView.setTextColor(Color.parseColor("#777777"));
                     if (isRemovable)
                         callback2.updateCart(null);

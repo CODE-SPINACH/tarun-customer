@@ -13,7 +13,7 @@
         android:layout_height="match_parent">
 
         <LinearLayout
-            android:background="#ea6125"
+            android:background="#36B666"
             android:id="@+id/buyMedicineLinearLayout1"
             android:orientation="horizontal"
             android:layout_width="match_parent"
@@ -83,7 +83,7 @@
             <View
                 android:layout_width="fill_parent"
                 android:layout_height="1dp"
-                android:background="#ea6125" />
+                android:background="#2E9C58" />
 
             <LinearLayout
                 android:gravity="center"
@@ -93,7 +93,7 @@
 
                 <TextView
                     android:id="@+id/buyMedicineTextView5"
-                    android:background="#ea6125"
+                    android:background="#36B666"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:text="0"
@@ -105,11 +105,12 @@
                     android:padding="4dp"/>
 
                 <TextView
+                    android:id="@+id/buyMedicineTextView7"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1.5"
-                    android:text="items added"
-                    android:textSize="12sp"
+                    android:text="Items added"
+                    android:textSize="14sp"
                     android:gravity="center|left"
 
                     />
@@ -139,7 +140,8 @@
                     android:layout_width="50dp"
                     android:layout_height="match_parent"
                     android:src="@mipmap/ic_continue_button"
-                    android:background="#FFF"/>
+                    android:background="#FFF"
+                    android:layout_weight="0.5"/>
 
                 </LinearLayout>
             </LinearLayout>

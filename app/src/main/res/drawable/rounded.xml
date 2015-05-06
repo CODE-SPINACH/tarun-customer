@@ -1,23 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector  xmlns:android="http://schemas.android.com/apk/res/android">
     <item >
-<shape
-    android:shape="rectangle">
-
-    <stroke android:color="#EEE" android:width="0dp"/>
-    <solid android:color="#ea6125"/>
-    <corners
-        android:radius="5dp"/></shape>
-
-    </item>
-    <item android:state_pressed="true">
         <shape
+            xmlns:android="http://schemas.android.com/apk/res/android"
             android:shape="rectangle">
 
-        <stroke android:color="#EEE" android:width="0dp"/>
-        <solid android:color="#BA4D1D"/>
-        <corners
-            android:radius="5dp"/></shape>
+            <!-- view background color -->
+            <solid
+                android:color="#FFF" >
+            </solid>
+
+            <!-- view border color and width -->
+            <stroke
+                android:width="1dp"
+                android:color="#2E9C58" >
+            </stroke>
+
+            <!-- If you want to add some padding -->
+            <padding
+                android:left="10dp"
+                android:top="4dp"
+                android:right="10dp"
+                android:bottom="4dp"    >
+            </padding>
+
+            <!-- Here is the corner radius -->
+            <corners
+                android:radius="0dp"   >
+            </corners>
+
+        </shape>
 
     </item>
 </selector>

@@ -4,9 +4,9 @@
         <item name="android:windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
 
-        <item name="colorPrimary">#ea6125</item>
-        <item name="colorPrimaryDark">#BA4D1D</item>
-        <item name="colorAccent">#FF6A28</item>
+        <item name="colorPrimary">#36B666</item>
+        <item name="colorPrimaryDark">#36B666</item>
+        <item name="colorAccent">#36B666</item>
     </style>
 
     <style name="full_screen_dialog">

@@ -56,6 +56,7 @@ public class PreviousOrderDialog extends DialogFragment {
     private TextView costView;
     private TextView backToCartView;
     private ImageButton closeButton;
+    private TextView itemAdded;
 
     public PreviousOrderDialog() {
         super();
@@ -108,6 +109,14 @@ public class PreviousOrderDialog extends DialogFragment {
         noOfItemsView = (TextView) view.findViewById(R.id.previousOrderDialogTextView2);
         costView = (TextView) view.findViewById(R.id.previousOrderDialogTextView3);
         backToCartView = (TextView) view.findViewById(R.id.previousOrderDialogTextView4);
+        itemAdded = (TextView)view.findViewById(R.id.previousOrderDialogTextView5);
+
+        Typeface typeface=Typeface.createFromAsset(getActivity().getAssets(),"fonts/gothic.ttf");
+
+        noOfItemsView.setTypeface(typeface);
+        costView.setTypeface(typeface);
+        backToCartView.setTypeface(typeface);
+        itemAdded.setTypeface(typeface);
 
         toolbarTitleView.setText("Previous Orders");
         noOfItemsView.setText(cartOrderItemsList.size() + "");

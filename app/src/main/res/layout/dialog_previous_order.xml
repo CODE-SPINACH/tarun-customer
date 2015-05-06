@@ -70,7 +70,7 @@
             <View
                 android:layout_width="fill_parent"
                 android:layout_height="1dp"
-                android:background="#ea6125" />
+                android:background="#8D4DC2" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -80,7 +80,7 @@
 
                 <TextView
                     android:id="@+id/previousOrderDialogTextView2"
-                    android:background="#ea6125"
+                    android:background="#36B666"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:text="0"
@@ -93,11 +93,12 @@
                     />
 
                 <TextView
+                    android:id="@+id/previousOrderDialogTextView5"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1.5"
-                    android:text="items added"
-                    android:textSize="12sp"
+                    android:text="Items added"
+                    android:textSize="14sp"
                     android:gravity="center|left"
                     />
 
@@ -122,11 +123,13 @@
                 <TextView
                     android:id="@+id/previousOrderDialogTextView4"
                     android:padding="5dp"
-                    android:textColor="#ea6125"
+                    android:textColor="#2E9C58"
                     android:gravity="center"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_weight="1.5"
                     android:layout_height="match_parent"
-                    android:text="back to cart"
+                    android:text="Cart"
+                    android:textSize="18dp"
                     android:background="#FFF"/>
 
             </LinearLayout>
