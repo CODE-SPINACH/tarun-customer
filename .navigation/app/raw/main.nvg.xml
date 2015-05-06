@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<navigationModel
+  ns = "http://schemas.android.com?import=com.android.tools.idea.editors.navigation.model.*">
+  <locations  
+    class = "java.util.ArrayList">
+    <statePointEntry>
+      <state      
+        class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
+        className = "com.app.drugcorner32.dc_template.Activities.MainActivity"/>
+      <point      
+        x = "2323"      
+        y = "477"/>
+    </statePointEntry>
+    <statePointEntry>
+      <state      
+        class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
+        className = "com.app.drugcorner32.dc_template.Activities.AddressActivity"/>
+      <point      
+        x = "3112"      
+        y = "321"/>
+    </statePointEntry>
+    <statePointEntry>
+      <state      
+        class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
+        className = "com.app.drugcorner32.dc_template.Activities.NotificationActivity"/>
+      <point      
+        x = "2365"      
+        y = "663"/>
+    </statePointEntry>
+  </locations>
+</navigationModel>
