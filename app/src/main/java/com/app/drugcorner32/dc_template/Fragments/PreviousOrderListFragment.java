@@ -9,6 +9,7 @@ import android.widget.ListView;
 
 import com.app.drugcorner32.dc_template.Activities.MainActivity;
 import com.app.drugcorner32.dc_template.Adapters.OrderListAdapter;
+import com.app.drugcorner32.dc_template.Interfaces.OnFragmentChange;
 import com.app.drugcorner32.dc_template.R;
 
 /*
@@ -24,7 +25,7 @@ public class PreviousOrderListFragment extends android.support.v4.app.Fragment {
     private boolean isSelectable = false;
 
     private OrderListAdapter orderListAdapter;
-    private Callback callback;
+    private OnFragmentChange callback;
 
     public static PreviousOrderListFragment newInstance() {
         PreviousOrderListFragment fragment = new PreviousOrderListFragment();
@@ -60,7 +61,7 @@ public class PreviousOrderListFragment extends android.support.v4.app.Fragment {
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         try {
-            callback = (Callback) activity;
+            callback = (OnFragmentChange) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
                     + " must implement OnFragmentInteractionListener");
@@ -75,10 +76,6 @@ public class PreviousOrderListFragment extends android.support.v4.app.Fragment {
 
     public void setSelectable(boolean val){
         isSelectable = val;
-    }
-
-    public static interface Callback{
-        public void replaceFragment(int id , Object o);
     }
 
 }

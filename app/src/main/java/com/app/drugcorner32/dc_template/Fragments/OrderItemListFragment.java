@@ -12,6 +12,7 @@ import com.app.drugcorner32.dc_template.Data.MedicineDetails;
 import com.app.drugcorner32.dc_template.Data.OrderDetails;
 import com.app.drugcorner32.dc_template.Data.OrderItemDetails;
 import com.app.drugcorner32.dc_template.Data.PrescriptionDetails;
+import com.app.drugcorner32.dc_template.Interfaces.OnFragmentChange;
 import com.app.drugcorner32.dc_template.R;
 
 import java.util.List;
@@ -19,10 +20,10 @@ import java.util.List;
 public class OrderItemListFragment extends android.support.v4.app.Fragment {
 
     public static String TAG = "OrderItemList";
-    private boolean isSelectable = false;
+    private boolean isRemovable = false;
     private boolean isEditable = false;
 
-    private Callback callback;
+    private OnFragmentChange callback;
     private OrderItemListAdapter itemAdapter;
     private OrderDetails orderDetails;
     private ExpandableListView itemListView;
@@ -49,11 +50,11 @@ public class OrderItemListFragment extends android.support.v4.app.Fragment {
 
         itemAdapter = new OrderItemListAdapter(getActivity());
 
-        /*This makes the fragment reusable with selecting
-        from previous order and displaying the current order*/
         if(orderDetails!=null)
             itemAdapter.setItemDetailsList(orderDetails.getOrderItemsList());
-        itemAdapter.setSelectable(isSelectable);
+
+        itemAdapter.setRemovable(isRemovable);
+        itemAdapter.setEditable(isEditable);
     }
 
     @Override
@@ -64,6 +65,7 @@ public class OrderItemListFragment extends android.support.v4.app.Fragment {
         itemListView =
                 (ExpandableListView)view.findViewById(R.id.orderItemListView);
         itemAdapter.setExpandableListView(itemListView);
+
         itemListView.setAdapter(itemAdapter);
         return view;
     }
@@ -72,7 +74,7 @@ public class OrderItemListFragment extends android.support.v4.app.Fragment {
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         try {
-            callback = (Callback) activity;
+            callback = (OnFragmentChange) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
                     + " must implement Callback");
@@ -107,8 +109,8 @@ public class OrderItemListFragment extends android.support.v4.app.Fragment {
     }
 
 
-    public void setSelectable(boolean val){
-        isSelectable = val;
+    public void setRemovable(boolean val){
+        isRemovable = val;
     }
 
     public void setEditable(boolean val){
@@ -134,10 +136,6 @@ public class OrderItemListFragment extends android.support.v4.app.Fragment {
     public void updateCartAdapter(){
         if(itemAdapter!=null)
             itemAdapter.notifyDataSetChanged();
-    }
-
-    public static interface Callback{
-        public void replaceFragment(int id, Object object);
     }
 
 }

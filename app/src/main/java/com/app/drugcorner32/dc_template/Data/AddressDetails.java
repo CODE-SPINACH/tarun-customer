@@ -1,9 +1,11 @@
 package com.app.drugcorner32.dc_template.Data;
 
+import java.io.Serializable;
+
 /**
  * Created by Tarun on 03-05-2015.
  */
-public class AddressDetails {
+public class AddressDetails implements Serializable{
     private String firstName;
     private String lastName;
     private String houseInfo;

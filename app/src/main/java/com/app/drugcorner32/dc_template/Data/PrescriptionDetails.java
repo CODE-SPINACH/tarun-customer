@@ -1,12 +1,10 @@
 package com.app.drugcorner32.dc_template.Data;
 
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.net.Uri;
 
 import com.app.drugcorner32.dc_template.Helpers.HelperClass;
 import com.app.drugcorner32.dc_template.Helpers.helperIDGenerator;
-import com.app.drugcorner32.dc_template.R;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -22,7 +20,7 @@ public class PrescriptionDetails implements Serializable {
     //Translated prescription means that it contains the medicine list.
     //Untranslated prescription means that it is just the image of prescription
 
-    public static enum TypesOfPrescription{
+    public enum TypesOfPrescription{
         TRANSLATED_PRESCRIPTION,UNTRANSLATED_PRESCRIPTION
     }
 
@@ -31,12 +29,9 @@ public class PrescriptionDetails implements Serializable {
     private boolean isSelected = false;
 
     //The path to the image of the subscription
-    private Uri imageUri;
+    private String imageUri;
 
     private int prescriptionID;
-
-    //Thumbnail for faster access
-    private Bitmap thumbnail;
 
     //The prescription will be translated to medicine list by the pharmacist. This is that list
     //Empty at the beginning
@@ -51,7 +46,7 @@ public class PrescriptionDetails implements Serializable {
 
     public PrescriptionDetails(PrescriptionDetails details){
         prescriptionID = details.getPrescriptionID();
-        imageUri = details.getImageUri();
+        imageUri = details.getImageUri().toString();
         if(prescriptionType == TypesOfPrescription.TRANSLATED_PRESCRIPTION)
             for(int i = 0;i<details.getMedicineList().size();i++){
                 if(details.getMedicineList().get(i).getSelection()) {
@@ -60,21 +55,17 @@ public class PrescriptionDetails implements Serializable {
             }
     }
 
-    public PrescriptionDetails(Uri imageUri,Context context) {
+    public PrescriptionDetails(Uri imageUri) {
         prescriptionID = helperIDGenerator.getID();
-        this.imageUri = imageUri;
+        this.imageUri = imageUri.toString();
         prescriptionType = TypesOfPrescription.UNTRANSLATED_PRESCRIPTION;
-        thumbnail = HelperClass.getPreview(imageUri,
-                (int) context.getResources().getDimension(R.dimen.card_image_size));
     }
 
-    public PrescriptionDetails(Uri imageUri,List<MedicineDetails> medicineList,Context context) {
+    public PrescriptionDetails(Uri imageUri,List<MedicineDetails> medicineList) {
         prescriptionID = helperIDGenerator.getID();
-        this.imageUri = imageUri;
+        this.imageUri = imageUri.toString();
         this.medicineList = medicineList;
         prescriptionType = TypesOfPrescription.TRANSLATED_PRESCRIPTION;
-        thumbnail = HelperClass.getPreview(imageUri,
-                (int) context.getResources().getDimension(R.dimen.card_image_size));
     }
 
     public void addMedicine(MedicineDetails details){
@@ -84,14 +75,17 @@ public class PrescriptionDetails implements Serializable {
 
     //Getters
     public Uri getImageUri(){
-        return imageUri;
+        return Uri.parse(imageUri);
     }
 
     public TypesOfPrescription getPrescriptionType(){
         return prescriptionType;
     }
 
-    public Bitmap getThumbnail(){
+    public Bitmap getThumbnail() {
+        Bitmap thumbnail = null;
+        if (imageUri != null)
+            thumbnail = HelperClass.getPreview(Uri.parse(imageUri), 100);
         return thumbnail;
     }
 
@@ -119,7 +113,7 @@ public class PrescriptionDetails implements Serializable {
     }
 
     public void setImageUri(Uri imageUri){
-        this.imageUri = imageUri;
+        this.imageUri = imageUri.toString();
     }
 
     public void setPrescriptionType(TypesOfPrescription prescriptionType){

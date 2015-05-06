@@ -19,8 +19,9 @@ import com.app.drugcorner32.dc_template.Interfaces.OnFragmentChange;
 import com.app.drugcorner32.dc_template.R;
 
 public class BuyMedicineFragment extends android.support.v4.app.Fragment {
-    private OnFragmentChange callback;
-
+    private OnFragmentChange callback1;
+    private Callback callback2;
+    private OrderDetails orderDetails = new OrderDetails();
     public static String TAG = "BuyMedicine";
 
     private OrderItemListFragment itemListFragment;
@@ -76,7 +77,9 @@ public class BuyMedicineFragment extends android.support.v4.app.Fragment {
         if(itemListFragment == null)
             itemListFragment = OrderItemListFragment.newInstance();
 
+        itemListFragment.setOrderDetails(orderDetails);
         itemListFragment.setEditable(true);
+        itemListFragment.setRemovable(true);
 
         android.support.v4.app.FragmentTransaction ft = getChildFragmentManager().beginTransaction();
         ft.replace(R.id.buyMedicineListViewContainer,itemListFragment,OrderItemListFragment.TAG).commitAllowingStateLoss();
@@ -85,14 +88,14 @@ public class BuyMedicineFragment extends android.support.v4.app.Fragment {
         sendPrescriptionTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                callback.replaceFragment(R.layout.dialog_send_prescripiton, null);
+                callback1.replaceFragment(R.layout.dialog_send_prescripiton, null);
             }
         });
 
         enterManuallyTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                callback.replaceFragment(R.layout.dialog_search_medicine, null);
+                callback1.replaceFragment(R.layout.dialog_search_medicine, null);
             }
         });
 
@@ -100,14 +103,14 @@ public class BuyMedicineFragment extends android.support.v4.app.Fragment {
         previousOrderTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                callback.replaceFragment(R.layout.dialog_previous_order, itemListFragment.getItemDetailses());
+                callback1.replaceFragment(R.layout.dialog_previous_order, itemListFragment.getItemDetailses());
             }
         });
 
         continueButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                callback2.startAddressActivity(orderDetails);
             }
         });
 
@@ -118,7 +121,8 @@ public class BuyMedicineFragment extends android.support.v4.app.Fragment {
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         try {
-            callback = (OnFragmentChange) activity;
+            callback1 = (OnFragmentChange) activity;
+            callback2 = (Callback)activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
                     + " must implement OnFragmentInteractionListener");
@@ -128,11 +132,12 @@ public class BuyMedicineFragment extends android.support.v4.app.Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
-        callback = null;
+        callback1 = null;
+        callback2 = null;
     }
 
     public void addNewPrescription(Uri imagePath){
-        itemListFragment.addOrderItem(new OrderItemDetails(new PrescriptionDetails(imagePath,getActivity())));
+        itemListFragment.addOrderItem(new OrderItemDetails(new PrescriptionDetails(imagePath)));
     }
 
     public void addNewMedicine(MedicineDetails medicineDetails){
@@ -162,4 +167,7 @@ public class BuyMedicineFragment extends android.support.v4.app.Fragment {
         }
     }
 
+    public interface Callback{
+        void startAddressActivity(OrderDetails details);
+    }
 }

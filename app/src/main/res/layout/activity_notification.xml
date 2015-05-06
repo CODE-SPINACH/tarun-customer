@@ -2,6 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#eee"
     tools:context="com.app.drugcorner32.dc_template.Activities.NotificationActivity"
     tools:ignore="MergeRootFrame" >
 
@@ -15,13 +16,22 @@
         local:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         local:popupTheme="@style/ThemeOverlay.AppCompat.Light" >
 
+        <ImageButton
+            android:id="@+id/notificationToolbarImageButton1"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@drawable/abc_ic_ab_back_mtrl_am_alpha"
+            android:background="#00FFFFFF"
+            />
+
         <TextView
+            android:padding="10dp"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="Notification"
             android:textColor="#FFF"
             android:textSize="20dp"
-            android:id="@+id/notificationToolbarText"/>
+            android:id="@+id/notificationToolbarTextView1"/>
     </android.support.v7.widget.Toolbar>
 
     <FrameLayout

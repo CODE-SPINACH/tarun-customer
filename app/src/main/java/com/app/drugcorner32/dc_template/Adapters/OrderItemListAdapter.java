@@ -81,7 +81,8 @@ public class OrderItemListAdapter extends BaseExpandableListAdapter{
     private OnFragmentChange callback1;
     private Callback callback2;
     private List<OrderItemDetails> itemDetailsList = new ArrayList<>();
-    private boolean isSelectable;
+    private boolean isRemovable;
+    private boolean isEditable;
     private Typeface typeFace;
     private ExpandableListView expandableListView;
 
@@ -92,9 +93,14 @@ public class OrderItemListAdapter extends BaseExpandableListAdapter{
         typeFace = Typeface.createFromAsset(context.getAssets(), "fonts/gothic.ttf");
     }
 
-    public void setSelectable(boolean val){
-        isSelectable = val;
+    public void setRemovable(boolean val){
+        isRemovable = val;
     }
+
+    public void setEditable(boolean val){
+        isEditable = val;
+    }
+
 
     public void setItemDetailsList(List<OrderItemDetails> list){
         itemDetailsList = list;
@@ -156,7 +162,7 @@ public class OrderItemListAdapter extends BaseExpandableListAdapter{
                     holder0.costTextView.setTypeface(typeFace);
                     holder0.removeView.setTypeface(typeFace);
 
-                    if(isSelectable)
+                    if(!isRemovable)
                         holder0.removeView.setVisibility(View.GONE);
 
                     view.setTag(holder0);
@@ -233,6 +239,15 @@ public class OrderItemListAdapter extends BaseExpandableListAdapter{
                     holder1.decrementButton.setTypeface(typeFace);
                     holder1.incrementButton.setTypeface(typeFace);
 
+
+                    if(!isRemovable)
+                        holder1.removeTextView.setVisibility(View.INVISIBLE);
+
+                    if(!isEditable){
+                        holder1.incrementButton.setVisibility(View.INVISIBLE);
+                        holder1.decrementButton.setVisibility(View.INVISIBLE);
+                    }
+
                     view.setTag(holder1);
                 }
                 else
@@ -243,85 +258,82 @@ public class OrderItemListAdapter extends BaseExpandableListAdapter{
                 holder1.costOfMedicineTextView.setText(medicineDetails.getCost() * medicineDetails.getQuantity() + "/-");
                 holder1.numberOfMedicineTextView.setText(medicineDetails.getQuantity() + "");
 
+                holder1.orTextView.setVisibility(View.VISIBLE);
+                holder1.stripTextView.setVisibility(View.VISIBLE);
+                holder1.tabletTextView.setText("tablet");
+
                 if(medicineDetails.getMedicineType() == MedicineDetails.MedicineTypes.Strips) {
-                    holder1.orTextView.setVisibility(View.VISIBLE);
-                    holder1.stripTextView.setVisibility(View.VISIBLE);
-                    holder1.tabletTextView.setText("strip");
                     holder1.stripTextView.setTextColor(Color.parseColor("#ea6125"));
                     holder1.tabletTextView.setTextColor(Color.parseColor("#777777"));
                 }
                 else if(medicineDetails.getMedicineType() == MedicineDetails.MedicineTypes.Tablets) {
-                    holder1.orTextView.setVisibility(View.VISIBLE);
-                    holder1.stripTextView.setVisibility(View.VISIBLE);
-                    holder1.tabletTextView.setText("tablet");
                     holder1.tabletTextView.setTextColor(Color.parseColor("#ea6125"));
                     holder1.stripTextView.setTextColor(Color.parseColor("#777777"));
                 }
                 else if(medicineDetails.getMedicineType() == MedicineDetails.MedicineTypes.Bottles){
                     holder1.orTextView.setVisibility(View.GONE);
                     holder1.stripTextView.setVisibility(View.GONE);
-                    holder1.tabletTextView.setText("Bottles");
+                    holder1.tabletTextView.setText("bottle");
                 }
 
-                if(isSelectable)
-                    holder1.removeTextView.setVisibility(View.INVISIBLE);
-
-                holder1.tabletTextView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        medicineDetails.setMedicineType(MedicineDetails.MedicineTypes.Tablets);
-                        if(isSelectable)
-                            callback2.updateCart(null);
-                        holder1.tabletTextView.setTextColor(Color.parseColor("#ea6125"));
-                        holder1.stripTextView.setTextColor(Color.parseColor("#777777"));
-                    }
-                });
-
-                holder1.stripTextView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        medicineDetails.setMedicineType(MedicineDetails.MedicineTypes.Strips);
-                        if(isSelectable)
-                            callback2.updateCart(null);
-                        holder1.stripTextView.setTextColor(Color.parseColor("#ea6125"));
-                        holder1.tabletTextView.setTextColor(Color.parseColor("#777777"));
-                    }
-                });
-
-                holder1.incrementButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        int quantity = medicineDetails.getQuantity() + 1;
-                        medicineDetails.setQuantity(quantity);
-                        holder1.costOfMedicineTextView.setText(medicineDetails.getCost() * quantity + "/-");
-                        holder1.numberOfMedicineTextView.setText(""+quantity);
-                        if(isSelectable) {
-                            if (quantity == 1)
-                                callback2.updateCart(itemDetailsList.get(groupPosition));
-                            else
+                if(isEditable) {
+                    holder1.tabletTextView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            medicineDetails.setMedicineType(MedicineDetails.MedicineTypes.Tablets);
+                            if (isRemovable)
                                 callback2.updateCart(null);
+                            holder1.tabletTextView.setTextColor(Color.parseColor("#ea6125"));
+                            holder1.stripTextView.setTextColor(Color.parseColor("#777777"));
                         }
-                        callback2.updateBottomMenu();
-                    }
-                });
+                    });
 
-                holder1.decrementButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        int quantity = medicineDetails.getQuantity() - 1;
-                        medicineDetails.setQuantity(quantity);
-                        holder1.costOfMedicineTextView.setText(medicineDetails.getCost() * quantity + "/-");
-                        holder1.numberOfMedicineTextView.setText(""+quantity);
-
-                        if(isSelectable) {
-                            if (quantity == 0)
-                                callback2.updateCart(itemDetailsList.get(groupPosition));
-                            else
+                    holder1.stripTextView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            medicineDetails.setMedicineType(MedicineDetails.MedicineTypes.Strips);
+                            if (isRemovable)
                                 callback2.updateCart(null);
+                            holder1.stripTextView.setTextColor(Color.parseColor("#ea6125"));
+                            holder1.tabletTextView.setTextColor(Color.parseColor("#777777"));
                         }
-                        callback2.updateBottomMenu();
-                    }
-                });
+                    });
+
+                    holder1.incrementButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            int quantity = medicineDetails.getQuantity() + 1;
+                            medicineDetails.setQuantity(quantity);
+                            holder1.costOfMedicineTextView.setText(medicineDetails.getCost() * quantity + "/-");
+                            holder1.numberOfMedicineTextView.setText("" + quantity);
+                            if (isRemovable) {
+                                if (quantity == 1)
+                                    callback2.updateCart(itemDetailsList.get(groupPosition));
+                                else
+                                    callback2.updateCart(null);
+                            }
+                            callback2.updateBottomMenu();
+                        }
+                    });
+
+                    holder1.decrementButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            int quantity = medicineDetails.getQuantity() - 1;
+                            medicineDetails.setQuantity(quantity);
+                            holder1.costOfMedicineTextView.setText(medicineDetails.getCost() * quantity + "/-");
+                            holder1.numberOfMedicineTextView.setText("" + quantity);
+
+                            if (isRemovable) {
+                                if (quantity == 0)
+                                    callback2.updateCart(itemDetailsList.get(groupPosition));
+                                else
+                                    callback2.updateCart(null);
+                            }
+                            callback2.updateBottomMenu();
+                        }
+                    });
+                }
 
                 holder1.removeTextView.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -368,6 +380,14 @@ public class OrderItemListAdapter extends BaseExpandableListAdapter{
             childHolder.decrementButton.setTypeface(typeFace);
             childHolder.incrementButton.setTypeface(typeFace);
 
+            if (!isRemovable)
+                childHolder.removeTextView.setVisibility(View.INVISIBLE);
+
+            if(!isEditable) {
+                childHolder.incrementButton.setVisibility(View.INVISIBLE);
+                childHolder.decrementButton.setVisibility(View.INVISIBLE);
+            }
+
             convertView.setTag(childHolder);
         } else
             childHolder = (ChildViewHolder) convertView.getTag();
@@ -375,6 +395,10 @@ public class OrderItemListAdapter extends BaseExpandableListAdapter{
         childHolder.nameOfMedicineTextView.setText(medicineDetails.getMedicineName());
         childHolder.costOfMedicineTextView.setText(medicineDetails.getCost() * medicineDetails.getQuantity() + "");
         childHolder.numberOfMedicineTextView.setText(medicineDetails.getQuantity() + "");
+        childHolder.orTextView.setVisibility(View.VISIBLE);
+        childHolder.stripTextView.setVisibility(View.VISIBLE);
+        childHolder.tabletTextView.setText("tablet");
+
 
         if (medicineDetails.getMedicineType() == MedicineDetails.MedicineTypes.Strips) {
             childHolder.stripTextView.setTextColor(Color.parseColor("#ea6125"));
@@ -385,79 +409,76 @@ public class OrderItemListAdapter extends BaseExpandableListAdapter{
         } else {
             childHolder.orTextView.setVisibility(View.GONE);
             childHolder.stripTextView.setVisibility(View.GONE);
-            childHolder.tabletTextView.setText("Bottles");
+            childHolder.tabletTextView.setText("bottle");
         }
 
-        if (isSelectable) {
-            childHolder.removeTextView.setVisibility(View.INVISIBLE);
-        }
+        if (isEditable) {
 
-
-        childHolder.tabletTextView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                medicineDetails.setMedicineType(MedicineDetails.MedicineTypes.Tablets);
-                childHolder.tabletTextView.setTextColor(Color.parseColor("#ea6125"));
-                childHolder.stripTextView.setTextColor(Color.parseColor("#777777"));
-                if (isSelectable)
-                    callback2.updateCart(null);
-            }
-        });
-
-        childHolder.stripTextView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                medicineDetails.setMedicineType(MedicineDetails.MedicineTypes.Strips);
-                childHolder.stripTextView.setTextColor(Color.parseColor("#ea6125"));
-                childHolder.tabletTextView.setTextColor(Color.parseColor("#777777"));
-                if (isSelectable)
-                    callback2.updateCart(null);
-            }
-        });
-
-        childHolder.incrementButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int quantity = medicineDetails.getQuantity() + 1;
-                medicineDetails.setQuantity(quantity);
-
-                if (isSelectable) {
-                    if (quantity == 1)
-                        callback2.updateCart(getGroup(groupPosition));
-                    else
+            childHolder.tabletTextView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    medicineDetails.setMedicineType(MedicineDetails.MedicineTypes.Tablets);
+                    childHolder.tabletTextView.setTextColor(Color.parseColor("#ea6125"));
+                    childHolder.stripTextView.setTextColor(Color.parseColor("#777777"));
+                    if (isRemovable)
                         callback2.updateCart(null);
                 }
-                callback2.updateBottomMenu();
-                childHolder.costOfMedicineTextView.setText(medicineDetails.getCost() * quantity + "/-");
-                childHolder.numberOfMedicineTextView.setText("" + quantity);
-                notifyDataSetChanged();
-            }
-        });
+            });
 
-        childHolder.decrementButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int quantity = medicineDetails.getQuantity() - 1;
-                if (quantity < 0)
-                    return;
-
-                if (isSelectable) {
-                    if (quantity == 0) {
-                        medicineDetails.setQuantity(quantity);
-                        callback2.updateCart(getGroup(groupPosition));
-                    } else
+            childHolder.stripTextView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    medicineDetails.setMedicineType(MedicineDetails.MedicineTypes.Strips);
+                    childHolder.stripTextView.setTextColor(Color.parseColor("#ea6125"));
+                    childHolder.tabletTextView.setTextColor(Color.parseColor("#777777"));
+                    if (isRemovable)
                         callback2.updateCart(null);
-                } else if (quantity == 0)
-                    return;
+                }
+            });
 
-                medicineDetails.setQuantity(quantity);
-                callback2.updateBottomMenu();
-                childHolder.costOfMedicineTextView.setText(medicineDetails.getCost() * quantity + "/-");
-                childHolder.numberOfMedicineTextView.setText("" + quantity);
-                notifyDataSetChanged();
-            }
-        });
+            childHolder.incrementButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int quantity = medicineDetails.getQuantity() + 1;
+                    medicineDetails.setQuantity(quantity);
 
+                    if (isRemovable) {
+                        if (quantity == 1)
+                            callback2.updateCart(getGroup(groupPosition));
+                        else
+                            callback2.updateCart(null);
+                    }
+                    callback2.updateBottomMenu();
+                    childHolder.costOfMedicineTextView.setText(medicineDetails.getCost() * quantity + "/-");
+                    childHolder.numberOfMedicineTextView.setText("" + quantity);
+                    notifyDataSetChanged();
+                }
+            });
+
+            childHolder.decrementButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int quantity = medicineDetails.getQuantity() - 1;
+                    if (quantity < 0)
+                        return;
+
+                    if (isRemovable) {
+                        if (quantity == 0) {
+                            medicineDetails.setQuantity(quantity);
+                            callback2.updateCart(getGroup(groupPosition));
+                        } else
+                            callback2.updateCart(null);
+                    } else if (quantity == 0)
+                        return;
+
+                    medicineDetails.setQuantity(quantity);
+                    callback2.updateBottomMenu();
+                    childHolder.costOfMedicineTextView.setText(medicineDetails.getCost() * quantity + "/-");
+                    childHolder.numberOfMedicineTextView.setText("" + quantity);
+                    notifyDataSetChanged();
+                }
+            });
+        }
         childHolder.removeTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -1,13 +1,12 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#eee"
-    tools:context=".MainActivity">
+    tools:context="com.app.drugcorner32.dc_template.Activities.AddressActivity">
 
     <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:local="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/toolbar"
+        android:id="@+id/addressToolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:minHeight="?attr/actionBarSize"
@@ -15,21 +14,28 @@
         local:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         local:popupTheme="@style/ThemeOverlay.AppCompat.Light" >
 
-
-        <TextView
-            android:layout_marginTop="30dp"
+        <ImageButton
+            android:id="@+id/addressToolbarImageButton1"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="Drug Corner"
+            android:src="@drawable/abc_ic_ab_back_mtrl_am_alpha"
+            android:background="#00FFFFFF"
+            />
+
+        <TextView
+            android:padding="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Fill Address"
             android:textColor="#FFF"
             android:textSize="20dp"
-            android:id="@+id/toolbarText"/>
-        </android.support.v7.widget.Toolbar>
+            android:id="@+id/addressToolbarTextView1"/>
+    </android.support.v7.widget.Toolbar>
 
     <FrameLayout
-        android:layout_below="@+id/toolbar"
+        android:id="@+id/container"
+        android:layout_below="@+id/addressToolbar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/mainActivityFrameLayout"/>
+        android:layout_height="match_parent"/>
 
 </RelativeLayout>

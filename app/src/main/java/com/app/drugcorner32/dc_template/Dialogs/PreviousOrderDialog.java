@@ -2,6 +2,7 @@ package com.app.drugcorner32.dc_template.Dialogs;
 
 import android.app.Dialog;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -98,6 +99,11 @@ public class PreviousOrderDialog extends DialogFragment {
 
         toolbarBackButton = (ImageButton)view.findViewById(R.id.previousOrderDialogImageButton1);
         toolbarTitleView = (TextView) view.findViewById(R.id.previousOrderDialogTextView1);
+
+        Typeface typeFace = Typeface.createFromAsset(getActivity().getAssets(), "fonts/gothic.ttf");
+        toolbarTitleView.setTypeface(typeFace);
+
+
         closeButton = (ImageButton)view.findViewById(R.id.previousOrderDialogImageButton2);
         noOfItemsView = (TextView) view.findViewById(R.id.previousOrderDialogTextView2);
         costView = (TextView) view.findViewById(R.id.previousOrderDialogTextView3);

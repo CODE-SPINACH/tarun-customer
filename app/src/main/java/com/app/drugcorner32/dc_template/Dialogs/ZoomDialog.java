@@ -17,19 +17,16 @@ import com.app.drugcorner32.dc_template.R;
 
 /**
  * Created by Tarun on 15-03-2015.
+ *
  */
 public class ZoomDialog extends DialogFragment {
 
     private Uri fileUri;
     public static String TAG = "ZoomDialog";
 
-
-
     public ZoomDialog() {
         super();
-
     }
-
 
     @NonNull
     @Override
@@ -48,7 +45,6 @@ public class ZoomDialog extends DialogFragment {
         lp.width = WindowManager.LayoutParams.MATCH_PARENT;
         lp.height = WindowManager.LayoutParams.MATCH_PARENT;
         window.setAttributes(lp);
-
         super.onStart();
     }
 

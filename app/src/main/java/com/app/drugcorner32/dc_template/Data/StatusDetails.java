@@ -5,7 +5,7 @@ import java.io.Serializable;
 /**
  * Created by Tarun on 04-03-2015.
  */
-public class Status implements Serializable{
+public class StatusDetails implements Serializable{
 
     public static enum STATUSES {
         BEING_PROCESSED,DELIVERED,CANCELLED,ON_THE_WAY,ORDER_NOT_PLACED_YET
@@ -13,11 +13,11 @@ public class Status implements Serializable{
 
     private STATUSES currentStatus;
 
-    public Status(STATUSES status){
+    public StatusDetails(STATUSES status){
         currentStatus = status;
     }
 
-    public Status(){
+    public StatusDetails(){
         currentStatus = STATUSES.ORDER_NOT_PLACED_YET;
     }
 

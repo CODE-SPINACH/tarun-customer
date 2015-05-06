@@ -4,28 +4,33 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
+import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.app.drugcorner32.dc_template.Adapters.OrderItemListAdapter;
+import com.app.drugcorner32.dc_template.Data.NotificationDetails;
 import com.app.drugcorner32.dc_template.Data.OrderDetails;
 import com.app.drugcorner32.dc_template.Data.OrderItemDetails;
+import com.app.drugcorner32.dc_template.Dialogs.EditMedicineDialog;
+import com.app.drugcorner32.dc_template.Dialogs.ResendImageDialog;
 import com.app.drugcorner32.dc_template.Dialogs.SendPrescriptionDialog;
+import com.app.drugcorner32.dc_template.Dialogs.ViewMedicineDialog;
 import com.app.drugcorner32.dc_template.Fragments.NotificationFragment;
-import com.app.drugcorner32.dc_template.Fragments.OrderItemListFragment;
-import com.app.drugcorner32.dc_template.Fragments.ResendImageFragment;
+import com.app.drugcorner32.dc_template.Interfaces.OnFragmentChange;
 import com.app.drugcorner32.dc_template.R;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.Calendar;
 
-public class NotificationActivity extends ActionBarActivity implements OrderItemListFragment.Callback,
-        NotificationFragment.Callback,OrderItemListAdapter.Callback,ResendImageFragment.Callback,SendPrescriptionDialog.Callback{
+public class NotificationActivity extends ActionBarActivity implements OnFragmentChange, OrderItemListAdapter.Callback,NotificationFragment.Callback{
     private OrderDetails orderDetails;
     private final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
     private Uri fileUri;
@@ -34,8 +39,10 @@ public class NotificationActivity extends ActionBarActivity implements OrderItem
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notification);
 
+        ImageButton backButton = (ImageButton) findViewById(R.id.notificationToolbarImageButton1);
+
         android.support.v7.widget.Toolbar toolbar = (android.support.v7.widget.Toolbar)findViewById(R.id.notificationToolBar);
-        TextView toolbarText = (TextView)findViewById(R.id.notificationToolbarText);
+        TextView toolbarText = (TextView)findViewById(R.id.notificationToolbarTextView1);
 
         Typeface typeFace=Typeface.createFromAsset(toolbar.getContext().getAssets(), "fonts/gothic.ttf");
         toolbarText.setTypeface(typeFace);
@@ -49,6 +56,13 @@ public class NotificationActivity extends ActionBarActivity implements OrderItem
             Toast.makeText(this,"Empty",Toast.LENGTH_SHORT).show();
 
         replaceFragment(R.layout.fragment_notification, null);
+
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
     }
 
 
@@ -61,27 +75,23 @@ public class NotificationActivity extends ActionBarActivity implements OrderItem
                 break;
 
             case R.id.buttonNotificationCardButton1:
-                ResendImageFragment resendImageFragment = ResendImageFragment.newInstance();
-                ft.replace(R.id.container,resendImageFragment,ResendImageFragment.TAG).
-                        setTransitionStyle(FragmentTransaction.TRANSIT_FRAGMENT_OPEN).
-                        addToBackStack(null).commitAllowingStateLoss();
-                /*NotificationDetails details = (NotificationDetails)object;
+                NotificationDetails details = (NotificationDetails)object;
 
                 if(details.getType() == NotificationDetails.NOTIFICATION_TYPE.VIEW){
-                    OrderItemListFragment itemListFragment = OrderItemListFragment.newInstance();
-                    itemListFragment.setOrderDetails(orderDetails);
-                    itemListFragment.setEditable(true);
-
-                    ft.replace(R.id.container,itemListFragment,OrderItemListFragment.TAG).
-                            setTransitionStyle(FragmentTransaction.TRANSIT_FRAGMENT_OPEN).
-                            addToBackStack(null).commitAllowingStateLoss();
+                    ViewMedicineDialog viewMedicineDialog = new ViewMedicineDialog();
+                    viewMedicineDialog.setOrderDetails(orderDetails);
+                    viewMedicineDialog.show(getSupportFragmentManager(),ViewMedicineDialog.TAG);
                 }
                 else if(details.getType() == NotificationDetails.NOTIFICATION_TYPE.EDIT){
-
+                    EditMedicineDialog editMedicineDialog = new EditMedicineDialog();
+                    editMedicineDialog.setOrderDetails(orderDetails);
+                    editMedicineDialog.show(getSupportFragmentManager(),EditMedicineDialog.TAG);
                 }
                 else{
-
-                }*/
+                    ResendImageDialog resendImageDialog = new ResendImageDialog();
+                    resendImageDialog.setPrescriptionList(orderDetails.getOrderItemsList());
+                    resendImageDialog.show(getSupportFragmentManager(),ResendImageDialog.TAG);
+                }
                 break;
 
             case R.id.resendButton1:
@@ -122,7 +132,7 @@ public class NotificationActivity extends ActionBarActivity implements OrderItem
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
-            replaceFragment(CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE,null);
+            replaceFragment(CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE, null);
         }
     }
 
@@ -151,11 +161,33 @@ public class NotificationActivity extends ActionBarActivity implements OrderItem
         return false;
     }
 
-    public void updateCart(OrderItemDetails details){
+    public void updateCart(OrderItemDetails details){}
+    public void updateBottomMenu(){}
 
-    }
+    public void startTimer(){
+        new CountDownTimer(10*1000, 1000) {
 
-    public void updateBottomMenu(){
+            public void onTick(long millisUntilFinished) {
+                int minutes = (int)(millisUntilFinished / (60 * 1000));
+                int seconds = (int)((millisUntilFinished / 1000) % 60);
+                String str = String.format("%d:%02d", minutes, seconds - 1);
+
+                EditMedicineDialog editMedicineDialog = (EditMedicineDialog)
+                        getSupportFragmentManager().findFragmentByTag(EditMedicineDialog.TAG);
+
+                if(editMedicineDialog != null) {
+                    editMedicineDialog.setTimer(str);
+                }
+            }
+
+            public void onFinish() {
+                EditMedicineDialog editMedicineDialog = (EditMedicineDialog)
+                        getSupportFragmentManager().findFragmentByTag(EditMedicineDialog.TAG);
+
+                if(editMedicineDialog != null)
+                    editMedicineDialog.dismiss();
+            }
+        }.start();
 
     }
 

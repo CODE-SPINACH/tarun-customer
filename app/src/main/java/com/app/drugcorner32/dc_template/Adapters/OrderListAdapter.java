@@ -12,6 +12,7 @@ import com.app.drugcorner32.dc_template.Data.MedicineDetails;
 import com.app.drugcorner32.dc_template.Data.OrderDetails;
 import com.app.drugcorner32.dc_template.Data.OrderItemDetails;
 import com.app.drugcorner32.dc_template.Data.PrescriptionDetails;
+import com.app.drugcorner32.dc_template.Interfaces.OnFragmentChange;
 import com.app.drugcorner32.dc_template.R;
 
 import java.text.SimpleDateFormat;
@@ -26,7 +27,8 @@ public class OrderListAdapter extends ArrayAdapter<OrderDetails> {
 
     private SimpleDateFormat dateFormat=new SimpleDateFormat("dd-MMMM-yyyy");
 
-    private Callback callback;
+    private OnFragmentChange callback1;
+    private Callback callback2;
     public static class ViewHolder{
         public TextView orderRecipientNameView;
         public TextView orderDateView;
@@ -44,7 +46,8 @@ public class OrderListAdapter extends ArrayAdapter<OrderDetails> {
 
     public OrderListAdapter(Context context, int cardViewResourceId){
         super(context,cardViewResourceId);
-        callback = (Callback)context;
+        callback1 = (OnFragmentChange)context;
+        callback2 = (Callback)context;
     }
 
     @Override
@@ -118,14 +121,14 @@ public class OrderListAdapter extends ArrayAdapter<OrderDetails> {
         holder.pickMedicineView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                callback.replaceFragment(R.id.orderCardTextView6, getItem(position));
+                callback1.replaceFragment(R.id.orderCardTextView6, getItem(position));
             }
         });
 
         holder.repeatView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                callback.repeatOrder(getItem(position));
+                callback2.repeatOrder(getItem(position));
             }
         });
 
@@ -137,7 +140,6 @@ public class OrderListAdapter extends ArrayAdapter<OrderDetails> {
     }
 
     public static interface Callback{
-        public void replaceFragment(int id,Object o);
         public void repeatOrder(OrderDetails details);
     }
 }

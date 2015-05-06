@@ -1,18 +1,20 @@
 package com.app.drugcorner32.dc_template.Fragments;
 
 import android.app.Activity;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
+import com.app.drugcorner32.dc_template.Data.AddressDetails;
 import com.app.drugcorner32.dc_template.R;
 
 public class AddressFragment extends android.support.v4.app.Fragment {
 
     public static String TAG = "Address";
+    private Callback callback;
 
     public static AddressFragment newInstance() {
         AddressFragment fragment = new AddressFragment();
@@ -41,36 +43,50 @@ public class AddressFragment extends android.support.v4.app.Fragment {
         View view = inflater.inflate(R.layout.fragment_address, container, false);
         Button continueButton = (Button)view.findViewById(R.id.placeOrderButton);
 
+        final TextView firstNameView = (TextView) view.findViewById(R.id.addressTextView1);
+        final TextView lastNameView = (TextView) view.findViewById(R.id.addressTextView2);
+        TextView phoneNoView = (TextView) view.findViewById(R.id.addressTextView3);
+        final TextView houseNameView = (TextView) view.findViewById(R.id.addressTextView4);
+        final TextView streetNameView = (TextView) view.findViewById(R.id.addressTextView5);
+        TextView landamrkNameView = (TextView) view.findViewById(R.id.addressTextView6);
+        TextView pincodeNoView = (TextView) view.findViewById(R.id.addressTextView7);
+
         continueButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               // mListener.replaceFragment(R.id.placeOrderButton,null);
+                AddressDetails details = new AddressDetails();
+                details.setFirstName(firstNameView.getText().toString());
+                details.setLastName(lastNameView.getText().toString());
+                details.setHouseInfo(houseNameView.getText().toString());
+                details.setStreetInfo(streetNameView.getText().toString());
+                details.setLandmark(streetNameView.getText().toString());
+
+                callback.startNotificationActivity(details);
             }
         });
-        return view;
-    }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-       /* if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }*/
+        return view;
     }
 
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        /*try {
-            mListener = (OnFragmentInteractionListener) activity;
+        try {
+            callback = (Callback) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
                     + " must implement OnFragmentInteractionListener");
-        }*/
+        }
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-       // mListener = null;
+        callback = null;
+    }
+
+
+    public interface Callback{
+        public void startNotificationActivity(AddressDetails details);
     }
 }

@@ -8,7 +8,6 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,7 +17,7 @@ import com.app.drugcorner32.dc_template.Data.MedicineDetails;
 import com.app.drugcorner32.dc_template.Data.OrderDetails;
 import com.app.drugcorner32.dc_template.Data.OrderItemDetails;
 import com.app.drugcorner32.dc_template.Data.PrescriptionDetails;
-import com.app.drugcorner32.dc_template.Data.Status;
+import com.app.drugcorner32.dc_template.Data.StatusDetails;
 import com.app.drugcorner32.dc_template.Dialogs.PreviousOrderDialog;
 import com.app.drugcorner32.dc_template.Dialogs.SearchMedicineDialog;
 import com.app.drugcorner32.dc_template.Dialogs.SendPrescriptionDialog;
@@ -27,20 +26,18 @@ import com.app.drugcorner32.dc_template.Fragments.AddressFragment;
 import com.app.drugcorner32.dc_template.Fragments.BuyMedicineFragment;
 import com.app.drugcorner32.dc_template.Fragments.HomeScreenFragment;
 import com.app.drugcorner32.dc_template.Fragments.OrderItemListFragment;
-import com.app.drugcorner32.dc_template.Fragments.PreviousOrderListFragment;
+import com.app.drugcorner32.dc_template.Interfaces.OnFragmentChange;
 import com.app.drugcorner32.dc_template.R;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
 //TODO OrderDetails is dummy data
 
-public class MainActivity extends ActionBarActivity implements PreviousOrderDialog.Callback,
-        HomeScreenFragment.Callback,SendPrescriptionDialog.Callback,SearchMedicineDialog.Callback,BuyMedicineFragment.Callback,
-        OrderItemListFragment.Callback,PreviousOrderListFragment.Callback,OrderListAdapter.Callback,
+public class MainActivity extends ActionBarActivity implements OnFragmentChange, HomeScreenFragment.Callback,
+        SendPrescriptionDialog.Callback,SearchMedicineDialog.Callback,OrderListAdapter.Callback,BuyMedicineFragment.Callback,
         OrderItemListAdapter.Callback{
 
     private Uri fileUri;
@@ -65,7 +62,7 @@ public class MainActivity extends ActionBarActivity implements PreviousOrderDial
         com.app.drugcorner32.dc_template.Helpers.helperIDGenerator.init();
 
         //setting the home fragment
-        replaceFragment(R.id.mainActivityFrameLayout,null);
+        replaceFragment(R.id.homeScreenImageButton1,null);
 
         orderListAdapter = new OrderListAdapter(this,R.layout.cards_order);
 
@@ -91,7 +88,7 @@ public class MainActivity extends ActionBarActivity implements PreviousOrderDial
         itemDetailses.add(new OrderItemDetails(new MedicineDetails("Sumo 100mg",MedicineDetails.MedicineTypes.Tablets,32),false));
 
         orderDetails = new OrderDetails(1030,2000f,"A - 1002 PRERNA TOWER VASTRAPUR",
-                new Status(Status.STATUSES.DELIVERED),Calendar.getInstance().getTime(),itemDetailses);
+                new StatusDetails(StatusDetails.STATUSES.DELIVERED),Calendar.getInstance().getTime(),itemDetailses);
 
         orderListAdapter.add(orderDetails);
         orderListAdapter.add(orderDetails);
@@ -110,20 +107,6 @@ public class MainActivity extends ActionBarActivity implements PreviousOrderDial
             Calendar cal = Calendar.getInstance();
             File dir = getPicStorageDir("prescription_images");
             File imageFile = new File(dir, cal.getTimeInMillis() + ".jpg");
-            if (!imageFile.exists()) {
-                try {
-                    imageFile.createNewFile();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            } else {
-                imageFile.delete();
-                try {
-                    imageFile.createNewFile();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
             fileUri = Uri.fromFile(imageFile);
             Intent i = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
             i.putExtra(MediaStore.EXTRA_OUTPUT, fileUri);
@@ -133,7 +116,7 @@ public class MainActivity extends ActionBarActivity implements PreviousOrderDial
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
-            replaceFragment(CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE,null);
+            replaceFragment(CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE, null);
         }
     }
 
@@ -174,7 +157,6 @@ public class MainActivity extends ActionBarActivity implements PreviousOrderDial
                 break;
 
             case R.id.checkoutButton:
-                Log.v("Checking","Checkout Button");
                 AddressFragment addressFragment = (AddressFragment) getSupportFragmentManager().
                         findFragmentByTag(AddressFragment.TAG);
                 if (addressFragment == null) {
@@ -191,6 +173,7 @@ public class MainActivity extends ActionBarActivity implements PreviousOrderDial
                 if (previousOrderDialog == null) {
                     previousOrderDialog = new PreviousOrderDialog();
                 }
+
                 previousOrderDialog.setCartOrderItemsList((List<OrderItemDetails>) object);
                 previousOrderDialog.show(getSupportFragmentManager(), PreviousOrderDialog.TAG);
                 break;
@@ -211,6 +194,7 @@ public class MainActivity extends ActionBarActivity implements PreviousOrderDial
 
                 if (frag3 == null) {
                     Toast.makeText(this, "State Loss", Toast.LENGTH_SHORT).show();
+                    break;
                 }
 
                 frag3.addNewPrescription(fileUri);
@@ -229,6 +213,7 @@ public class MainActivity extends ActionBarActivity implements PreviousOrderDial
 
                 if (frag4 == null) {
                     Toast.makeText(this, "State Loss", Toast.LENGTH_SHORT).show();
+                    break;
                 }
                 frag4.addNewMedicine(new MedicineDetails((String) object, MedicineDetails.MedicineTypes.Bottles));
                 frag4.updateBottomMenu();
@@ -245,7 +230,8 @@ public class MainActivity extends ActionBarActivity implements PreviousOrderDial
                     if (frag5 == null)
                         frag5 = OrderItemListFragment.newInstance();
 
-                    frag5.setSelectable(true);
+                    frag5.setRemovable(false);
+                    frag5.setEditable(true);
                     frag5.setOrderDetails((OrderDetails) object);
                     previousOrderDialog1.setSelectedOrderDetails((OrderDetails) object);
                     previousOrderDialog1.changeFragment(frag5);
@@ -300,6 +286,13 @@ public class MainActivity extends ActionBarActivity implements PreviousOrderDial
     public void startNotificationActivity(){
         Intent intent = new Intent(this,NotificationActivity.class);
         intent.putExtra("Order",orderDetails);
+        startActivity(intent);
+    }
+
+    public void startAddressActivity(OrderDetails details){
+        Intent intent = new Intent(this,AddressActivity.class);
+        Toast.makeText(this,details.getOrderItemsList().size() + "",Toast.LENGTH_SHORT).show();
+        intent.putExtra("Order",details);
         startActivity(intent);
     }
 

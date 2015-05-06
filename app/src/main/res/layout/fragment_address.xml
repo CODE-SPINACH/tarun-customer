@@ -5,148 +5,107 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="#eee"
     tools:context="com.app.drugcorner32.dc_template.Fragments.AddressFragment">
 
-    <!--Horizontal Linear Layout for EDIT TEXT-->
-    <LinearLayout
-        android:layout_marginTop="20dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_weight="1"
+        android:layout_height="0dp">
 
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:hint="First Name"
-            android:inputType="text"
-            android:layout_marginTop="25dp"/>
-
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:hint="Last Name"
-            android:inputType="text"
-            android:layout_marginTop="25dp"/>
-
-
-    </LinearLayout>
-    <!--Horizontal Linear Layout for EDITTEXT end here(First name and last name-->
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp">
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:hint="Phone Number"
-            android:inputType="phone"
-            android:layout_marginTop="30dp"/>
-
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:hint="Address"
-            android:inputType="text"
-            android:layout_marginTop="30dp"/>
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:hint="Address"
-            android:inputType="text"
-            android:layout_marginTop="30dp"/>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:hint="Landmark"
-            android:inputType="text"
-            android:layout_marginTop="30dp"/>
-
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:hint="Pincode"
-            android:inputType="text"
-            android:layout_marginTop="30dp"/>
-
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_marginRight="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginBottom="30dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:hint="City"
-            android:inputType="text"
-            android:layout_marginTop="30dp"/>
-
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:hint="State"
-            android:inputType="text"
-            android:layout_marginTop="30dp"/>
-
-
-    </LinearLayout>
-
-    <android.support.v7.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:cardCornerRadius="5dp"
-        android:layout_weight="0.2"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginBottom="10dp"
-        android:layout_marginTop="2dp"
-        android:background="#EEE"
-        android:id="@+id/checkout">
-        <Button
-            android:id="@+id/placeOrderButton"
-            android:textColor="#FFF"
-            android:text="Place Order"
-            android:textSize="20sp"
-            android:background="@drawable/rounded"
+        <LinearLayout
+            android:padding="10dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_gravity="bottom"/>
-    </android.support.v7.widget.CardView>
+            android:orientation="vertical">
+        <!--Horizontal Linear Layout for EDIT TEXT-->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/addressTextView1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="First Name"
+                    android:inputType="textPersonName" />
+
+                <EditText
+                    android:id="@+id/addressTextView2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="Last Name"
+                    android:inputType="textPersonName" />
+
+            </LinearLayout>
+
+                <EditText
+                    android:id="@+id/addressTextView3"
+                    android:layout_marginTop="30dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Phone Number"
+                    android:singleLine="true"
+                    android:inputType="phone" />
+
+                <EditText
+                    android:id="@+id/addressTextView4"
+                    android:layout_marginTop="30dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Address"
+                    android:singleLine="true"
+                    android:inputType="textPostalAddress" />
+
+                <EditText
+                    android:layout_marginTop="30dp"
+                    android:id="@+id/addressTextView5"
+                    android:singleLine="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Address"
+                    android:inputType="textPostalAddress" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/addressTextView6"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="Landmark"
+                    android:inputType="text" />
+
+
+                <EditText
+                    android:id="@+id/addressTextView7"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="Pincode"
+                    android:inputType="number" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+    <Button
+        android:layout_margin="10dp"
+        android:id="@+id/placeOrderButton"
+        android:textColor="#FFF"
+        android:text="Place Order"
+        android:textSize="20sp"
+        android:background="@drawable/rounded"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 
 </LinearLayout>
 

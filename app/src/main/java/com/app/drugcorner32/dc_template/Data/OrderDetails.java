@@ -2,6 +2,7 @@ package com.app.drugcorner32.dc_template.Data;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -23,11 +24,8 @@ public class OrderDetails implements Serializable{
     //The net cost of the order
     private float orderAmount;
 
-    //The address to where the delivery was made
-    private String orderDeliveryAddress;
-
     //Status of the delivery
-    private Status orderStatus;
+    private StatusDetails orderStatus;
 
     //Date and time of the delivery
     private Date orderDate;
@@ -35,11 +33,19 @@ public class OrderDetails implements Serializable{
     //Prescriptions that were added
     private List<OrderItemDetails> orderItemDetailses = new ArrayList<>();
 
-    public OrderDetails(int orderNo,float amount,String address,Status status,Date date,
+    public OrderDetails(){
+        Calendar cal = Calendar.getInstance();
+        orderNo = (int)(Math.random() * 1000);
+        orderDate = cal.getTime();
+        orderAmount = 0;
+        addressDetails = null;
+        orderStatus = new StatusDetails(StatusDetails.STATUSES.ORDER_NOT_PLACED_YET);
+    }
+
+    public OrderDetails(int orderNo,float amount,String address,StatusDetails status,Date date,
                         List<OrderItemDetails> detailses){
         this.orderNo = orderNo;
         orderAmount = amount;
-        orderDeliveryAddress = address;
         orderDate = date;
         orderStatus = status;
         orderItemDetailses = detailses;
@@ -57,9 +63,6 @@ public class OrderDetails implements Serializable{
         return orderNo;
     }
 
-    public String getOrderDeliveryAddress(){
-        return orderDeliveryAddress;
-    }
 
     public float getOrderAmount(){
         return orderAmount;
@@ -69,7 +72,7 @@ public class OrderDetails implements Serializable{
         return orderDate;
     }
 
-    public Status getOrderStatus(){
+    public StatusDetails getOrderStatus(){
         return orderStatus;
     }
 

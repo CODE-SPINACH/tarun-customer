@@ -39,15 +39,19 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".Activities.MainActivity" />
         </activity>
-        <activity
-            android:name=".LoginActivity"
-            android:label="@string/title_activity_login"
-            android:windowSoftInputMode="adjustResize|stateHidden" >
-        </activity>
 
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
+
+        <activity
+            android:name=".Activities.AddressActivity"
+            android:label="@string/title_activity_address"
+            android:parentActivityName=".Activities.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.app.drugcorner32.dc_template.Activities.MainActivity" />
+        </activity>
     </application>
 
 </manifest>
