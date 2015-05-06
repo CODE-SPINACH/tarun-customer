@@ -1,6 +1,7 @@
 package com.app.drugcorner32.dc_template.Fragments;
 
 import android.app.Activity;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -82,12 +83,22 @@ public class NotificationFragment extends android.support.v4.app.Fragment {
                 notificationDetails.getType() == NotificationDetails.NOTIFICATION_TYPE.DELIVERY_TIME){
             view = inflater.inflate(R.layout.cards_simple_notification,layout,false);
             TextView messageView = (TextView)view.findViewById(R.id.simpleNotificationCardTextView1);
+
+            Typeface typeface=Typeface.createFromAsset(getActivity().getAssets(),"fonts/gothic.ttf");
+
+            messageView.setTypeface(typeface);
+
             messageView.setText(notificationDetails.getMessage());
         }
         else{
             view = inflater.inflate(R.layout.cards_button_notification,layout,false);
             Button button = (Button)view.findViewById(R.id.buttonNotificationCardButton1);
             TextView messageView = (TextView)view.findViewById(R.id.buttonNotificationCardTextView1);
+
+            Typeface typeface=Typeface.createFromAsset(getActivity().getAssets(),"fonts/gothic.ttf");
+
+            button.setTypeface(typeface);
+            messageView.setTypeface(typeface);
 
             messageView.setText(notificationDetails.getMessage());
             if(notificationDetails.getType() == NotificationDetails.NOTIFICATION_TYPE.VIEW)

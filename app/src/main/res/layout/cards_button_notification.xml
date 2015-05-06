@@ -21,7 +21,8 @@
             android:layout_weight="1"
             android:textSize="15sp"
             android:layout_height="match_parent"
-            android:textColor="#333"/>
+            android:textColor="#333"
+            android:lineSpacingExtra="5dp"/>
 
         <Button
             android:textStyle="bold"

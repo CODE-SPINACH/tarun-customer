@@ -52,10 +52,12 @@
             android:layout_weight="1">
             <TextView
                 android:id="@+id/editMedicinesTextView1"
-                android:gravity="center"
+                android:gravity="center|left"
+                android:layout_marginLeft="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:textSize="25sp"
+                android:textSize="18dp"
+                android:textColor="#2E9C58"
                 android:text="Time Left : "/>
         </android.support.v7.widget.CardView>
 
@@ -66,21 +68,26 @@
             android:layout_weight="5">
         </FrameLayout>
 
-        <LinearLayout
-            android:padding="10dp"
+        <View
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="1dp"
+            android:background="#2E9C58"/>
+
+        <LinearLayout
+            android:background="#FFF"
+            android:layout_width="match_parent"
+            android:layout_height="55dp">
 
             <TextView
                 android:id="@+id/editMedicinesTextView2"
-                android:background="@drawable/resend_button"
+                android:background="#FFF"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:textSize="20sp"
-                android:gravity="center"
+                android:textSize="18sp"
+                android:layout_marginLeft="10dp"
+                android:gravity="center|left"
                 android:textColor="#2E9C58"
-                android:paddingBottom="5dp"
-                android:text="Total Cost : 250 Rs"/>
+                android:text="Total Amount : 250 Rs"/>
 
         </LinearLayout>
     </LinearLayout>

@@ -52,19 +52,24 @@
             android:layout_weight="1">
         </FrameLayout>
 
-        <LinearLayout
-            android:padding="10dp"
+        <View
             android:layout_width="match_parent"
-            android:layout_height="55dp">
+            android:layout_height="1dp"
+            android:background="#2E9C58"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:background="#FFF">
 
             <TextView
-                android:background="@drawable/rounded"
+                android:id="@+id/viewMedicinesToolbarTextView2"
+                android:layout_marginLeft="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:textSize="25sp"
-                android:gravity="center"
-                android:textColor="#FFF"
-                android:text="Total Cost : 250 Rs"/>
+                android:textSize="18sp"
+                android:gravity="center|left"
+                android:textColor="#2E9C58"
+                android:text="Total Amount : 250 Rs"/>
 
         </LinearLayout>
     </LinearLayout>

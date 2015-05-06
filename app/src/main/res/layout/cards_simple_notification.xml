@@ -13,8 +13,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:textSize="14sp"
+        android:textSize="18sp"
         android:textColor="#2E9C58"
+        android:lineSpacingExtra="5dp"
         android:text="Your order is being processed.\n Please Wait."/>
 
 </android.support.v7.widget.CardView>

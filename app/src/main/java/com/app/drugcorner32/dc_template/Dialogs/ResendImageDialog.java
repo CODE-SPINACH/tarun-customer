@@ -95,6 +95,9 @@ public class ResendImageDialog extends android.support.v4.app.DialogFragment{
         Button resendButton = (Button)view.findViewById(R.id.resendButton1);
         Button cancelButton = (Button)view.findViewById(R.id.resendButton2);
 
+        resendButton.setTypeface(typeFace);
+        cancelButton.setTypeface(typeFace);
+
         for(int i = 0;i<prescriptionDetailsList.size();i++){
             final PrescriptionDetails prescriptionDetails = prescriptionDetailsList.get(i);
             final RelativeLayout relativeLayout = (RelativeLayout)inflater.inflate(R.layout.layout_resend_thumbnail, (RelativeLayout) view, false);

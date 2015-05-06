@@ -2,6 +2,7 @@ package com.app.drugcorner32.dc_template.Dialogs;
 
 import android.app.Dialog;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -28,6 +29,7 @@ public class EditMedicineDialog extends DialogFragment {
     private OrderDetails orderDetails;
     private OnFragmentChange callback;
     private TextView counterTextView;
+    private TextView totalCost;
 
     public EditMedicineDialog(){
         super();
@@ -71,6 +73,12 @@ public class EditMedicineDialog extends DialogFragment {
 
         ImageButton closeButton = (ImageButton)view.findViewById(R.id.editMedicinesToolbarImageButton1);
         counterTextView = (TextView)view.findViewById(R.id.editMedicinesTextView1);
+        totalCost = (TextView)view.findViewById(R.id.editMedicinesTextView2);
+
+        Typeface typeface=Typeface.createFromAsset(getActivity().getAssets(),"fonts/gothic.ttf");
+
+        counterTextView.setTypeface(typeface);
+        totalCost.setTypeface(typeface);
 
         OrderItemListFragment itemListFragment = (OrderItemListFragment) getChildFragmentManager().
                 findFragmentByTag(OrderItemListFragment.TAG);

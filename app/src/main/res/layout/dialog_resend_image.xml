@@ -69,12 +69,13 @@
                 android:layout_alignParentBottom="true">
 
             <Button
+                android:textSize="18dp"
                 android:layout_weight="1"
                 android:id="@+id/resendButton1"
                 android:text="Resend"
                 android:layout_gravity="bottom"
                 android:textColor="#2E9C58"
-                android:background="@drawable/resend_button"
+                android:background="@android:color/transparent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
@@ -84,11 +85,12 @@
                  android:layout_weight="1"/>
 
             <Button
+                android:textSize="18dp"
                 android:layout_weight="1"
                 android:id="@+id/resendButton2"
                 android:text="Remove"
                 android:textColor="#2E9C58"
-                android:background="@drawable/resend_button"
+                android:background="@android:color/transparent"
                 android:layout_gravity="right"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
