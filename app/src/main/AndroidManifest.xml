@@ -24,6 +24,8 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name=".Activities.MainActivity"
+            android:screenOrientation="portrait"
+            android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/app_name"
             android:windowSoftInputMode="adjustPan" >
             <intent-filter>
@@ -33,6 +35,8 @@
             </intent-filter>
         </activity>
         <activity
+            android:screenOrientation="portrait"
+            android:configChanges="keyboardHidden|orientation|screenSize"
             android:name=".Activities.NotificationActivity"
             android:label="@string/title_activity_notification" >
             <meta-data
@@ -45,6 +49,8 @@
             android:value="@integer/google_play_services_version" />
 
         <activity
+            android:screenOrientation="portrait"
+            android:configChanges="keyboardHidden|orientation|screenSize"
             android:name=".Activities.AddressActivity"
             android:label="@string/title_activity_address"
             android:parentActivityName=".Activities.MainActivity" >

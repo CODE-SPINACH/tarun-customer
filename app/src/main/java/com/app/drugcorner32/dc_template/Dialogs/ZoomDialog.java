@@ -1,6 +1,9 @@
 package com.app.drugcorner32.dc_template.Dialogs;
 
 import android.app.Dialog;
+import android.graphics.Color;
+import android.graphics.Typeface;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -11,6 +14,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.app.drugcorner32.dc_template.CustomViews.TouchImageView;
 import com.app.drugcorner32.dc_template.R;
@@ -38,14 +42,15 @@ public class ZoomDialog extends DialogFragment {
 
     @Override
     public void onStart() {
+        super.onStart();
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
         Window window = getDialog().getWindow();
+        window.setBackgroundDrawable(new ColorDrawable((Color.TRANSPARENT)));
         lp.copyFrom(window.getAttributes());
         //This makes the dialog take up the full width
         lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-        lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
         window.setAttributes(lp);
-        super.onStart();
     }
 
     @Override
@@ -56,8 +61,13 @@ public class ZoomDialog extends DialogFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.dialog_zoom_image, container, false);
-        TouchImageView touchImageView = (TouchImageView)view.findViewById(R.id.zoomImageView);
-        ImageButton closeButton = (ImageButton)view.findViewById(R.id.zoomImageButton1);
+        Typeface typeface=Typeface.createFromAsset(getActivity().getAssets(), "fonts/gothic.ttf");
+
+        TextView titleView = (TextView)view.findViewById(R.id.zoomImageToolbarTextView1);
+        TouchImageView touchImageView = (TouchImageView)view.findViewById(R.id.zoomImageView1);
+        ImageButton closeButton = (ImageButton)view.findViewById(R.id.zoomImageToolbarImageButton1);
+
+        titleView.setTypeface(typeface);
         touchImageView.setImageURI(fileUri);
 
         closeButton.setOnClickListener(new View.OnClickListener() {

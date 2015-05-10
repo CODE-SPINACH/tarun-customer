@@ -55,7 +55,7 @@
             android:layout_weight="1">
 
             <ImageView
-                android:scaleType="fitCenter"
+                android:scaleType="fitXY"
                 android:contentDescription="Prescription Image"
                 android:id="@+id/resendImageView1"
                 android:layout_width="match_parent"

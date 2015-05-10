@@ -385,7 +385,6 @@ public class MainActivity extends ActionBarActivity implements OnFragmentChange,
 
     public void startAddressActivity(OrderDetails details){
         Intent intent = new Intent(this,AddressActivity.class);
-        Toast.makeText(this,details.getOrderItemsList().size() + "",Toast.LENGTH_SHORT).show();
         intent.putExtra("Order",details);
         startActivity(intent);
     }

@@ -1,19 +1,50 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#eee"
     tools:context="com.app.drugcorner32.dc_template.Fragments.ZoomImageFragment">
 
+    <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:local="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/zoomImageToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        local:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        local:popupTheme="@style/ThemeOverlay.AppCompat.Light" >
+
+        <TextView
+            android:padding="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/zoomImageToolbarTextView1"
+            android:text="View Image"
+            android:textSize="20sp"
+            android:textColor="#FFF"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="right|center">
+            <ImageButton
+                android:contentDescription="close the dialog"
+                android:id="@+id/zoomImageToolbarImageButton1"
+                android:padding="10dp"
+                android:src="@drawable/abc_ic_clear_mtrl_alpha"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#00FFFFFF"/>
+        </LinearLayout>
+
+    </android.support.v7.widget.Toolbar>
+
+
     <com.app.drugcorner32.dc_template.CustomViews.TouchImageView
+        android:layout_below="@id/zoomImageToolbar"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/zoomImageView"/>
+        android:id="@+id/zoomImageView1"/>
 
-    <ImageButton
-        android:id="@+id/zoomImageButton1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="right|top"
-        android:background="#00000000"
-        android:src="@drawable/ic_cancel"/>
-
-</FrameLayout>
+</RelativeLayout>
