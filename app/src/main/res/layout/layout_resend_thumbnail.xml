@@ -9,15 +9,24 @@
         android:background="#eee"
         android:scaleType="fitXY"
         android:id="@+id/resendThumbnailImageView1"
-        android:padding="10dp"
+        android:padding="0dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"/>
 
     <ImageView
-        android:background="#eee"
+        android:background="#EE36B666"
         android:id="@+id/resendThumbnailImageView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:src="@mipmap/ic_incorrect_image_white"
+        android:layout_alignRight="@+id/resendThumbnailImageView1"/>
+
+    <ImageView
+        android:background="#EE36B666"
+        android:id="@+id/resendThumbnailImageView3"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:src="@mipmap/ic_correct_image_white"
         android:layout_alignRight="@+id/resendThumbnailImageView1"/>
 
 </RelativeLayout>

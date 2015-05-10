@@ -5,8 +5,8 @@
         <item name="windowActionBar">false</item>
 
         <item name="colorPrimary">#36B666</item>
-        <item name="colorPrimaryDark">#36B666</item>
-        <item name="colorAccent">#36B666</item>
+        <item name="colorPrimaryDark">#2E9C58</item>
+        <item name="colorAccent">#74C291</item>
     </style>
 
     <style name="full_screen_dialog">

@@ -111,7 +111,7 @@ public class ResendImageDialog extends android.support.v4.app.DialogFragment{
                 @Override
                 public void onClick(View v) {
                     if(currentlySelectedLayout != null)
-                        currentlySelectedLayout.setBackgroundColor(Color.parseColor("#777777"));
+                        currentlySelectedLayout.setBackgroundColor(Color.parseColor("#eeeeee"));
 
                     //The below written code lets the scrolled out portion to be completely visible on selection
                     int screenRelativeRight = relativeLayout.getRight() - scrollView.getScrollX();
@@ -122,7 +122,7 @@ public class ResendImageDialog extends android.support.v4.app.DialogFragment{
                     else if(screenRelativeLeft < view.getLeft())
                         scrollView.smoothScrollBy(screenRelativeLeft - view.getLeft(), 0);
 
-                    relativeLayout.setBackgroundColor(Color.parseColor("#ea6125"));
+                    relativeLayout.setBackgroundColor(Color.parseColor("#36B666"));
                     image.setImageURI(prescriptionDetails.getImageUri());
 
                     currentlySelectedPrescription = prescriptionDetails;
