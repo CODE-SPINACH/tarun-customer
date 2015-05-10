@@ -13,7 +13,7 @@
         android:layout_height="match_parent">
 
         <LinearLayout
-            android:background="#36B666"
+            android:background="@drawable/drugcorner_green"
             android:id="@+id/buyMedicineLinearLayout1"
             android:orientation="horizontal"
             android:layout_width="match_parent"
