@@ -1,6 +1,8 @@
 package com.app.drugcorner32.dc_template.Activities;
 
+import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
@@ -10,7 +12,13 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,7 +35,6 @@ import com.app.drugcorner32.dc_template.Dialogs.SendPrescriptionDialog;
 import com.app.drugcorner32.dc_template.Dialogs.ZoomDialog;
 import com.app.drugcorner32.dc_template.Fragments.AddressFragment;
 import com.app.drugcorner32.dc_template.Fragments.BuyMedicineFragment;
-import com.app.drugcorner32.dc_template.Fragments.HomeScreenFragment;
 import com.app.drugcorner32.dc_template.Fragments.OrderItemListFragment;
 import com.app.drugcorner32.dc_template.Interfaces.OnFragmentChange;
 import com.app.drugcorner32.dc_template.R;
@@ -40,12 +47,20 @@ import java.util.List;
 
 //TODO OrderDetails is dummy data
 
-public class MainActivity extends ActionBarActivity implements OnFragmentChange, HomeScreenFragment.Callback,
-        SendPrescriptionDialog.Callback,SearchMedicineDialog.Callback,OrderListAdapter.Callback,BuyMedicineFragment.Callback,
+public class MainActivity extends ActionBarActivity implements OnFragmentChange, SendPrescriptionDialog.Callback,
+        SearchMedicineDialog.Callback,OrderListAdapter.Callback,BuyMedicineFragment.Callback,
         OrderItemListAdapter.Callback{
 
     private Uri fileUri;
     private final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
+    private final int GALLERY_IMAGE_ACTIVITY_REQUEST_CODE = 101;
+
+    private DrawerLayout drawerLayout;
+    private ActionBarDrawerToggle drawerToggle;
+    private ListView drawerListView;
+
+    private String[] drawerItems = {"A","B","C","D"};
+
     private OrderListAdapter orderListAdapter;
     private OrderDetails orderDetails;
     @Override
@@ -62,11 +77,43 @@ public class MainActivity extends ActionBarActivity implements OnFragmentChange,
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("");
 
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawerListView = (ListView) findViewById(R.id.drawerListView);
+
+        drawerListView.setAdapter(new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,drawerItems));
+
+        drawerToggle = new ActionBarDrawerToggle(this, drawerLayout,
+                toolbar, R.string.abc_action_bar_home_description, R.string.abc_action_bar_home_description) {
+
+            public void onDrawerClosed(View view) {
+                super.onDrawerClosed(view);
+            }
+
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+                //This has been added to stop the drawer toggle icon from transforming into back button
+                super.onDrawerSlide(drawerView,0);
+            }
+
+            public void onDrawerSlide(View drawerView, float slideOffset) {
+                super.onDrawerSlide(drawerView, 0);
+            }
+
+        };
+        drawerLayout.setDrawerListener(drawerToggle);
+        drawerToggle.syncState();
+
+        drawerListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(getApplicationContext(),position + "",Toast.LENGTH_SHORT).show();
+            }
+        });
 
         com.app.drugcorner32.dc_template.Helpers.helperIDGenerator.init();
 
         //setting the home fragment
-        replaceFragment(R.id.homeScreenImageButton1,null);
+        replaceFragment(R.layout.fragment_buy_medicine,null);
 
         orderListAdapter = new OrderListAdapter(this,R.layout.cards_order);
 
@@ -118,9 +165,23 @@ public class MainActivity extends ActionBarActivity implements OnFragmentChange,
         }
     }
 
+    public void choosePhotoFromGallery(){
+        Intent galleryIntent = new Intent(Intent.ACTION_PICK,
+                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+
+        startActivityForResult(galleryIntent, GALLERY_IMAGE_ACTIVITY_REQUEST_CODE);
+    }
+
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
-            replaceFragment(CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE, null);
+            if(resultCode == RESULT_OK)
+                replaceFragment(CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE, null);
+        }
+        else if(requestCode == GALLERY_IMAGE_ACTIVITY_REQUEST_CODE){
+            if(resultCode == RESULT_OK){
+                fileUri = data.getData();
+                replaceFragment(GALLERY_IMAGE_ACTIVITY_REQUEST_CODE,null);
+            }
         }
     }
 
@@ -136,27 +197,13 @@ public class MainActivity extends ActionBarActivity implements OnFragmentChange,
     public void replaceFragment(int id, Object object) {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         switch (id) {
-            case R.id.mainActivityFrameLayout:
-                HomeScreenFragment frag1 = (HomeScreenFragment) getSupportFragmentManager().
-                        findFragmentByTag(HomeScreenFragment.TAG);
-
-                if (frag1 == null)
-                    frag1 = HomeScreenFragment.newInstance();
-
-                ft.replace(R.id.mainActivityFrameLayout, frag1, HomeScreenFragment.TAG);
-                ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-                ft.commitAllowingStateLoss();
-                break;
-
-            case R.id.homeScreenImageButton1:
+            case R.layout.fragment_buy_medicine:
                 BuyMedicineFragment frag2 = (BuyMedicineFragment) getSupportFragmentManager().
                         findFragmentByTag(BuyMedicineFragment.TAG);
                 if (frag2 == null) {
                     frag2 = BuyMedicineFragment.newInstance();
                 }
                 ft.replace(R.id.mainActivityFrameLayout, frag2, BuyMedicineFragment.TAG);
-                ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-                ft.addToBackStack(null);
                 ft.commitAllowingStateLoss();
                 break;
 
@@ -222,13 +269,7 @@ public class MainActivity extends ActionBarActivity implements OnFragmentChange,
                 frag3.updateBottomMenu();
                 break;
 
-            case R.id.prescriptionCardImageView1:
-                ZoomDialog zoomDialog = new ZoomDialog();
-                zoomDialog.setImageUri((Uri) object);
-                zoomDialog.show(getSupportFragmentManager(), ZoomDialog.TAG);
-                break;
-
-            case R.id.searchMedicineSearchView1:
+            case GALLERY_IMAGE_ACTIVITY_REQUEST_CODE:
                 BuyMedicineFragment frag4 = (BuyMedicineFragment) getSupportFragmentManager().
                         findFragmentByTag(BuyMedicineFragment.TAG);
 
@@ -236,8 +277,46 @@ public class MainActivity extends ActionBarActivity implements OnFragmentChange,
                     Toast.makeText(this, "State Loss", Toast.LENGTH_SHORT).show();
                     break;
                 }
-                frag4.addNewMedicine(new MedicineDetails((String) object, MedicineDetails.MedicineTypes.Bottles));
+                //Thumbnail is being saved
+                String path = getRealPathFromURI(this,fileUri);
+
+                Calendar calendar1 = Calendar.getInstance();
+                File dir1 = getPicStorageDir("prescription_images_thumbnails");
+                File imageFile1 = new File(dir1, calendar1.getTimeInMillis() + ".jpeg");
+                File oldFile1 = new File(path);
+                Uri thumbnailUri1 = Uri.fromFile(imageFile1);
+                Bitmap bitmap1 = ThumbnailUtils.extractThumbnail(BitmapFactory.decodeFile(oldFile1.getAbsolutePath()),
+                        100, 100);
+                try {
+                    FileOutputStream out = new FileOutputStream(imageFile1);
+                    bitmap1.compress(Bitmap.CompressFormat.JPEG, 100, out);
+                    out.flush();
+                    out.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                frag4.addNewPrescription(fileUri,thumbnailUri1);
                 frag4.updateBottomMenu();
+
+                break;
+
+            case R.id.prescriptionCardImageView1:
+                ZoomDialog zoomDialog = new ZoomDialog();
+                zoomDialog.setImageUri((Uri) object);
+                zoomDialog.show(getSupportFragmentManager(), ZoomDialog.TAG);
+                break;
+
+            case R.id.searchMedicineSearchView1:
+                BuyMedicineFragment frag = (BuyMedicineFragment) getSupportFragmentManager().
+                        findFragmentByTag(BuyMedicineFragment.TAG);
+
+                if (frag == null) {
+                    Toast.makeText(this, "State Loss", Toast.LENGTH_SHORT).show();
+                    break;
+                }
+                frag.addNewMedicine(new MedicineDetails((String) object, MedicineDetails.MedicineTypes.Bottles));
+                frag.updateBottomMenu();
                 break;
 
             case R.id.orderCardTextView6:
@@ -304,12 +383,6 @@ public class MainActivity extends ActionBarActivity implements OnFragmentChange,
         return orderListAdapter;
     }
 
-    public void startNotificationActivity(){
-        Intent intent = new Intent(this,NotificationActivity.class);
-        intent.putExtra("Order",orderDetails);
-        startActivity(intent);
-    }
-
     public void startAddressActivity(OrderDetails details){
         Intent intent = new Intent(this,AddressActivity.class);
         Toast.makeText(this,details.getOrderItemsList().size() + "",Toast.LENGTH_SHORT).show();
@@ -352,5 +425,21 @@ public class MainActivity extends ActionBarActivity implements OnFragmentChange,
         }
 
     }
+
+    public String getRealPathFromURI(Context context, Uri contentUri) {
+        Cursor cursor = null;
+        try {
+            String[] proj = { MediaStore.Images.Media.DATA };
+            cursor = context.getContentResolver().query(contentUri,  proj, null, null, null);
+            int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+            cursor.moveToFirst();
+            return cursor.getString(column_index);
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
+    }
+
 
 }

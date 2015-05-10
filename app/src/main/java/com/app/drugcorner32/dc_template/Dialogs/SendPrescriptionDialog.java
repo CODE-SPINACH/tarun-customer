@@ -93,7 +93,8 @@ public class SendPrescriptionDialog extends DialogFragment {
         galleryButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                callBack.choosePhotoFromGallery();
+                dismiss();
             }
         });
 
@@ -102,5 +103,6 @@ public class SendPrescriptionDialog extends DialogFragment {
 
     public interface Callback{
         void takePhoto();
+        void choosePhotoFromGallery();
     }
 }

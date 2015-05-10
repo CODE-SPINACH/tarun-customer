@@ -4,8 +4,6 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/DC_TEMPLATE.iml" filepath="$PROJECT_DIR$/DC_TEMPLATE.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/tarun-customer.iml" filepath="$PROJECT_DIR$/tarun-customer.iml" />
     </modules>
   </component>
 </project>
-

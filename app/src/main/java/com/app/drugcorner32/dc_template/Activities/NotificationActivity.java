@@ -1,7 +1,12 @@
 package com.app.drugcorner32.dc_template.Activities;
 
+import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
+import android.media.ThumbnailUtils;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -29,13 +34,16 @@ import com.app.drugcorner32.dc_template.Interfaces.OnFragmentChange;
 import com.app.drugcorner32.dc_template.R;
 
 import java.io.File;
-import java.io.IOException;
+import java.io.FileOutputStream;
 import java.util.Calendar;
 
-public class NotificationActivity extends ActionBarActivity implements OnFragmentChange, OrderItemListAdapter.Callback{
+public class NotificationActivity extends ActionBarActivity implements OnFragmentChange, OrderItemListAdapter.Callback,
+        SendPrescriptionDialog.Callback{
 
     private OrderDetails orderDetails;
     private final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
+    private final int GALLERY_IMAGE_ACTIVITY_REQUEST_CODE = 101;
+
     private Uri fileUri;
     int count = 0;
     @Override
@@ -125,6 +133,55 @@ public class NotificationActivity extends ActionBarActivity implements OnFragmen
                 sendPrescriptionDialog.show(getSupportFragmentManager(),SendPrescriptionDialog.TAG);
                 break;
 
+            case CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE:
+                ResendImageDialog resendImageDialog1 = (ResendImageDialog)
+                        getSupportFragmentManager().findFragmentByTag(ResendImageDialog.TAG);
+
+                Calendar calendar = Calendar.getInstance();
+                File dir = getPicStorageDir("prescription_images_thumbnails");
+                File thumbnailFile = new File(dir, calendar.getTimeInMillis() + ".jpeg");
+                Uri thumbnailUri = Uri.fromFile(thumbnailFile);
+
+                File imageFile = new File(fileUri.getPath());
+
+                Bitmap bitmap = ThumbnailUtils.extractThumbnail(BitmapFactory.decodeFile(imageFile.getPath()),
+                        100, 100);
+                try {
+                    FileOutputStream out = new FileOutputStream(thumbnailFile);
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
+                    out.flush();
+                    out.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                resendImageDialog1.replaceCurrentPhoto(fileUri,thumbnailUri);
+
+                break;
+            case GALLERY_IMAGE_ACTIVITY_REQUEST_CODE:
+                ResendImageDialog resendImageDialog2 = (ResendImageDialog)
+                        getSupportFragmentManager().findFragmentByTag(ResendImageDialog.TAG);
+
+                String path = getRealPathFromURI(this,fileUri);
+
+                Calendar calendar1 = Calendar.getInstance();
+                File dir1 = getPicStorageDir("prescription_images_thumbnails");
+                File thumbnailFile1 = new File(dir1, calendar1.getTimeInMillis() + ".jpeg");
+                File imageFile1 = new File(path);
+                Uri thumbnailUri1 = Uri.fromFile(thumbnailFile1);
+                Bitmap bitmap1 = ThumbnailUtils.extractThumbnail(BitmapFactory.decodeFile(imageFile1.getAbsolutePath()),
+                        100, 100);
+                try {
+                    FileOutputStream out = new FileOutputStream(thumbnailFile1);
+                    bitmap1.compress(Bitmap.CompressFormat.JPEG, 100, out);
+                    out.flush();
+                    out.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                resendImageDialog2.replaceCurrentPhoto(fileUri,thumbnailUri1);
+                break;
+
             default:
                 break;
         }
@@ -135,20 +192,6 @@ public class NotificationActivity extends ActionBarActivity implements OnFragmen
             Calendar cal = Calendar.getInstance();
             File dir = getPicStorageDir("prescription_images");
             File imageFile = new File(dir, cal.getTimeInMillis() + ".jpg");
-            if (!imageFile.exists()) {
-                try {
-                    imageFile.createNewFile();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            } else {
-                imageFile.delete();
-                try {
-                    imageFile.createNewFile();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
             fileUri = Uri.fromFile(imageFile);
             Intent i = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
             i.putExtra(MediaStore.EXTRA_OUTPUT, fileUri);
@@ -156,9 +199,22 @@ public class NotificationActivity extends ActionBarActivity implements OnFragmen
         }
     }
 
+    public void choosePhotoFromGallery(){
+        Intent galleryIntent = new Intent(Intent.ACTION_PICK,
+                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+
+        startActivityForResult(galleryIntent, GALLERY_IMAGE_ACTIVITY_REQUEST_CODE);
+    }
+
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
             replaceFragment(CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE, null);
+        }
+        else if(requestCode == GALLERY_IMAGE_ACTIVITY_REQUEST_CODE){
+            if(resultCode == RESULT_OK){
+                fileUri = data.getData();
+                replaceFragment(GALLERY_IMAGE_ACTIVITY_REQUEST_CODE,null);
+            }
         }
     }
 
@@ -188,10 +244,17 @@ public class NotificationActivity extends ActionBarActivity implements OnFragmen
     }
 
     public void updateCart(OrderItemDetails details){}
-    public void updateBottomMenu(){}
+
+    public void updateBottomMenu(){
+        EditMedicineDialog editMedicineDialog = (EditMedicineDialog)
+                getSupportFragmentManager().findFragmentByTag(EditMedicineDialog.TAG);
+        if(editMedicineDialog == null)
+            return;
+        editMedicineDialog.updateBottomMenu();
+    }
 
     public void startTimer(){
-        new CountDownTimer(10*1000, 1000) {
+        new CountDownTimer(60*1000, 1000) {
 
             public void onTick(long millisUntilFinished) {
                 int minutes = (int)(millisUntilFinished / (60 * 1000));
@@ -282,5 +345,21 @@ public class NotificationActivity extends ActionBarActivity implements OnFragmen
                 break;
         }
     }
+
+    public String getRealPathFromURI(Context context, Uri contentUri) {
+        Cursor cursor = null;
+        try {
+            String[] proj = { MediaStore.Images.Media.DATA };
+            cursor = context.getContentResolver().query(contentUri,  proj, null, null, null);
+            int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+            cursor.moveToFirst();
+            return cursor.getString(column_index);
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
+    }
+
 
 }

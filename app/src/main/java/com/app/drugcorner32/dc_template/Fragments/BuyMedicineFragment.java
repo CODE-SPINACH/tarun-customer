@@ -51,7 +51,6 @@ public class BuyMedicineFragment extends android.support.v4.app.Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_buy_medicine, container, false);
         TextView sendPrescriptionTextView = (TextView)view.findViewById(R.id.buyMedicineTextView1);

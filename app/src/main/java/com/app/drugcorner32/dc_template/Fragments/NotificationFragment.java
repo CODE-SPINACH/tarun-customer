@@ -75,7 +75,7 @@ public class NotificationFragment extends android.support.v4.app.Fragment {
     }
 
     //The view of the notification cards is being created here
-    public void createNotificationView( final NotificationDetails notificationDetails){
+    public void createNotificationView(final NotificationDetails notificationDetails){
         final View view;
         LayoutInflater inflater = getActivity().getLayoutInflater();
 

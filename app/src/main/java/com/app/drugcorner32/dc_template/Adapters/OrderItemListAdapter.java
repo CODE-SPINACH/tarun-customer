@@ -81,7 +81,12 @@ public class OrderItemListAdapter extends BaseExpandableListAdapter{
     private OnFragmentChange callback1;
     private Callback callback2;
     private List<OrderItemDetails> itemDetailsList = new ArrayList<>();
+
+    //if isRemovable is false then this indicates that previous order dialog is open
+    //isRemovable indicates that the item can be removed from the list
     private boolean isRemovable;
+
+    //isEditable indicates that the item can be edited/ have its quantity changed
     private boolean isEditable;
     private Typeface typeFace;
     private ExpandableListView expandableListView;
@@ -309,7 +314,7 @@ public class OrderItemListAdapter extends BaseExpandableListAdapter{
                             medicineDetails.setQuantity(quantity);
                             holder1.costOfMedicineTextView.setText(medicineDetails.getCost() * quantity + "/-");
                             holder1.numberOfMedicineTextView.setText("" + quantity);
-                            if (isRemovable) {
+                            if (!isRemovable) {
                                 if (quantity == 1)
                                     callback2.updateCart(itemDetailsList.get(groupPosition));
                                 else
@@ -323,16 +328,25 @@ public class OrderItemListAdapter extends BaseExpandableListAdapter{
                         @Override
                         public void onClick(View v) {
                             int quantity = medicineDetails.getQuantity() - 1;
+
+                            if(quantity < 0 )
+                                return;
+
                             medicineDetails.setQuantity(quantity);
                             holder1.costOfMedicineTextView.setText(medicineDetails.getCost() * quantity + "/-");
                             holder1.numberOfMedicineTextView.setText("" + quantity);
 
-                            if (isRemovable) {
+                            if (!isRemovable) {
                                 if (quantity == 0)
                                     callback2.updateCart(itemDetailsList.get(groupPosition));
                                 else
                                     callback2.updateCart(null);
                             }
+                            else
+                                if(quantity == 0) {
+                                    collapse(holder1.medicineLayout, groupPosition);
+                                    return;
+                                }
                             callback2.updateBottomMenu();
                         }
                     });
@@ -396,7 +410,7 @@ public class OrderItemListAdapter extends BaseExpandableListAdapter{
             childHolder = (ChildViewHolder) convertView.getTag();
 
         childHolder.nameOfMedicineTextView.setText(medicineDetails.getMedicineName());
-        childHolder.costOfMedicineTextView.setText(medicineDetails.getCost() * medicineDetails.getQuantity() + "");
+        childHolder.costOfMedicineTextView.setText(medicineDetails.getCost() * medicineDetails.getQuantity() + "/-");
         childHolder.numberOfMedicineTextView.setText(medicineDetails.getQuantity() + "");
         childHolder.orTextView.setVisibility(View.VISIBLE);
         childHolder.stripTextView.setVisibility(View.VISIBLE);
@@ -445,7 +459,7 @@ public class OrderItemListAdapter extends BaseExpandableListAdapter{
                     int quantity = medicineDetails.getQuantity() + 1;
                     medicineDetails.setQuantity(quantity);
 
-                    if (isRemovable) {
+                    if (!isRemovable) {
                         if (quantity == 1)
                             callback2.updateCart(getGroup(groupPosition));
                         else
@@ -465,19 +479,28 @@ public class OrderItemListAdapter extends BaseExpandableListAdapter{
                     if (quantity < 0)
                         return;
 
-                    if (isRemovable) {
+                    medicineDetails.setQuantity(quantity);
+                    childHolder.costOfMedicineTextView.setText(medicineDetails.getCost() * quantity + "/-");
+                    childHolder.numberOfMedicineTextView.setText("" + quantity);
+
+                    if (!isRemovable) {
                         if (quantity == 0) {
-                            medicineDetails.setQuantity(quantity);
                             callback2.updateCart(getGroup(groupPosition));
                         } else
                             callback2.updateCart(null);
-                    } else if (quantity == 0)
-                        return;
-
-                    medicineDetails.setQuantity(quantity);
+                    }
+                    else
+                        if(quantity == 0) {
+                            boolean delete = true;
+                            for (MedicineDetails details : getGroup(groupPosition).getPrescriptionDetails().getMedicineList())
+                                if (details.getQuantity() != 0)
+                                    delete = false;
+                            if (delete) {
+                                expandableListView.collapseGroup(groupPosition);
+                                itemDetailsList.remove(groupPosition);
+                            }
+                        }
                     callback2.updateBottomMenu();
-                    childHolder.costOfMedicineTextView.setText(medicineDetails.getCost() * quantity + "/-");
-                    childHolder.numberOfMedicineTextView.setText("" + quantity);
                     notifyDataSetChanged();
                 }
             });
@@ -486,28 +509,27 @@ public class OrderItemListAdapter extends BaseExpandableListAdapter{
             @Override
             public void onClick(View v) {
                 medicineDetails.setQuantity(0);
+
+                childHolder.numberOfMedicineTextView.setText("0");
+                childHolder.costOfMedicineTextView.setText("0.0/-");
+
                 //This ensures that if all the medicines have been removed then the prescription gets removed too
                 boolean delete = true;
                 for (MedicineDetails details : getGroup(groupPosition).getPrescriptionDetails().getMedicineList())
                     if (details.getQuantity() != 0)
                         delete = false;
                 if (delete) {
+                    expandableListView.collapseGroup(groupPosition);
                     itemDetailsList.remove(groupPosition);
-                    notifyDataSetChanged();
                 }
-
-                View parentView = getGroupView(groupPosition,true,null,null);
-                GroupViewHolder0 holder0 = (GroupViewHolder0)parentView.getTag();
-
-                expandableListView.collapseGroup(groupPosition);
-                collapse(holder0.prescriptionLayout, groupPosition);
-                callback2.updateBottomMenu();
                 notifyDataSetChanged();
+                callback2.updateBottomMenu();
             }
         });
         return convertView;
 
     }
+
 
     @Override
     public int getGroupType(int groupPosition) {

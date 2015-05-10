@@ -5,6 +5,7 @@
     android:layout_marginTop="10dp"
     android:id="@+id/buttonNotificationCardView1"
     android:layout_height="wrap_content"
+    android:layout_marginBottom="10dp"
     >
 
     <LinearLayout

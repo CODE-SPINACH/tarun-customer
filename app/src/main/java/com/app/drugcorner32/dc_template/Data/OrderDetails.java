@@ -94,4 +94,11 @@ public class OrderDetails implements Serializable{
         return isDisabled;
     }
 
+    public float getCost(){
+        float sum = 0;
+        for(OrderItemDetails details : orderItemDetailses)
+            sum += details.getCost();
+        return sum;
+    }
+
 }

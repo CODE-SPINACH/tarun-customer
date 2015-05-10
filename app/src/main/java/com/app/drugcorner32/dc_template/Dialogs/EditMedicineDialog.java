@@ -29,7 +29,7 @@ public class EditMedicineDialog extends DialogFragment {
     private OrderDetails orderDetails;
     private OnFragmentChange callback;
     private TextView counterTextView;
-    private TextView totalCost;
+    private TextView totalCostView;
 
     public EditMedicineDialog(){
         super();
@@ -73,12 +73,13 @@ public class EditMedicineDialog extends DialogFragment {
 
         ImageButton closeButton = (ImageButton)view.findViewById(R.id.editMedicinesToolbarImageButton1);
         counterTextView = (TextView)view.findViewById(R.id.editMedicinesTextView1);
-        totalCost = (TextView)view.findViewById(R.id.editMedicinesTextView2);
+        totalCostView = (TextView)view.findViewById(R.id.editMedicinesTextView2);
 
         Typeface typeface=Typeface.createFromAsset(getActivity().getAssets(),"fonts/gothic.ttf");
-
         counterTextView.setTypeface(typeface);
-        totalCost.setTypeface(typeface);
+        totalCostView.setTypeface(typeface);
+
+        totalCostView.setText("Total Cost : " + orderDetails.getCost() + "/-");
 
         OrderItemListFragment itemListFragment = (OrderItemListFragment) getChildFragmentManager().
                 findFragmentByTag(OrderItemListFragment.TAG);
@@ -109,5 +110,9 @@ public class EditMedicineDialog extends DialogFragment {
 
     public void setTimer(String str){
         counterTextView.setText("Time Left : " + str);
+    }
+
+    public void updateBottomMenu(){
+        totalCostView.setText("Total Cost : " + orderDetails.getCost() + "/-");
     }
 }

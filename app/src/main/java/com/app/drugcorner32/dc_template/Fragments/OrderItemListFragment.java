@@ -47,14 +47,6 @@ public class OrderItemListFragment extends android.support.v4.app.Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
         }
-
-        itemAdapter = new OrderItemListAdapter(getActivity());
-
-        if(orderDetails!=null)
-            itemAdapter.setItemDetailsList(orderDetails.getOrderItemsList());
-
-        itemAdapter.setRemovable(isRemovable);
-        itemAdapter.setEditable(isEditable);
     }
 
     @Override
@@ -64,6 +56,16 @@ public class OrderItemListFragment extends android.support.v4.app.Fragment {
         View view = inflater.inflate(R.layout.fragment_order_item_list, container, false);
         itemListView =
                 (ExpandableListView)view.findViewById(R.id.orderItemListView);
+
+        itemAdapter = new OrderItemListAdapter(getActivity());
+
+        if(orderDetails!=null)
+            itemAdapter.setItemDetailsList(orderDetails.getOrderItemsList());
+
+        itemAdapter.setRemovable(isRemovable);
+        itemAdapter.setEditable(isEditable);
+
+
         itemAdapter.setExpandableListView(itemListView);
 
         itemListView.setAdapter(itemAdapter);

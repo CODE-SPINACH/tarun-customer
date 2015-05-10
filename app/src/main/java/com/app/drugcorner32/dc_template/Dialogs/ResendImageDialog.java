@@ -39,9 +39,9 @@ public class ResendImageDialog extends android.support.v4.app.DialogFragment{
     private OnFragmentChange callback;
     private List<PrescriptionDetails> prescriptionDetailsList = new ArrayList<>();
 
-    private RelativeLayout previousSelectedLayout;
-    private PrescriptionDetails previousSelectedDetails;
-
+    private RelativeLayout currentlySelectedLayout;
+    private PrescriptionDetails currentlySelectedPrescription;
+    private ImageView image;
 
     public ResendImageDialog(){
         super();
@@ -91,7 +91,7 @@ public class ResendImageDialog extends android.support.v4.app.DialogFragment{
 
         final HorizontalScrollView scrollView = (HorizontalScrollView)view.findViewById(R.id.resendHorizontalScrollView1);
         final LinearLayout linearLayout = (LinearLayout)view.findViewById(R.id.resendLinearLayout1);
-        final ImageView image = (ImageView)view.findViewById(R.id.resendImageView1);
+        image = (ImageView)view.findViewById(R.id.resendImageView1);
         Button resendButton = (Button)view.findViewById(R.id.resendButton1);
         Button cancelButton = (Button)view.findViewById(R.id.resendButton2);
 
@@ -110,8 +110,8 @@ public class ResendImageDialog extends android.support.v4.app.DialogFragment{
             relativeLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(previousSelectedLayout != null)
-                        previousSelectedLayout.setBackgroundColor(Color.parseColor("#777777"));
+                    if(currentlySelectedLayout != null)
+                        currentlySelectedLayout.setBackgroundColor(Color.parseColor("#777777"));
 
                     //The below written code lets the scrolled out portion to be completely visible on selection
                     int screenRelativeRight = relativeLayout.getRight() - scrollView.getScrollX();
@@ -125,8 +125,8 @@ public class ResendImageDialog extends android.support.v4.app.DialogFragment{
                     relativeLayout.setBackgroundColor(Color.parseColor("#ea6125"));
                     image.setImageURI(prescriptionDetails.getImageUri());
 
-                    previousSelectedDetails = prescriptionDetails;
-                    previousSelectedLayout = relativeLayout;
+                    currentlySelectedPrescription = prescriptionDetails;
+                    currentlySelectedLayout = relativeLayout;
                 }
             });
         }
@@ -140,13 +140,13 @@ public class ResendImageDialog extends android.support.v4.app.DialogFragment{
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (previousSelectedDetails != null) {
-                    prescriptionDetailsList.remove(previousSelectedDetails);
-                    linearLayout.removeView(previousSelectedLayout);
+                if (currentlySelectedPrescription != null) {
+                    prescriptionDetailsList.remove(currentlySelectedPrescription);
+                    linearLayout.removeView(currentlySelectedLayout);
                     image.setImageBitmap(null);
 
-                    previousSelectedDetails = null;
-                    previousSelectedLayout = null;
+                    currentlySelectedPrescription = null;
+                    currentlySelectedLayout = null;
                 }
             }
         });
@@ -169,10 +169,15 @@ public class ResendImageDialog extends android.support.v4.app.DialogFragment{
                     prescriptionDetailsList.add(details.getPrescriptionDetails());
     }
 
-    public void replaceCurrentPhoto(Uri newURI){
-        previousSelectedDetails.setImageUri(newURI);
+    public void replaceCurrentPhoto(Uri imageUri,Uri thumbnailUri){
+        currentlySelectedPrescription.setThumbnailUri(thumbnailUri);
+        currentlySelectedPrescription.setImageUri(imageUri);
+
+        ImageView thumbnailView = (ImageView)currentlySelectedLayout.findViewById(R.id.resendThumbnailImageView1);
+        ImageView imageStatusView = (ImageView)currentlySelectedLayout.findViewById(R.id.resendThumbnailImageView2);
+
+        thumbnailView.setImageURI(currentlySelectedPrescription.getThumbnailUri());
+        image.setImageURI(currentlySelectedPrescription.getImageUri());
     }
-
-
 
 }
