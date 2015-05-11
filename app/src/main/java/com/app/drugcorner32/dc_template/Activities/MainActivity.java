@@ -83,7 +83,13 @@ public class MainActivity extends ActionBarActivity implements OnFragmentChange,
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawerListView = (ListView) findViewById(R.id.drawerListView);
 
+
+        View header=getLayoutInflater().inflate(R.layout.navigation_drawer_header, null);
+        drawerListView.addHeaderView(header);
+
+
         drawerListView.setAdapter(new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,drawerItems));
+
 
         drawerToggle = new ActionBarDrawerToggle(this, drawerLayout,
                 toolbar, R.string.abc_action_bar_home_description, R.string.abc_action_bar_home_description) {

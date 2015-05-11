@@ -5,7 +5,9 @@
     android:paddingBottom="8dp"
     android:layout_height="wrap_content"
     android:background="#ffffff"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:id="@+id/navigation_item_layout"
+    android:paddingLeft="5dp">
 
 
     <ImageView
