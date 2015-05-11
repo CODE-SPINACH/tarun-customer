@@ -59,7 +59,10 @@ public class MainActivity extends ActionBarActivity implements OnFragmentChange,
     private ActionBarDrawerToggle drawerToggle;
     private ListView drawerListView;
 
-    private String[] drawerItems = {"A","B","C","D"};
+    private String[] drawerItems = {"Home","Feedback","Rate us","Share us","About us"};
+    private int icons[] = {R.drawable.ic_camera,R.drawable.ic_cancel,R.drawable.ic_continue,R.drawable.ic_add,R.drawable.ic_gallery};
+    private String name = "Ravi Gupta";
+    private String email = "ravigupta9363@gmail.com";
 
     private OrderListAdapter orderListAdapter;
     private OrderDetails orderDetails;
